@@ -1,0 +1,52 @@
+.header {
+  background-color: #dca879;
+  margin: 0;                    /* Remove margens padrão */
+  padding: 0;                  /* Remove padding padrão */
+  display: flex;               /* Flexbox para alinhar itens */
+  align-items: center;         /* Centraliza verticalmente */
+  
+  /* deixa no cabeçalho */
+  position: fixed;          
+  top: 0;                   
+  left: 0;                  
+  width: 100vw;             
+  
+  box-sizing: border-box;   /* Considera padding no cálculo da largura */
+  z-index: 1000;            /* Garante que fique acima de outros elementos */
+  
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.logo{
+  width: 50px;              /* Define largura fixa para o logo */
+  height: auto;             /* Mantém proporção do logo */
+  display: block;
+}
+
+.nav {
+  background-color: #dca879;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;          /* Remove margens do nav */
+  padding: 0 1rem;         /* Remove padding interno */
+  height: 100%;       /* Ocupa altura total do header */
+}
+
+.link {
+  color: #0c0c0c;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  text-decoration: none;          /* Garante que links não tenham sublinhado */
+  display: inline-block;           /* Permite padding e margin */
+}
+
+.link:hover {
+  background-color: #c0926a;
+}
