@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Adotar from './pages/Adotar';
 import Sobre from './pages/Sobre';
-import './App.css';
+
 
 function App() {
   return (
@@ -14,7 +14,15 @@ function App() {
         <Route path="/adotar" element={<Adotar />} />
         <Route path="/sobre" element={<Sobre />} />
       </Routes>
+
+
+
+      
     </div>
+
+    
+
+    
   );
 }
 
