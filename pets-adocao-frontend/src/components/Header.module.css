@@ -35,6 +35,7 @@
   margin: 0;          /* Remove margens do nav */
   padding: 0 1rem;         /* Remove padding interno */
   height: 100%;       /* Ocupa altura total do header */
+
 }
 
 .link {
