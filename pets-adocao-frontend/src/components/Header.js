@@ -24,7 +24,15 @@ const Header = () => {
           </Link>
         </nav>
 
-        <SearchBar />
+        <div className={styles.rightSection}>
+          <SearchBar />
+          
+          <Link to="/login" className={styles.loginLink}>
+            Logar/Registrar
+          </Link>
+        
+        </div>
+      
       
       </header>
   );

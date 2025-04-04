@@ -47,7 +47,31 @@
   text-decoration: none;          /* Garante que links não tenham sublinhado */
   display: inline-block;           /* Permite padding e margin */
 }
-
 .link:hover {
   background-color: #c0926a;
+  transform: translateY(-1px);
+}
+
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto; /* Empurra a seção para a direita */
+  padding-right: 1rem;
+}
+
+.loginLink {
+  background-color: #c0926a;
+  color: #0c0c0c;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.loginLink:hover {
+  background-color: #c0926a;
+  transform: translateY(-1px);
 }
