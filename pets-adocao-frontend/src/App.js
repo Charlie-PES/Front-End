@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import Home from './pages/Home';
 import Adotar from './pages/Adotar';
 import Sobre from './pages/Sobre';
+import Cadastro from './pages/Cadastro';
 import './App.css';
 
 function App() {
@@ -16,8 +17,9 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/adotar" element={<Adotar />} />
                     <Route path="/sobre" element={<Sobre />} />
+                    <Route path="/cadastro" element={<Cadastro />} />
                 </Routes>
-                <Footer />  {}
+                <Footer />
             </div>
         </Router>
     );

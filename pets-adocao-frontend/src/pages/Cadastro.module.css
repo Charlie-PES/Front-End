@@ -1,0 +1,80 @@
+.cadastroContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0e1d2;
+}
+
+.cadastroForm {
+    background-color: #ffd6a5;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.userIcon {
+    display: block;
+    margin: 0 auto 10px;
+    color: #f77f00;
+}
+
+h1 {
+    text-align: center;
+    color: #d62828;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-top: 10px;
+    display: block;
+    color: #6d6875;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.checkboxContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.registerButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #d62828;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.registerButton:hover {
+    background-color: #9d0208;
+}
+
+.googleButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #f77f00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.googleButton:hover {
+    background-color: #e85d04;
+}
