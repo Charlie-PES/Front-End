@@ -15,9 +15,9 @@ const SearchBar = ({ className = '' }) => {
   };
 
   return (
-    <form 
-      onSubmit={handleSubmit} 
-      className={`${styles.searchForm} ${className}`} 
+    <form
+      onSubmit={handleSubmit}
+      className={`${styles.searchForm} ${className}`}
     >
       <input
         type="text"

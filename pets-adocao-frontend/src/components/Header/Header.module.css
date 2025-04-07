@@ -4,16 +4,16 @@
   padding: 0;                  /* Remove padding padrão */
   display: flex;               /* Flexbox para alinhar itens */
   align-items: center;         /* Centraliza verticalmente */
-  
+
   /* deixa no cabeçalho */
-  position: fixed;          
-  top: 0;                   
-  left: 0;                  
-  width: 100vw;             
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+
   box-sizing: border-box;   /* Considera padding no cálculo da largura */
   z-index: 1000;            /* Garante que fique acima de outros elementos */
-  
+
 }
 
 .logoContainer {
