@@ -1,114 +1,249 @@
 .homeContainer {
     font-family: Arial, sans-serif;
     padding-bottom: 100px;
-}
-
-/* Banner */
-.banner {
+  }
+  
+  /* Banner */
+  .banner {
     display: flex;
     justify-content: space-between;
     background-color: #fcd1a7;
     padding: 40px;
     align-items: center;
-}
-.bannerText h1 {
-    font-size: 36px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bannerText h1 {
+    font-size: 110px;
     margin-bottom: 10px;
-}
-.bannerText p {
-    font-size: 18px;
-}
-.adoptButton {
+    margin-left: 90px;
+    color: #333;
+  }
+  
+  .bannerText p {
+    font-size: 28px;
+    color: #555;
+    margin-bottom: 15px;
+    margin-left: 90px;
+  }
+  
+  .adoptButton {
     background-color: #ff914d;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     color: white;
+    font-size: 20px;
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-}
-.bannerImage {
-    max-height: 200px;
     border-radius: 10px;
+    transition: background-color 0.3s ease;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    margin-left: 90px;
 }
-
-/* Categorias */
-.categories {
+  
+  .adoptButton:hover {
+    background-color: #e6762e;
+  }
+  
+  .bannerImage {
+    max-height: 250px;
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    margin-right: 250px;
+}
+  
+  /* Categorias */
+  .categories {
     display: flex;
     justify-content: space-around;
     background-color: #f4a261;
-    padding: 20px 0;
+    padding: 25px 0;
     text-align: center;
-}
-.category img {
+    gap: 5px;
+  }
+  
+  .categoryCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .categoryCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .categoryCard img {
     border-radius: 50%;
-    height: 80px;
-    width: 80px;
+    height: 90px;
+    width: 90px;
     object-fit: cover;
-}
-.category p {
-    margin-top: 8px;
+    border: 3px solid white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .categoryCard p {
+    margin-top: 10px;
     font-weight: bold;
-}
-
-/* Pets para adoção */
-.adocao {
-    padding: 40px 20px;
+    color: white;
+    font-size: 15px;
+  }
+  
+  /* Pets para adoção */
+  .petsSection {
+    padding: 50px 50px;
     text-align: center;
-}
-.petCards {
+    background-color: #fff9f3;
+  }
+  
+  .petsSection h2 {
+    font-size: 52px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .petsSection small {
+    color: #888;
+    font-size: 20px;
+  }
+  
+  .petCards {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 50px;
     margin-top: 30px;
-}
-.petCard {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 200px;
-    padding: 10px;
-}
-.petCard img {
-    width: 100%;
-    height: 150px;
+    flex-wrap: wrap;
+  }
+  
+  .petCard {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 220px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .petCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .petCard img {
+    width: 120%;
+    height: 180px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
-.adoteBtn {
+  
+  .petCard h3 {
+    margin-top: 12px;
+    font-size: 25px;
+    color: #333;
+  }
+  
+  .petCard p {
+    font-size: 15px;
+    color: #555;
+    margin-top: 6px;
+  }
+  
+  .adotarBtn {
     background-color: #f77f00;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 12px;
     cursor: pointer;
-}
-
-/* Passos */
-.steps {
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .adotarBtn:hover {
+    background-color: #dd6f00;
+  }
+  
+  /* Passos para adoção */
+  .stepsSection {
     background-color: #fff3e0;
-    padding: 40px 20px;
+    padding: 50px 20px;
     text-align: center;
-}
-.stepsContainer {
+  }
+  
+  .stepsSection h2 {
+    font-size: 38px;
+    color: #333;
+  }
+  
+  .stepsSection p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .steps {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
-}
-.stepsContainer img {
+    gap: 50px;
+    flex-wrap: wrap;
+  }
+  
+  .stepCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 150px;
+    padding: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .stepCard img {
     width: 100px;
     height: 100px;
     border-radius: 10px;
     object-fit: cover;
-}
-.adoptNowBtn {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stepCard p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .stepCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .adoptNowBtn {
     background-color: #ff914d;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     color: white;
-    margin-top: 20px;
+    margin-top: 30px;
     cursor: pointer;
     font-weight: bold;
-    border-radius: 5px;
-}
+    font-size: 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .adoptNowBtn:hover {
+    background-color: #e6762e;
+  }
+  
