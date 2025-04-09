@@ -1,5 +1,8 @@
 import React from 'react';
 import styles from './Home.module.css';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const Home = () => {
   const pets = [
@@ -18,13 +21,32 @@ const Home = () => {
       desc: 'Super carente, simples, ama passeios e queijo',
       img: '/images/dog3.png',
     },
+    {
+      nome: 'Luna',
+      desc: 'Brincalhona e adora correr',
+      img: '/images/dog4.png',
+    },
   ];
 
   const steps = [
     { texto: 'Escolha um animalzinho', img: '/images/dog5.png' },
     { texto: 'Adote ele', img: '/images/dog6.png' },
-    { texto: 'Deixam amigos para sempre', img: '/images/dog7.png' },
+    { texto: 'Sejam amigos para sempre', img: '/images/dog7.png' },
   ];
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    speed: 600,
+    autoplaySpeed: 3000,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 768, settings: { slidesToShow: 1 } }
+    ]
+  };
 
   return (
     <div className={styles.homeContainer}>
@@ -34,7 +56,7 @@ const Home = () => {
         <div className={styles.bannerText}>
           <h1>Seja bem-vindo!</h1>
           <p>Adote doguinhos e gatinhos</p>
-          <button className={styles.adoptButton}>Adote agora</button>
+          <a href="#pets" className={styles.adoptButton}>Ver pets</a>
         </div>
         <img src="/images/logo.png" alt="Dog Banner" className={styles.bannerImage} />
       </section>
@@ -55,20 +77,22 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Pets para adoção */}
-      <section className={styles.petsSection}>
+      {/* Pets para adoção com carrossel */}
+      <section id="pets" className={styles.petsSection}>
         <h2>Pets para adoção</h2>
-        <small>Olhe nossos amiguinhos</small>
+        <small>Conheça nossos amiguinhos</small>
 
-        <div className={styles.petCards}>
-          {pets.map((pet, i) => (
-            <div key={i} className={styles.petCard}>
-              <img src={pet.img} alt={pet.nome} />
-              <h3>{pet.nome}</h3>
-              <p>{pet.desc}</p>
-              <button className={styles.adotarBtn}>ME ADOTE</button>
-            </div>
-          ))}
+        <div className={styles.sliderContainer}>
+          <Slider {...sliderSettings}>
+            {pets.map((pet, i) => (
+              <div key={i} className={styles.petCard}>
+                <img src={pet.img} alt={pet.nome} />
+                <h3>{pet.nome}</h3>
+                <p>{pet.desc}</p>
+                <button className={styles.adotarBtn}>ME ADOTE</button>
+              </div>
+            ))}
+          </Slider>
         </div>
       </section>
 
@@ -86,7 +110,7 @@ const Home = () => {
           ))}
         </div>
 
-        <button className={styles.adoptNowBtn}>ADOTE AGORA</button>
+        <a href="#pets" className={styles.adoptNowBtn}>Ver pets disponíveis</a>
       </section>
 
     </div>
