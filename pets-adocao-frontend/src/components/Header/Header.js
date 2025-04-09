@@ -28,7 +28,7 @@ const Header = () => {
         <div className={styles.rightSection}>
           <SearchBar />
           
-          <Link to="/login" className={styles.loginLink}>
+          <Link to="/cadastro" className={styles.loginLink}>
             Logar/Registrar
           </Link>
         
