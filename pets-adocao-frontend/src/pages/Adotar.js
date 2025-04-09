@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Adotar.module.css';
 
 const Adotar = () => {
@@ -16,7 +17,6 @@ const Adotar = () => {
     { id: 5, nome: 'Black Tea', imagem: '/images/pet5.jpg' },
     { id: 6, nome: 'Green Jasmine Tea', imagem: '/images/pet6.jpg' },
     { id: 7, nome: 'Christmas Rooibos', imagem: '/images/pet7.jpg' },
-    // ... repita ou gere dinamicamente mais pets se quiser
   ];
 
   const toggleSexo = (valor) => {
@@ -70,7 +70,9 @@ const Adotar = () => {
           <div key={pet.id} className={styles.petCard}>
             <img src={pet.imagem} alt={pet.nome} />
             <h3>{pet.nome}</h3>
-            <button className={styles.adotarBtn}>ME ADOTE</button>
+            <Link to={`/match/${pet.id}`}>
+                <button className={styles.adotarBtn}>ME ADOTE</button>
+            </Link>
           </div>
         ))}
       </main>

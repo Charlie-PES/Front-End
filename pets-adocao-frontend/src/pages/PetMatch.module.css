@@ -1,0 +1,20 @@
+.matchContainer {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .goButton {
+    margin-top: 2rem;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .petBox img {
+    border-radius: 10px;
+  }
+  

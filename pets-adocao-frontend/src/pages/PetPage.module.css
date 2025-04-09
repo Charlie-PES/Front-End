@@ -1,0 +1,104 @@
+.container {
+    padding: 30px;
+    font-family: Arial, sans-serif;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.petImage {
+    max-width: 250px;
+    border-radius: 10px;
+}
+
+.info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section {
+    background-color: #fff7f0;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.historico {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.compatibilidade {
+    flex: 1;
+    min-width: 220px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.barra {
+    background-color: #d6f0d6;
+    height: 25px;
+    border-radius: 20px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.preenchido {
+    background-color: #84d887;
+    height: 100%;
+    line-height: 25px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.adotarBtn {
+    background-color: #dba87c;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Outros pets */
+.outros {
+    margin-top: 50px;
+}
+
+.outros h3 {
+    margin-bottom: 20px;
+}
+
+.outrosGrid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.outroCard {
+    width: 150px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.outroImagem {
+    width: 100%;
+    height: 100px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
