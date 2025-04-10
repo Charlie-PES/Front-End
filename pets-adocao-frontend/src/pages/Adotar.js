@@ -31,17 +31,27 @@ const Adotar = () => {
   return (
     <div className={styles.adotarContainer}>
       <aside className={styles.sidebar}>
-        <h2>Filter</h2>
-        <select>
-          <option>Comportamento</option>
-        </select>
-        <select>
-          <option>Tamanho</option>
-        </select>
-        <select>
-          <option>Strength</option>
-        </select>
-        <div className={styles.checkboxGroup}>
+        <h2>Filtrar</h2>
+
+        <div className={styles.filterGroup}>
+          <label>Comportamento</label>
+          <select>
+            <option>Brincalhão</option>
+            <option>Calmo</option>
+            <option>Protetor</option>
+          </select>
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label>Porte</label>
+          <select>
+            <option>Pequeno</option>
+            <option>Médio</option>
+            <option>Grande</option>
+          </select>
+        </div>
+
+        <div className={styles.filterGroup}>
           <label>Sexo</label>
           <label>
             <input
@@ -60,9 +70,14 @@ const Adotar = () => {
             Macho
           </label>
         </div>
-        <select>
-          <option>...</option>
-        </select>
+
+        <div className={styles.filterGroup}>
+          <label>Necessidades especiais</label>
+          <select>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </div>
       </aside>
 
       <main className={styles.petsGrid}>
@@ -71,7 +86,7 @@ const Adotar = () => {
             <img src={pet.imagem} alt={pet.nome} />
             <h3>{pet.nome}</h3>
             <Link to={`/match/${pet.id}`}>
-                <button className={styles.adotarBtn}>ME ADOTE</button>
+              <button className={styles.adotarBtn}>ME ADOTE</button>
             </Link>
           </div>
         ))}
