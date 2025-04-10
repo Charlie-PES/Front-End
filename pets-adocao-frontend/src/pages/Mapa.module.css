@@ -1,0 +1,27 @@
+.mapaContainer {
+    padding: 30px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    background-color: #fffaf4;
+  }
+  
+  .map {
+    height: 500px;
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

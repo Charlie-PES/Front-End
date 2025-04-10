@@ -1,20 +1,144 @@
 .matchContainer {
-    padding: 2rem;
-    text-align: center;
+  padding: 2rem;
+  text-align: center;
+  background-color: #fdfdfd;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 0.6s ease;
+}
+
+.matchContainer h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.matchBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.petInfo {
+  flex: 1;
+  min-width: 280px;
+  max-width: 320px;
+}
+
+.petCard {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
+}
+
+.petCard img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.detailTitle {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+.parametros {
+  flex: 2;
+  min-width: 300px;
+}
+
+.parametroRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.sideIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  background: white;
+}
+
+.parametroBar {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.parametroBar:hover {
+  transform: scale(1.02);
+}
+
+.goButton {
+  margin-top: 2.5rem;
+  padding: 14px 26px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.goButton:hover {
+  background-color: #449d48;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
   }
-  
-  .goButton {
-    margin-top: 2rem;
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .petBox img {
-    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .matchBox {
+    flex-direction: column;
+    align-items: center;
   }
-  
+
+  .parametroRow {
+    flex-direction: column;
+  }
+
+  .parametroBar {
+    width: 100%;
+  }
+}

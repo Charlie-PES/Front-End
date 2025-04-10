@@ -23,6 +23,10 @@ const Header = () => {
           <Link to="/sobre" className={styles.link}>
             Sobre
           </Link>
+
+          <Link to="/mapa" className={styles.link}>
+          Mapa
+          </Link>
         </nav>
 
         <div className={styles.rightSection}>

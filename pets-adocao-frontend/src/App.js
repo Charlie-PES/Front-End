@@ -8,6 +8,7 @@ import Sobre from './pages/Sobre';
 import Cadastro from './pages/Cadastro';
 import PetMatch from './pages/PetMatch';
 import PetPage from './pages/PetPage';
+import Mapa from './pages/Mapa';
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/match/:id" element={<PetMatch />} />
                         <Route path="/pet/:id" element={<PetPage />} />
+                        <Route path="/mapa" element={<Mapa />} />
                     </Routes>
                 </main>
 
