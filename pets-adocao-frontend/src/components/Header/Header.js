@@ -27,6 +27,10 @@ const Header = () => {
           <Link to="/mapa" className={styles.link}>
           Mapa
           </Link>
+          
+          <Link to="/perfil" className={styles.link}>
+          Perfil
+          </Link>
         </nav>
 
         <div className={styles.rightSection}>
