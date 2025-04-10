@@ -10,6 +10,7 @@ import PetMatch from './pages/PetMatch';
 import PetPage from './pages/PetPage';
 import Mapa from './pages/Mapa';
 import Perfil from './pages/Perfil';
+import Acompanhamento from './pages/Acompanhamento';
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                         <Route path="/pet/:id" element={<PetPage />} />
                         <Route path="/mapa" element={<Mapa />} />
                         <Route path="/perfil" element={<Perfil />} />
+                        <Route path="/acompanhamento" element={<Acompanhamento />} />
                     </Routes>
                 </main>
 

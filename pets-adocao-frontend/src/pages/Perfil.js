@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Perfil.module.css';
 import { FaUserEdit, FaPlusCircle, FaPaw, FaHeart, FaHistory, FaSignOutAlt } from 'react-icons/fa';
 
@@ -28,9 +29,9 @@ const Perfil = () => {
           <button className={styles.actionButton}>
             <FaPlusCircle /> Cadastrar Pet
           </button>
-          <button className={styles.actionButton}>
+          <Link to="/acompanhamento" className={styles.actionButton}>
             <FaPaw /> Acompanhamento Pós-Adoção
-          </button>
+          </Link>
           <button className={styles.actionButton}>
             <FaHistory /> Histórico de Adoções
           </button>
