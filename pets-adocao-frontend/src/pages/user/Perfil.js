@@ -23,9 +23,9 @@ const Perfil = () => {
         </div>
 
         <div className={styles.actions}>
-          <button className={styles.actionButton}>
+          <Link to="/editar-perfil" className={styles.actionButton}>
             <FaUserEdit /> Editar Perfil
-          </button>
+          </Link>
           <Link to="/cadastro-pet" className={styles.actionButton}>
             <FaPlusCircle /> Cadastrar Pet
           </Link>

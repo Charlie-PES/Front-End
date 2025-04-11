@@ -11,7 +11,8 @@ import PetPage from './pages/pet/PetPage';
 import Mapa from './pages/info/Mapa';
 import Perfil from './pages/user/Perfil';
 import Acompanhamento from './pages/user/Acompanhamento';
-import CadastroPet from './pages/CadastroPet'; // ajuste o caminho se necessário
+import CadastroPet from './pages/user/CadastroPet';
+import EditarPerfil from './pages/user/EditarPerfil';
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                         <Route path="/perfil" element={<Perfil />} />
                         <Route path="/acompanhamento" element={<Acompanhamento />} />
                         <Route path="/cadastro-pet" element={<CadastroPet />} />
+                        <Route path="/editar-perfil" element={<EditarPerfil />} />
                     </Routes>
                 </main>
 
