@@ -15,6 +15,11 @@ import CadastroPet from './pages/user/CadastroPet';
 import EditarPerfil from './pages/user/EditarPerfil';
 import HistoricoAdocao from './pages/user/HistoricoAdocao';
 import PetsFavoritos from './pages/user/PetsFavoritos';
+import Faq from './pages/info/Faq';
+import ServicoConsumidor from './pages/info/ServicoConsumidor';
+import ContateNos from './pages/info/ContateNos';
+import PoliticaPrivacidade from './pages/info/PoliticaPrivacidade';
+import Inscricoes from './pages/info/Inscricoes';
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
@@ -38,6 +43,11 @@ function App() {
                         <Route path="/editar-perfil" element={<EditarPerfil />} />
                         <Route path="/historico-adocao" element={<HistoricoAdocao />} />
                         <Route path="/favoritos" element={<PetsFavoritos />} />
+                        <Route path="/faq" element={<Faq />} />
+                        <Route path="/servico-consumidor" element={<ServicoConsumidor />} />
+                        <Route path="/contato" element={<ContateNos />} />
+                        <Route path="/privacidade" element={<PoliticaPrivacidade />} />
+                        <Route path="/inscricoes" element={<Inscricoes />} />
                     </Routes>
                 </main>
 

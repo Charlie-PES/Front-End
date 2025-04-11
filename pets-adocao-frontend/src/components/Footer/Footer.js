@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.css';
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { Link } from 'react-router-dom'; // import necessário
 
 const Footer = () => {
   return (
@@ -12,24 +13,30 @@ const Footer = () => {
       </div>
 
       <div className={styles.center}>
-       
         <div className={styles.links}>
-          
           <div>
             <h4>Ajuda</h4>
-            <p>FAQ</p>
-            <p>Serviço ao consumidor</p>
-            <p>Contate nós</p>
+            <Link to="/faq">
+              FAQ
+            </Link>
+            <Link to="/servico-consumidor">
+              Serviço ao consumidor
+            </Link>
+            <Link to="/contato">
+              Contate nós
+            </Link>
           </div>
           
           <div>
             <h4>Outros</h4>
-            <p>Política de privacidade</p>
-            <p>Inscrições</p>
+            <Link to="/privacidade">
+              Política de privacidade
+            </Link>
+            <Link to="/inscricoes">
+              Inscrições
+            </Link>
           </div>
-        
         </div>
-      
       </div>
 
       <div className={styles.right}>
