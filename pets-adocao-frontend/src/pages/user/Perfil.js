@@ -32,15 +32,15 @@ const Perfil = () => {
           <Link to="/acompanhamento" className={styles.actionButton}>
             <FaPaw /> Acompanhamento Pós-Adoção
           </Link>
-          <button className={styles.actionButton}>
+          <Link to="/historico-adocao" className={styles.actionButton}>
             <FaHistory /> Histórico de Adoções
-          </button>
-          <button className={styles.actionButton}>
-            <FaHeart /> Pets Favoritados
-          </button>
-          <button className={`${styles.actionButton} ${styles.logout}`}>
-            <FaSignOutAlt /> Sair da Conta
-          </button>
+          </Link>
+          <Link to="/favoritos" className={styles.actionButton}>
+            <FaHeart /> Pets Favoritos
+          </Link>
+          <Link to="/cadastro" className={styles.actionButton}>
+            <FaHeart /> Sair
+          </Link>
         </div>
       </div>
     </div>
