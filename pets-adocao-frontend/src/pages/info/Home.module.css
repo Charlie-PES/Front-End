@@ -1,5 +1,8 @@
 /* Container principal da Home */
 .homeContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
   font-family: Arial, sans-serif;
   padding-bottom: 100px;
   animation: fadeIn 0.5s ease-in-out;
@@ -8,50 +11,68 @@
 /* =========================
     BANNER PRINCIPAL
 ========================= */
-
 .banner {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: #fcd1a7;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  flex-wrap: wrap; /* Responsivo */
+  justify-content: space-between;
+  padding: 40px 0;
+  margin-bottom: 40px;
 }
-
+.bannerText {
+  flex: 1;
+  padding-right: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .bannerText h1 {
-  font-size: 4rem;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
   color: #333;
+  margin-bottom: 20px;
+  text-align: center;
 }
-
 .bannerText p {
-  font-size: 1.6rem;
-  color: #555;
-  margin-bottom: 15px;
-}
-
-.adoptButton {
-  background-color: #ff914d;
-  border: none;
-  padding: 14px 28px;
-  color: white;
   font-size: 1.2rem;
-  cursor: pointer;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
+  color: #666;
+  margin-bottom: 30px;
+  text-align: center;
+  max-width: 600px;
+}
+.bannerButtons {
+  display: flex;
+  gap: 20px;
 }
 
-.adoptButton:hover {
-  background-color: #e6762e;
+.adoptButton, .mapButton {
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+.adoptButton {
+  background-color: #dca879;
+  color: white;
+}
+.mapButton {
+  background-color: #dca879;
+  color: white;
+}
+
+
+
+.adoptButton:hover, .mapButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .bannerImage {
-  max-height: 250px;
-  border-radius: 20px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-  margin-top: 20px;
+  max-width: 400px;
+  height: auto;
 }
 
 /* =========================
@@ -61,38 +82,41 @@
 .categories {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  padding: 30px 20px;
-  background-color: #f4a261;
-  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
 .categoryCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s ease;
+  background: none;
+  border: none;
   cursor: pointer;
+  padding: 15px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
 .categoryCard:hover {
   transform: translateY(-5px);
 }
 
+.categoryCard.active {
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 .categoryCard img {
-  border-radius: 50%;
-  height: 90px;
-  width: 90px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border: 3px solid white;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  margin-bottom: 10px;
 }
 
 .categoryCard p {
-  margin-top: 10px;
+  margin: 0;
   font-weight: bold;
-  color: white;
-  font-size: 1rem;
+  color: #333;
 }
 
 /* =========================
@@ -100,78 +124,82 @@
 ========================= */
 
 .petsSection {
-  padding: 60px 20px;
-  background-color: #fff9f3;
+  margin-bottom: 60px;
+}
+
+.sectionDescription {
+  color: #666;
+  margin-bottom: 30px;
   text-align: center;
 }
 
-.petsSection h2 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.petsSection small {
-  color: #888;
-  font-size: 1.2rem;
-}
-
-.petCards {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 30px;
-  flex-wrap: wrap;
+.sliderContainer {
+  padding: 20px 0;
 }
 
 .petCard {
-  background-color: #fff;
-  border-radius: 16px;
-  width: 240px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 10px;
+  transition: all 0.3s ease;
 }
 
 .petCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
 .petCard img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 12px;
 }
 
-.petCard h3 {
-  margin-top: 15px;
-  font-size: 1.3rem;
+.petInfo {
+  padding: 20px;
+}
+.petInfo h3 {
+  margin: 0 0 10px 0;
   color: #333;
 }
 
-.petCard p {
-  font-size: 1rem;
-  color: #555;
-  margin-top: 8px;
+.petDesc {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.petDetails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.petDetails span {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .adotarBtn {
-  background-color: #f77f00;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #dca879;
   color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  margin-top: 12px;
-  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
   font-weight: bold;
   transition: background-color 0.3s ease;
 }
 
 .adotarBtn:hover {
-  background-color: #dd6f00;
+  background-color: #bb8e68;
 }
 
 /* =========================
@@ -179,72 +207,78 @@
 ========================= */
 
 .stepsSection {
-  background-color: #fff3e0;
-  padding: 60px 20px;
   text-align: center;
-}
-
-.stepsSection h2 {
-  font-size: 2.5rem;
-  color: #333;
-}
-
-.stepsSection p {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 30px;
+  padding: 40px 0;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  margin-bottom: 40px;
 }
 
 .steps {
   display: flex;
   justify-content: center;
-  gap: 50px;
-  flex-wrap: wrap;
+  gap: 30px;
+  margin: 40px 0;
 }
 
 .stepCard {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.stepNumber {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  background-color: #dca879;
+  color: white;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  max-width: 180px;
-  padding: 10px;
-  transition: transform 0.3s ease;
+  justify-content: center;
+  font-weight: bold;
 }
 
 .stepCard img {
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
+  width: 100%;
+  height: 150px;
   object-fit: cover;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.stepCard h3 {
+  margin: 0 0 10px 0;
+  color: #333;
 }
 
 .stepCard p {
-  margin-top: 10px;
-  font-size: 1rem;
-  color: #333;
-  font-weight: 500;
-}
-
-.stepCard:hover {
-  transform: translateY(-5px);
+  color: #666;
+  margin: 0;
 }
 
 .adoptNowBtn {
-  background-color: #ff914d;
-  border: none;
-  padding: 14px 28px;
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: #dca879;
   color: white;
-  margin-top: 30px;
-  cursor: pointer;
+  text-decoration: none;
+  border-radius: 25px;
   font-weight: bold;
-  font-size: 1.2rem;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .adoptNowBtn:hover {
-  background-color: #e6762e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 /* =========================
@@ -272,41 +306,29 @@
     text-align: center;
   }
 
-  .bannerText h1 {
-    font-size: 2.5rem;
+  .bannerText {
+    padding-right: 0;
+    margin-bottom: 30px;
   }
 
-  .bannerText p {
-    font-size: 1.2rem;
+  .bannerButtons {
+    justify-content: center;
   }
 
-  .adoptButton {
-    margin: 20px 0;
+  .categories {
+    flex-wrap: wrap;
   }
 
-  .bannerImage {
-    margin: 20px 0 0;
-    max-width: 100%;
-  }
-
-  .petCard {
-    width: 90%;
+  .categoryCard {
+    flex: 1 1 calc(50% - 20px);
   }
 
   .steps {
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
   }
 
   .stepCard {
-    max-width: 120px;
-  }
-
-  .categoryCard img {
-    height: 70px;
-    width: 70px;
-  }
-
-  .categoryCard p {
-    font-size: 0.9rem;
+    max-width: 100%;
   }
 }
