@@ -26,9 +26,9 @@ const Perfil = () => {
           <button className={styles.actionButton}>
             <FaUserEdit /> Editar Perfil
           </button>
-          <button className={styles.actionButton}>
+          <Link to="/cadastro-pet" className={styles.actionButton}>
             <FaPlusCircle /> Cadastrar Pet
-          </button>
+          </Link>
           <Link to="/acompanhamento" className={styles.actionButton}>
             <FaPaw /> Acompanhamento Pós-Adoção
           </Link>
