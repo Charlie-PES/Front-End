@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Cadastro.module.css';
 import { FaUserCircle } from 'react-icons/fa';
-import { auth, googleProvider, signInWithPopup } from '../firebase.js'; // ajuste o caminho conforme seu projeto
+import { auth, googleProvider, signInWithPopup } from '../../firebase.js'; // ajuste o caminho conforme seu projeto
 
 const Cadastro = () => {
   const [formData, setFormData] = useState({

@@ -2,15 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Home from './pages/Home';
-import Adotar from './pages/Adotar';
-import Sobre from './pages/Sobre';
-import Cadastro from './pages/Cadastro';
-import PetMatch from './pages/PetMatch';
-import PetPage from './pages/PetPage';
-import Mapa from './pages/Mapa';
-import Perfil from './pages/Perfil';
-import Acompanhamento from './pages/Acompanhamento';
+import Home from './pages/info/Home';
+import Adotar from './pages/pet/Adotar';
+import Sobre from './pages/info/Sobre';
+import Cadastro from './pages/auth/Cadastro';
+import PetMatch from './pages/pet/PetMatch';
+import PetPage from './pages/pet/PetPage';
+import Mapa from './pages/info/Mapa';
+import Perfil from './pages/user/Perfil';
+import Acompanhamento from './pages/user/Acompanhamento';
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
