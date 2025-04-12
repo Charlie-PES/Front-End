@@ -1,0 +1,83 @@
+/* Feed.module.css */
+
+.feedContainer {
+    padding: 40px 20px;
+    background-color: var(--bg-color, #fffaf4);
+    color: var(--text-color, #333);
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .title {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--primary-color, #2e7d7b);
+  }
+  
+  .postList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .postCard {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+  }
+  
+  .postCard:hover {
+    transform: translateY(-4px);
+  }
+  
+  .postHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #444;
+  }
+  
+  .postCard p {
+    font-size: 1.05rem;
+    color: #555;
+    margin-bottom: 12px;
+  }
+  
+  .postImage {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    max-height: 400px;
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .title {
+      font-size: 1.7rem;
+    }
+  
+    .postCard {
+      padding: 16px;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

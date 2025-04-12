@@ -20,6 +20,7 @@ import ServicoConsumidor from './pages/info/ServicoConsumidor';
 import ContateNos from './pages/info/ContateNos';
 import PoliticaPrivacidade from './pages/info/PoliticaPrivacidade';
 import Inscricoes from './pages/info/Inscricoes';
+import Feed from './pages/info/Feed'; // ajuste o caminho se necessário
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
                         <Route path="/contato" element={<ContateNos />} />
                         <Route path="/privacidade" element={<PoliticaPrivacidade />} />
                         <Route path="/inscricoes" element={<Inscricoes />} />
+                        <Route path="/feed" element={<Feed />} />
                     </Routes>
                 </main>
 

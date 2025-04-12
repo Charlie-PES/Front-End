@@ -30,6 +30,11 @@ const Header = () => {
         <Link to="/perfil" className={styles.link}>
           Perfil
         </Link>
+
+        <Link to="/feed" className={styles.link}>
+          Feed
+        </Link>
+
       </nav>
 
       <div className={styles.rightSection}>

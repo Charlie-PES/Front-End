@@ -50,88 +50,101 @@ const Mapa = () => {
   );
 
   const MapClickHandler = () => {
-    useMapEvents({
-      click: handleMapClick,
-    });
+    useMapEvents({ click: handleMapClick });
     return null;
   };
 
   return (
-    <div className={styles.page}>
-      <div className={styles.sidebar}>
-        <h2>Escolha um local de adoção</h2>
-        <p>Muitos pets estão esperando por você! 🐾</p>
+    <div className={styles.mapaContainer}>
+      <h2 className={styles.mapaHeader}>📍 Encontre uma ONG ou Abrigo</h2>
 
-        <input
-          type="text"
-          placeholder="Buscar por nome"
-          value={filtros.nome}
-          onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Cidade"
-          value={filtros.cidade}
-          onChange={(e) => setFiltros({ ...filtros, cidade: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Estado"
-          value={filtros.estado}
-          onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Bairro"
-          value={filtros.bairro}
-          onChange={(e) => setFiltros({ ...filtros, bairro: e.target.value })}
-        />
-      </div>
-
-      <div className={styles.mapArea}>
-        <MapContainer center={[-30.0331, -51.23]} zoom={13} className={styles.map}>
-          <TileLayer
-            attribution='&copy; <a href="https://openstreetmap.org">OpenStreetMap</a>'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <MapClickHandler />
-
-          {filteredLocais.map((local, i) => (
-            <Marker key={i} position={local.posicao}>
-              <Popup>
-                <strong>{local.nome}</strong><br />
-                {local.descricao}
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
-
-        <button
-          className={styles.addButton}
-          onClick={() => setFormVisivel(!formVisivel)}
-          title="Adicionar nova ONG ou Abrigo"
-        >
-          +
-        </button>
-
-        {formVisivel && (
-          <form className={styles.formulario} onSubmit={handleSubmit}>
+      <div className={styles.mapaLayout}>
+        {/* Filtros */}
+        <div className={styles.sidebarContainer}>
+          <div className={styles.sidebar}>
+            <h2>Filtros</h2>
+            <p>Busque locais para adoção na sua região</p>
             <input
               type="text"
-              placeholder="Nome da ONG/Abrigo"
-              value={novoLocal.nome}
-              onChange={(e) => setNovoLocal({ ...novoLocal, nome: e.target.value })}
-              required
+              placeholder="Buscar por nome"
+              value={filtros.nome}
+              onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
             />
-            <textarea
-              placeholder="Descrição"
-              value={novoLocal.descricao}
-              onChange={(e) => setNovoLocal({ ...novoLocal, descricao: e.target.value })}
-              required
+            <input
+              type="text"
+              placeholder="Cidade"
+              value={filtros.cidade}
+              onChange={(e) => setFiltros({ ...filtros, cidade: e.target.value })}
             />
-            <button type="submit">Adicionar</button>
-          </form>
-        )}
+            <input
+              type="text"
+              placeholder="Estado"
+              value={filtros.estado}
+              onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Bairro"
+              value={filtros.bairro}
+              onChange={(e) => setFiltros({ ...filtros, bairro: e.target.value })}
+            />
+          </div>
+        </div>
+
+        {/* Mapa */}
+        <div className={styles.mapContainer}>
+          <div className={styles.mapArea}>
+            <MapContainer
+              center={[-30.0331, -51.23]}
+              zoom={13}
+              scrollWheelZoom={true}
+              className={styles.map}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://openstreetmap.org">OpenStreetMap</a>'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <MapClickHandler />
+              {filteredLocais.map((local, i) => (
+                <Marker key={i} position={local.posicao}>
+                  <Popup>
+                    <strong>{local.nome}</strong><br />
+                    {local.descricao}
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+
+            {/* Botão flutuante */}
+            <button
+              className={styles.addButton}
+              onClick={() => setFormVisivel(!formVisivel)}
+              title="Adicionar nova ONG ou Abrigo"
+            >
+              +
+            </button>
+
+            {/* Formulário flutuante */}
+            {formVisivel && (
+              <form className={styles.formulario} onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="Nome da ONG/Abrigo"
+                  value={novoLocal.nome}
+                  onChange={(e) => setNovoLocal({ ...novoLocal, nome: e.target.value })}
+                  required
+                />
+                <textarea
+                  placeholder="Descrição"
+                  value={novoLocal.descricao}
+                  onChange={(e) => setNovoLocal({ ...novoLocal, descricao: e.target.value })}
+                  required
+                />
+                <button type="submit">Adicionar</button>
+              </form>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
