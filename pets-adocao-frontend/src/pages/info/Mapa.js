@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import OverlayInfo from './OverlayInfo';
+import NovoLocalOverlay from './NovoLocalOverlay';
 
 // Corrige ícones padrão do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -29,22 +30,25 @@ const locaisIniciais = [
 const Mapa = () => {
   const [locais, setLocais] = useState(locaisIniciais);
   const [novoLocal, setNovoLocal] = useState({ nome: '', descricao: '', posicao: null });
-  const [formVisivel, setFormVisivel] = useState(false);
   const [filtros, setFiltros] = useState({ cidade: '', estado: '', bairro: '', nome: '' });
   const [ongSelecionada, setOngSelecionada] = useState(null);
+  const [overlayNovoLocal, setOverlayNovoLocal] = useState(false);
 
   const handleMapClick = (e) => {
     setNovoLocal({ ...novoLocal, posicao: [e.latlng.lat, e.latlng.lng] });
-    setFormVisivel(true);
+    setOverlayNovoLocal(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleAddNovoLocal = () => {
     if (novoLocal.nome && novoLocal.descricao && novoLocal.posicao) {
       setLocais([...locais, novoLocal]);
+      setOverlayNovoLocal(false);
       setNovoLocal({ nome: '', descricao: '', posicao: null });
-      setFormVisivel(false);
     }
+  };
+
+  const handleInputChange = (field, value) => {
+    setNovoLocal((prev) => ({ ...prev, [field]: value }));
   };
 
   const filteredLocais = locais.filter((local) =>
@@ -126,31 +130,11 @@ const Mapa = () => {
             {/* Botão flutuante */}
             <button
               className={styles.addButton}
-              onClick={() => setFormVisivel(!formVisivel)}
+              onClick={() => setOverlayNovoLocal(true)}
               title="Adicionar nova ONG ou Abrigo"
             >
               +
             </button>
-
-            {/* Formulário flutuante */}
-            {formVisivel && (
-              <form className={styles.formulario} onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  placeholder="Nome da ONG/Abrigo"
-                  value={novoLocal.nome}
-                  onChange={(e) => setNovoLocal({ ...novoLocal, nome: e.target.value })}
-                  required
-                />
-                <textarea
-                  placeholder="Descrição"
-                  value={novoLocal.descricao}
-                  onChange={(e) => setNovoLocal({ ...novoLocal, descricao: e.target.value })}
-                  required
-                />
-                <button type="submit">Adicionar</button>
-              </form>
-            )}
           </div>
         </div>
       </div>
@@ -158,6 +142,19 @@ const Mapa = () => {
       {/* Overlay de informações */}
       {ongSelecionada && (
         <OverlayInfo ong={ongSelecionada} onClose={() => setOngSelecionada(null)} />
+      )}
+
+      {/* Overlay para novo local */}
+      {overlayNovoLocal && (
+        <NovoLocalOverlay
+          local={novoLocal}
+          onChange={handleInputChange}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAddNovoLocal();
+          }}
+          onClose={() => setOverlayNovoLocal(false)}
+        />
       )}
     </div>
   );
