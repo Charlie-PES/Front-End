@@ -1,0 +1,150 @@
+/* OverlayDetalhesONG.module.css */
+
+.overlayContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    max-width: 420px;
+    width: 90%;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    max-height: 90vh;
+    animation: slideUp 0.3s ease;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .coverImage {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  
+  gallery {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+  }
+  
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid #ccc;
+  }
+  
+  .nome {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #333;
+  }
+  
+  descricao {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 16px;
+  }
+  
+  .mapaPreview {
+    width: 100%;
+    height: 180px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  
+  .linkRota {
+    font-size: 0.9rem;
+    text-align: center;
+    color: #0096c7;
+    margin-bottom: 16px;
+    display: block;
+    text-decoration: none;
+  }
+  
+  .instrucoes {
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+  }
+  
+  .instrucoes h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .itensVisita {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .itemVisita {
+    flex: 1;
+    background-color: #e7f9f7;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #222;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  
+  .botaoContato {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: #38b000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .botaoContato:hover {
+    background-color: #2d9100;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  

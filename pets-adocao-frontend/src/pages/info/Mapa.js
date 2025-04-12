@@ -3,6 +3,7 @@ import styles from './Mapa.module.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import OverlayInfo from './OverlayInfo';
 
 // Corrige ícones padrão do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -30,6 +31,7 @@ const Mapa = () => {
   const [novoLocal, setNovoLocal] = useState({ nome: '', descricao: '', posicao: null });
   const [formVisivel, setFormVisivel] = useState(false);
   const [filtros, setFiltros] = useState({ cidade: '', estado: '', bairro: '', nome: '' });
+  const [ongSelecionada, setOngSelecionada] = useState(null);
 
   const handleMapClick = (e) => {
     setNovoLocal({ ...novoLocal, posicao: [e.latlng.lat, e.latlng.lng] });
@@ -106,7 +108,13 @@ const Mapa = () => {
               />
               <MapClickHandler />
               {filteredLocais.map((local, i) => (
-                <Marker key={i} position={local.posicao}>
+                <Marker
+                  key={i}
+                  position={local.posicao}
+                  eventHandlers={{
+                    click: () => setOngSelecionada(local)
+                  }}
+                >
                   <Popup>
                     <strong>{local.nome}</strong><br />
                     {local.descricao}
@@ -146,6 +154,11 @@ const Mapa = () => {
           </div>
         </div>
       </div>
+
+      {/* Overlay de informações */}
+      {ongSelecionada && (
+        <OverlayInfo ong={ongSelecionada} onClose={() => setOngSelecionada(null)} />
+      )}
     </div>
   );
 };

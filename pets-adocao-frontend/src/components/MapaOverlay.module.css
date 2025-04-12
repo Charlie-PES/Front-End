@@ -1,0 +1,107 @@
+/* MapaOverlay.module.css */
+
+.overlayContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .overlayContent {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideIn 0.3s ease-in-out;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .orgName {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2e7d7b;
+  }
+  
+  .orgDescricao {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  
+  .mapPreview {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .orgInfos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  
+  .infoBox {
+    background-color: #f0f9f8;
+    border: 1px solid #cce7e6;
+    padding: 12px 16px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+  }
+  
+  .contactButton {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    margin-top: 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contactButton:hover {
+    background-color: #27ae60;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
