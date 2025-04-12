@@ -52,23 +52,29 @@ const Adotar = () => {
         </div>
 
         <div className={styles.filterGroup}>
-          <label>Sexo</label>
-          <label>
-            <input
-              type="checkbox"
-              onChange={() => toggleSexo('Fêmea')}
-              checked={filtros.sexo.includes('Fêmea')}
-            />
-            Fêmea
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              onChange={() => toggleSexo('Macho')}
-              checked={filtros.sexo.includes('Macho')}
-            />
-            Macho
-          </label>
+          <h3 className={styles.checkboxGroupTitle}>Sexo</h3>
+          <div className={styles.checkboxGroup}>
+            <label className={styles.checkboxLabel}>
+              <input
+                type="checkbox"
+                onChange={() => toggleSexo('Fêmea')}
+                checked={filtros.sexo.includes('Fêmea')}
+                className={styles.checkboxInput}
+              />
+              <span className={styles.checkboxCustom}></span>
+              Fêmea
+            </label>
+            <label className={styles.checkboxLabel}>
+              <input
+                type="checkbox"
+                onChange={() => toggleSexo('Macho')}
+                checked={filtros.sexo.includes('Macho')}
+                className={styles.checkboxInput}
+              />
+              <span className={styles.checkboxCustom}></span>
+              Macho
+            </label>
+          </div>
         </div>
 
         <div className={styles.filterGroup}>

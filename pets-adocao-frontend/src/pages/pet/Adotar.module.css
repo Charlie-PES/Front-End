@@ -44,15 +44,60 @@
   outline: none;
 }
 
+.checkboxGroupTitle {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
 .checkboxGroup {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.5rem;
 }
 
-.checkboxGroup label {
-  font-size: 0.95rem;
-  color: #444;
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkboxCustom {
+  height: 1.2rem;
+  width: 1.2rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkboxInput:checked ~ .checkboxCustom {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.checkboxCustom:after {
+  content: "";
+  display: none;
+  width: 0.4rem;
+  height: 0.8rem;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkboxInput:checked ~ .checkboxCustom:after {
+  display: block;
 }
 
 /* =============== GRID DE PETS =============== */
@@ -134,11 +179,12 @@
     justify-content: space-between;
   }
 
-  .checkboxGroup {
-    width: 48%;
-  }
-
   .petsGrid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
+
+
+
+
+
