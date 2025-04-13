@@ -36,7 +36,7 @@
 
 .sidebar {
   padding: 30px;
-  background: linear-gradient(to bottom, #d2f4e8, #b2dfdb);
+  background: linear-gradient(to bottom, #fdaf6f, #f78e15da);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -68,7 +68,7 @@
 
 .sidebar input:focus,
 .sidebar select:focus {
-  border-color: #2e7d7b;
+  border-color: #f2c728;
   outline: none;
 }
 
@@ -101,13 +101,13 @@
   position: absolute;
   bottom: 25px;
   right: 25px;
-  background-color: #2e7d7b;
+  background-color: #ed9f20;
   color: white;
   border: none;
-  width: 55px;
-  height: 55px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  font-size: 28px;
+  font-size: 32px;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
@@ -115,7 +115,7 @@
 }
 
 .addButton:hover {
-  background-color: #1e5d5b;
+  background-color: #e16500;
   transform: scale(1.1);
 }
 
@@ -132,6 +132,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  animation: fadeInScale 0.3s ease-out;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .formulario input,
@@ -160,6 +162,35 @@
   background-color: #1e5d5b;
 }
 
+/* MARCADORES ANIMADOS */
+@keyframes dropIn {
+  0% {
+    transform: translateY(-25px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.markerAnimated {
+  animation: dropIn 0.5s ease-out;
+}
+
+/* OVERLAY SUAVE */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* RESPONSIVO */
 @media (max-width: 768px) {
   .mapaLayout {
     flex-direction: column;
@@ -186,6 +217,7 @@
   }
 }
 
+/* ANIMAÇÃO DE ENTRADA GERAL */
 @keyframes fadeIn {
   from {
     opacity: 0;

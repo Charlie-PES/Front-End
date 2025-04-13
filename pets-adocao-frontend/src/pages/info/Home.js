@@ -7,7 +7,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import { FaPaw, FaHeart, FaSearch } from 'react-icons/fa';
 
 const Home = () => {
-  
   const [activeCategory, setActiveCategory] = useState('todos');
 
   const pets = [
@@ -71,6 +70,24 @@ const Home = () => {
     },
   ];
 
+  const parceiros = [
+    '/images/parceiro1.png',
+    '/images/parceiro2.png',
+    '/images/parceiro3.png'
+  ];
+
+  const noticias = [
+    { titulo: 'Campanha de vacinação começa em maio', imagem: '/images/feed1.jpg' },
+    { titulo: 'Feira de adoção neste sábado em SP', imagem: '/images/feed2.jpg' },
+    { titulo: 'Novo abrigo inaugurado em BH', imagem: '/images/feed3.jpg' },
+  ];
+
+  const depoimentos = [
+    { nome: 'Carlos', texto: 'Adotar mudou minha vida! O Thor é incrível.', foto: '/images/avatar1.jpg' },
+    { nome: 'Juliana', texto: 'Muito obrigada por essa plataforma maravilhosa!', foto: '/images/avatar2.jpg' },
+    { nome: 'Fernanda', texto: 'Encontrei a Luna e agora somos inseparáveis.', foto: '/images/avatar3.jpg' },
+  ];
+
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -90,71 +107,49 @@ const Home = () => {
     : pets.filter(pet => pet.categoria === activeCategory);
 
   return (
-    
     <div className={styles.homeContainer}>
-      
-      {/* Banner principal */}
-      
-      <section className={styles.banner}>
-          
-          <div className={styles.bannerText}>
-              <h1>Encontre seu novo melhor amigo!</h1>
-              
-              <p>Adote um pet e mude uma vida para sempre</p>
-              
-              <div className={styles.bannerButtons}>
 
-                <Link to="/adotar" className={styles.adoptButton}>
-                  <FaHeart /> Ver pets disponíveis
-                </Link>
-                
-                <Link to="/mapa" className={styles.mapButton}>
-                  <FaSearch /> Encontrar pets próximos
-                </Link>
-              </div>
+      {/* Banner principal */}
+      <section className={styles.banner}>
+        <div className={styles.bannerText}>
+          <h1>Encontre seu novo melhor amigo!</h1>
+          <p>Adote um pet e mude uma vida para sempre</p>
+          <div className={styles.bannerButtons}>
+            <Link to="/adotar" className={styles.adoptButton}>
+              <FaHeart /> Ver pets disponíveis
+            </Link>
+            <Link to="/mapa" className={styles.mapButton}>
+              <FaSearch /> Encontrar pets próximos
+            </Link>
           </div>
-          
-          <img src="/images/logo.png" alt="Dog Banner" className={styles.bannerImage} />
-      
+        </div>
+        <img src="/images/logo.png" alt="Dog Banner" className={styles.bannerImage} />
       </section>
 
       {/* Categorias */}
       <section className={styles.categories}>
-        <button 
-          className={`${styles.categoryCard} ${activeCategory === 'todos' ? styles.active : ''}`}
-          onClick={() => setActiveCategory('todos')}
-        >
+        <button className={`${styles.categoryCard} ${activeCategory === 'todos' ? styles.active : ''}`} onClick={() => setActiveCategory('todos')}>
           <img src="/images/all.png" alt="Todos" />
           <p>Todos</p>
         </button>
-        <button 
-          className={`${styles.categoryCard} ${activeCategory === 'cachorro' ? styles.active : ''}`}
-          onClick={() => setActiveCategory('cachorro')}
-        >
+        <button className={`${styles.categoryCard} ${activeCategory === 'cachorro' ? styles.active : ''}`} onClick={() => setActiveCategory('cachorro')}>
           <img src="/images/dog1.png" alt="Cachorros" />
           <p>Cachorros</p>
         </button>
-        <button 
-          className={`${styles.categoryCard} ${activeCategory === 'gato' ? styles.active : ''}`}
-          onClick={() => setActiveCategory('gato')}
-        >
+        <button className={`${styles.categoryCard} ${activeCategory === 'gato' ? styles.active : ''}`} onClick={() => setActiveCategory('gato')}>
           <img src="/images/cat1.png" alt="Gatos" />
           <p>Gatos</p>
         </button>
-        <button 
-          className={`${styles.categoryCard} ${activeCategory === 'outros' ? styles.active : ''}`}
-          onClick={() => setActiveCategory('outros')}
-        >
+        <button className={`${styles.categoryCard} ${activeCategory === 'outros' ? styles.active : ''}`} onClick={() => setActiveCategory('outros')}>
           <img src="/images/misc1.png" alt="Outros" />
           <p>Outros animais</p>
         </button>
       </section>
 
-      {/* Pets para adoção com carrossel */}
+      {/* Pets para adoção */}
       <section id="pets" className={styles.petsSection}>
         <h2>Pets para adoção</h2>
         <p className={styles.sectionDescription}>Conheça nossos amiguinhos que estão procurando um lar</p>
-
         <div className={styles.sliderContainer}>
           <Slider {...sliderSettings}>
             {filteredPets.map((pet) => (
@@ -168,9 +163,7 @@ const Home = () => {
                     <span>{pet.porte}</span>
                     <span>{pet.localizacao}</span>
                   </div>
-                  <Link to={`/pet/${pet.id}`} className={styles.adotarBtn}>
-                    ME ADOTE
-                  </Link>
+                  <Link to={`/pet/${pet.id}`} className={styles.adotarBtn}>ME ADOTE</Link>
                 </div>
               </div>
             ))}
@@ -178,11 +171,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Etapas para adoção */}
+      {/* Etapas */}
       <section className={styles.stepsSection}>
         <h2>Como adotar um pet?</h2>
         <p className={styles.sectionDescription}>Siga esses passos simples para encontrar seu novo amigo</p>
-
         <div className={styles.steps}>
           {steps.map((step, i) => (
             <div key={i} className={styles.stepCard}>
@@ -193,10 +185,46 @@ const Home = () => {
             </div>
           ))}
         </div>
+        <Link to="/adotar" className={styles.adoptNowBtn}>Ver pets disponíveis</Link>
+      </section>
 
-        <Link to="/adotar" className={styles.adoptNowBtn}>
-          Ver pets disponíveis
-        </Link>
+      {/* Parceiros */}
+      <section className={styles.partnersSection}>
+        <h2>Apoiadores</h2>
+        <Slider {...sliderSettings}>
+          {parceiros.map((logo, i) => (
+            <div key={i} className={styles.partnerLogo}>
+              <img src={logo} alt={`parceiro ${i + 1}`} />
+            </div>
+          ))}
+        </Slider>
+      </section>
+
+      {/* Notícias */}
+      <section className={styles.feedHighlights}>
+        <h2>Últimas do nosso feed</h2>
+        <Slider {...sliderSettings}>
+          {noticias.map((n, i) => (
+            <div key={i} className={styles.newsCard}>
+              <img src={n.imagem} alt={n.titulo} />
+              <p>{n.titulo}</p>
+            </div>
+          ))}
+        </Slider>
+      </section>
+
+      {/* Depoimentos */}
+      <section className={styles.testimonials}>
+        <h2>Depoimentos de quem já adotou</h2>
+        <Slider {...sliderSettings}>
+          {depoimentos.map((d, i) => (
+            <div key={i} className={styles.testimonialCard}>
+              <img src={d.foto} alt={d.nome} />
+              <h4>{d.nome}</h4>
+              <p>{d.texto}</p>
+            </div>
+          ))}
+        </Slider>
       </section>
     </div>
   );

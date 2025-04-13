@@ -6,17 +6,20 @@ const Adotar = () => {
   const [filtros, setFiltros] = useState({
     comportamento: '',
     tamanho: '',
-    sexo: []
+    sexo: [],
+    especial: '',
   });
 
   const pets = [
-    { id: 1, nome: 'Green Tea', imagem: '/images/pet1.jpg' },
-    { id: 2, nome: 'White Tea', imagem: '/images/pet2.jpg' },
-    { id: 3, nome: 'Super Matcha', imagem: '/images/pet3.jpg' },
-    { id: 4, nome: 'Rooibos Fruit Tea', imagem: '/images/pet4.jpg' },
-    { id: 5, nome: 'Black Tea', imagem: '/images/pet5.jpg' },
-    { id: 6, nome: 'Green Jasmine Tea', imagem: '/images/pet6.jpg' },
-    { id: 7, nome: 'Christmas Rooibos', imagem: '/images/pet7.jpg' },
+    { id: 1, nome: 'Carlinhos', imagem: '/images/dog1.png', sexo: 'Fêmea', porte: 'Pequeno', comportamento: 'Calmo', especial: 'Não' },
+    { id: 2, nome: 'Bolinha', imagem: '/images/dog2.png', sexo: 'Macho', porte: 'Médio', comportamento: 'Protetor', especial: 'Não' },
+    { id: 3, nome: 'Apolo', imagem: '/images/dog3.png', sexo: 'Fêmea', porte: 'Grande', comportamento: 'Brincalhão', especial: 'Sim' },
+    { id: 4, nome: 'Gaia', imagem: '/images/dog4.png', sexo: 'Fêmea', porte: 'Médio', comportamento: 'Brincalhão', especial: 'Não' },
+    { id: 5, nome: 'Spike', imagem: '/images/dog5.png', sexo: 'Macho', porte: 'Grande', comportamento: 'Calmo', especial: 'Sim' },
+    { id: 6, nome: 'Duduzão', imagem: '/images/dog6.png', sexo: 'Fêmea', porte: 'Pequeno', comportamento: 'Protetor', especial: 'Não' },
+    { id: 7, nome: 'Jaime', imagem: '/images/dog7.png', sexo: 'Macho', porte: 'Pequeno', comportamento: 'Calmo', especial: 'Sim' },
+    { id: 8, nome: 'Mister bigodes', imagem: '/images/cat1.png', sexo: 'Macho', porte: 'Pequeno', comportamento: 'Calmo', especial: 'Sim' },
+    { id: 9, nome: 'Alho', imagem: '/images/cat2.png', sexo: 'Macho', porte: 'Pequeno', comportamento: 'Calmo', especial: 'Sim' }
   ];
 
   const toggleSexo = (valor) => {
@@ -28,6 +31,31 @@ const Adotar = () => {
     }));
   };
 
+  const handleFiltroChange = (e) => {
+    const { name, value } = e.target;
+    setFiltros((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const resetarFiltros = () => {
+    setFiltros({
+      comportamento: '',
+      tamanho: '',
+      sexo: [],
+      especial: '',
+    });
+  };
+
+  const petsFiltrados = pets.filter((pet) => {
+    const sexoMatch = filtros.sexo.length === 0 || filtros.sexo.includes(pet.sexo);
+    const porteMatch = !filtros.tamanho || pet.porte === filtros.tamanho;
+    const comportamentoMatch = !filtros.comportamento || pet.comportamento === filtros.comportamento;
+    const especialMatch = !filtros.especial || pet.especial === filtros.especial;
+    return sexoMatch && porteMatch && comportamentoMatch && especialMatch;
+  });
+
   return (
     <div className={styles.adotarContainer}>
       <aside className={styles.sidebar}>
@@ -35,19 +63,21 @@ const Adotar = () => {
 
         <div className={styles.filterGroup}>
           <label>Comportamento</label>
-          <select>
-            <option>Brincalhão</option>
-            <option>Calmo</option>
-            <option>Protetor</option>
+          <select name="comportamento" onChange={handleFiltroChange} value={filtros.comportamento}>
+            <option value="">Todos</option>
+            <option value="Brincalhão">Brincalhão</option>
+            <option value="Calmo">Calmo</option>
+            <option value="Protetor">Protetor</option>
           </select>
         </div>
 
         <div className={styles.filterGroup}>
           <label>Porte</label>
-          <select>
-            <option>Pequeno</option>
-            <option>Médio</option>
-            <option>Grande</option>
+          <select name="tamanho" onChange={handleFiltroChange} value={filtros.tamanho}>
+            <option value="">Todos</option>
+            <option value="Pequeno">Pequeno</option>
+            <option value="Médio">Médio</option>
+            <option value="Grande">Grande</option>
           </select>
         </div>
 
@@ -79,16 +109,19 @@ const Adotar = () => {
 
         <div className={styles.filterGroup}>
           <label>Necessidades especiais</label>
-          <select>
-            <option>Sim</option>
-            <option>Não</option>
+          <select name="especial" onChange={handleFiltroChange} value={filtros.especial}>
+            <option value="">Todos</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
           </select>
         </div>
+
+        <button className={styles.resetBtn} onClick={resetarFiltros}>Limpar filtros</button>
       </aside>
 
       <main className={styles.petsGrid}>
-        {pets.map((pet) => (
-          <div key={pet.id} className={styles.petCard}>
+        {petsFiltrados.map((pet) => (
+          <div key={pet.id} className={`${styles.petCard} ${styles.fadeIn}`}>
             <img src={pet.imagem} alt={pet.nome} />
             <h3>{pet.nome}</h3>
             <Link to={`/match/${pet.id}`}>
@@ -96,6 +129,9 @@ const Adotar = () => {
             </Link>
           </div>
         ))}
+        {petsFiltrados.length === 0 && (
+          <p className={styles.noResults}>Nenhum pet encontrado com os filtros selecionados 🐾</p>
+        )}
       </main>
     </div>
   );

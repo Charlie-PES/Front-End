@@ -100,6 +100,23 @@
   display: block;
 }
 
+/* Botão de resetar filtros */
+.resetBtn {
+  margin-top: 8px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: #ffcccc;
+  color: #990000;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.resetBtn:hover {
+  background-color: #ff9999;
+}
+
 /* =============== GRID DE PETS =============== */
 .petsGrid {
   flex: 1;
@@ -116,6 +133,7 @@
   text-align: center;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+  animation: fadeCard 0.5s ease-in-out;
 }
 
 .petCard:hover {
@@ -154,7 +172,7 @@
   background-color: #dd6f00;
 }
 
-/* =============== ANIMAÇÃO DE ENTRADA =============== */
+/* =============== ANIMAÇÕES =============== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -164,6 +182,26 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes fadeCard {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Nenhum resultado encontrado */
+.noResults {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #999;
+  margin-top: 50px;
+  grid-column: 1 / -1;
 }
 
 /* =============== RESPONSIVIDADE =============== */
@@ -183,8 +221,3 @@
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
-
-
-
-
-

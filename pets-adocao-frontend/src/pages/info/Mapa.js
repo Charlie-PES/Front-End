@@ -6,7 +6,6 @@ import L from 'leaflet';
 import OverlayInfo from './OverlayInfo';
 import NovoLocalOverlay from './NovoLocalOverlay';
 
-// Corrige ícones padrão do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -16,11 +15,13 @@ L.Icon.Default.mergeOptions({
 
 const locaisIniciais = [
   {
+    id: 1,
     nome: 'ONG Amor Animal',
     posicao: [-30.0331, -51.23],
     descricao: 'Ajuda animais em situação de rua e promove adoções!',
   },
   {
+    id: 2,
     nome: 'Abrigo Patinhas',
     posicao: [-30.0400, -51.20],
     descricao: 'Adote com responsabilidade. 🐾',
@@ -33,6 +34,7 @@ const Mapa = () => {
   const [filtros, setFiltros] = useState({ cidade: '', estado: '', bairro: '', nome: '' });
   const [ongSelecionada, setOngSelecionada] = useState(null);
   const [overlayNovoLocal, setOverlayNovoLocal] = useState(false);
+  const [ultimoAdicionadoId, setUltimoAdicionadoId] = useState(null);
 
   const handleMapClick = (e) => {
     setNovoLocal({ ...novoLocal, posicao: [e.latlng.lat, e.latlng.lng] });
@@ -41,7 +43,10 @@ const Mapa = () => {
 
   const handleAddNovoLocal = () => {
     if (novoLocal.nome && novoLocal.descricao && novoLocal.posicao) {
-      setLocais([...locais, novoLocal]);
+      const novoId = locais.length + 1;
+      const novo = { ...novoLocal, id: novoId };
+      setLocais([...locais, novo]);
+      setUltimoAdicionadoId(novoId);
       setOverlayNovoLocal(false);
       setNovoLocal({ nome: '', descricao: '', posicao: null });
     }
@@ -65,7 +70,6 @@ const Mapa = () => {
       <h2 className={styles.mapaHeader}>📍 Encontre uma ONG ou Abrigo</h2>
 
       <div className={styles.mapaLayout}>
-        {/* Filtros */}
         <div className={styles.sidebarContainer}>
           <div className={styles.sidebar}>
             <h2>Filtros</h2>
@@ -97,7 +101,6 @@ const Mapa = () => {
           </div>
         </div>
 
-        {/* Mapa */}
         <div className={styles.mapContainer}>
           <div className={styles.mapArea}>
             <MapContainer
@@ -105,29 +108,42 @@ const Mapa = () => {
               zoom={13}
               scrollWheelZoom={true}
               className={styles.map}
+              style={{ height: '600px', width: '100%' }}
             >
               <TileLayer
                 attribution='&copy; <a href="https://openstreetmap.org">OpenStreetMap</a>'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <MapClickHandler />
-              {filteredLocais.map((local, i) => (
-                <Marker
-                  key={i}
-                  position={local.posicao}
-                  eventHandlers={{
-                    click: () => setOngSelecionada(local)
-                  }}
-                >
-                  <Popup>
-                    <strong>{local.nome}</strong><br />
-                    {local.descricao}
-                  </Popup>
-                </Marker>
-              ))}
+              {filteredLocais.map((local) => {
+                const isNew = local.id === ultimoAdicionadoId;
+                const icon = isNew
+                  ? L.divIcon({
+                      className: 'marker-drop',
+                      html: `<img src="${require('leaflet/dist/images/marker-icon.png')}" alt="" />`,
+                      iconSize: [25, 41],
+                      iconAnchor: [12, 41],
+                    })
+                  : new L.Icon.Default();
+
+                return (
+                  <Marker
+                    key={local.id}
+                    position={local.posicao}
+                    icon={icon}
+                    eventHandlers={{
+                      click: () => setOngSelecionada(local),
+                    }}
+                  >
+                    <Popup>
+                      <strong>{local.nome}</strong><br />
+                      {local.descricao}
+                    </Popup>
+                  </Marker>
+                );
+              })}
             </MapContainer>
 
-            {/* Botão flutuante */}
             <button
               className={styles.addButton}
               onClick={() => setOverlayNovoLocal(true)}
@@ -139,12 +155,10 @@ const Mapa = () => {
         </div>
       </div>
 
-      {/* Overlay de informações */}
       {ongSelecionada && (
         <OverlayInfo ong={ongSelecionada} onClose={() => setOngSelecionada(null)} />
       )}
 
-      {/* Overlay para novo local */}
       {overlayNovoLocal && (
         <NovoLocalOverlay
           local={novoLocal}
