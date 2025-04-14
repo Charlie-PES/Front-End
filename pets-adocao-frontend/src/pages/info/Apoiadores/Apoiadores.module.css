@@ -1,116 +1,111 @@
-/* Apoiadores.module.css */
-
 .apoiadoresContainer {
-    padding: 60px 20px;
-    max-width: 1300px;
-    margin: 0 auto;
-    text-align: center;
-    font-family: 'Segoe UI', sans-serif;
-    animation: fadeIn 0.5s ease-in-out;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.titulo {
+  font-size: 2.4rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subtitulo {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.gridLogos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.logoCard {
+  background-color: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.logoCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.logoCard img {
+  max-width: 120px;
+  max-height: 80px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.logoCard:hover img {
+  filter: none;
+}
+
+.logoCard p {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+/* Animação individual com delay */
+.logoCard {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
   .titulo {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: #2e2e2e;
-    margin-bottom: 10px;
-    animation: slideInDown 0.6s ease-out;
+    font-size: 2rem;
   }
-  
+
   .subtitulo {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 40px;
-    animation: fadeIn 0.8s ease-in-out;
+    font-size: 1rem;
   }
-  
-  /* Grid Responsivo */
+
   .gridLogos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    padding: 0;
+    gap: 20px;
   }
-  
-  /* Cartão com efeito flutuante */
-  .logoCard {
-    background: #fff;
-    padding: 24px;
-    border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: fadeInUp 0.5s ease forwards;
-    cursor: pointer;
-  }
-  
-  .logoCard:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-  }
-  
-  /* Logo */
-  .logoCard img {
-    max-width: 100%;
-    max-height: 80px;
-    object-fit: contain;
-    filter: grayscale(100%) brightness(0.9);
-    transition: filter 0.3s ease, transform 0.3s ease;
-  }
-  
-  .logoCard img:hover {
-    filter: grayscale(0%) brightness(1);
-    transform: scale(1.05);
-  }
-  
-  /* Animações */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(25px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes slideInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Responsivo */
-  @media (max-width: 768px) {
-    .titulo {
-      font-size: 2rem;
-    }
-  
-    .subtitulo {
-      font-size: 1rem;
-      padding: 0 10px;
-    }
-  
-    .logoCard {
-      padding: 20px;
-    }
-  }
-  
+}

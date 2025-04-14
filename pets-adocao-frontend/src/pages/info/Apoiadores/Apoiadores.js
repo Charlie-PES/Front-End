@@ -1,27 +1,55 @@
 import React from 'react';
 import styles from './Apoiadores.module.css';
 
-const Apoiadores = () => {
-  const logos = [
-    { nome: 'PetLovers Inc.', src: '/images/petlovers.png' },
-    { nome: 'Vida Animal ONG', src: '/images/vidaanimal.png' },
-    { nome: 'Amigos dos Bichos', src: '/images/amigos.png' },
-    { nome: 'Pets+ Saúde', src: '/images/petssaude.png' },
-  ];
+const apoiadores = [
+  {
+    nome: 'PetLovers Inc.',
+    imagem: '/images/parceiro1.png',
+    link: 'https://www.petlovers.com',
+  },
+  {
+    nome: 'Vida Animal ONG',
+    imagem: '/images/parceiro2.png',
+    link: 'https://www.vidaanimal.org',
+  },
+  {
+    nome: 'Amigos dos Bichos',
+    imagem: '/images/parceiro3.png',
+    link: 'https://www.amigosdosbichos.com',
+  }
+];
 
+const Apoiadores = () => {
   return (
-    <div className={styles.apoiadoresContainer}>
-      <h1 className={styles.titulo}>Apoiadores</h1>
-      <p className={styles.subtitulo}>Conheça quem acredita e investe nessa causa com a gente!</p>
+    <section className={styles.apoiadoresContainer}>
+      <h2 className={styles.titulo}>Conheça nossos apoiadores 🐾</h2>
+      <p className={styles.subtitulo}>
+        Empresas e ONGs que acreditam e investem na nossa causa.
+      </p>
 
       <div className={styles.gridLogos}>
-        {logos.map((logo, index) => (
-          <div className={styles.logoCard} key={index}>
-            <img src={logo.src} alt={logo.nome} />
-          </div>
+        {apoiadores.map((apoio, index) => (
+          <a
+            key={index}
+            href={apoio.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.logoCard}
+            aria-label={`Visitar o site de ${apoio.nome}`}
+            style={{ animationDelay: `${index * 0.2}s` }}
+          >
+            <figure>
+              <img
+                src={apoio.imagem}
+                alt={`Logo de ${apoio.nome}`}
+                loading="lazy"
+              />
+              <figcaption>{apoio.nome}</figcaption>
+            </figure>
+          </a>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
