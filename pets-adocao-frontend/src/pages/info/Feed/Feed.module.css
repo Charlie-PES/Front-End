@@ -1,83 +1,164 @@
 /* Feed.module.css */
 
 .feedContainer {
-    padding: 40px 20px;
-    background-color: var(--bg-color, #fffaf4);
-    color: var(--text-color, #333);
-    min-height: 100vh;
-    font-family: 'Arial', sans-serif;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  
-  .title {
-    font-size: 2.2rem;
-    margin-bottom: 30px;
-    text-align: center;
-    color: var(--primary-color, #2e7d7b);
-  }
-  
-  .postList {
-    display: flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 20px;
+  background-color: var(--bg-color, #fffaf4);
+  color: var(--text-color, #333);
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.leftSidebar {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 10px;
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+}
+
+.sidebarBox {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.sidebarBox h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #2e7d7b;
+}
+
+.sidebarBox ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebarBox li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #444;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.sidebarBox li:hover {
+  color: #2e7d7b;
+}
+
+.mainFeed {
+  flex: 1;
+  max-width: 800px;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: var(--primary-color, #2e7d7b);
+  text-align: left;
+}
+
+.newPostBox {
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  animation: fadeIn 0.4s ease;
+}
+
+.newPostBox textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: none;
+  border: none;
+  font-size: 1rem;
+  padding: 8px;
+  outline: none;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.postList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.postCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  animation: fadeIn 0.4s ease;
+}
+
+.postCard:hover {
+  transform: translateY(-4px);
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #444;
+}
+
+.postCard p {
+  font-size: 1.05rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.postImage {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  max-height: 400px;
+  margin-top: 10px;
+}
+
+@media (max-width: 1024px) {
+  .feedContainer {
     flex-direction: column;
-    gap: 24px;
-    max-width: 800px;
-    margin: 0 auto;
+    padding: 30px 16px;
   }
-  
-  .postCard {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease;
-  }
-  
-  .postCard:hover {
-    transform: translateY(-4px);
-  }
-  
-  .postHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #444;
-  }
-  
-  .postCard p {
-    font-size: 1.05rem;
-    color: #555;
-    margin-bottom: 12px;
-  }
-  
-  .postImage {
+
+  .leftSidebar {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-    object-fit: cover;
-    max-height: 400px;
-    margin-top: 10px;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 16px;
   }
-  
-  @media (max-width: 768px) {
-    .title {
-      font-size: 1.7rem;
-    }
-  
-    .postCard {
-      padding: 16px;
-    }
+
+  .mainFeed {
+    width: 100%;
+    max-width: 100%;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,112 @@
+/* Match.module.css */
+
+.matchContainer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .matchTitle {
+    font-size: 2.4rem;
+    color: #2e7d7b;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .matchForm {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  
+  .matchForm label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .matchForm input,
+  .matchForm select,
+  .matchForm textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+  }
+  
+  .matchForm input:focus,
+  .matchForm select:focus,
+  .matchForm textarea:focus {
+    border-color: #2e7d7b;
+    outline: none;
+  }
+  
+  .saveButton,
+  .findButton {
+    padding: 14px;
+    background-color: #2e7d7b;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-align: center;
+  }
+  
+  .saveButton:hover,
+  .findButton:hover {
+    background-color: #1e5d5b;
+  }
+  
+  .findButton {
+    margin-top: 20px;
+    background-color: #38b000;
+  }
+  
+  .findButton:hover {
+    background-color: #2f8d00;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .matchContainer {
+      padding: 20px 15px;
+    }
+  
+    .matchTitle {
+      font-size: 2rem;
+    }
+  }
+  
