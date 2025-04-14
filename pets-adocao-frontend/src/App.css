@@ -1,62 +1,92 @@
 /* Reset básico */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  html, body, #root {
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #fffdf9;
-  }
-  
-  /* Layout base com Header + Conteúdo + Footer */
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-  }
-  
-  /* Links de navegação */
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  /* Botões padrão */
-  button {
-    cursor: pointer;
-    font-weight: bold;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    transition: 0.2s ease-in-out;
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
-  
-  /* Exemplo opcional de centralização de conteúdo */
-  .page-title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Para prevenir overflow visual */
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Temas: Variáveis globais */
+:root {
+  --bg-color: #fffdf9;
+  --text-color: #333;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  --primary-color: #2e7d7b;
+  --border-color: #ccc;
+}
+
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-color: #f1f1f1;
+  --card-bg: #1e1e1e;
+  --card-shadow: rgba(255, 255, 255, 0.08);
+  --primary-color: #90caf9;
+  --border-color: #444;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Layout base com Header + Conteúdo + Footer */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Links de navegação */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Botões padrão */
+button {
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: 0.2s ease-in-out;
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Título centralizado */
+.page-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Imagens responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Cards padrão com sombra */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px var(--card-shadow);
+  transition: background-color 0.3s ease;
+}

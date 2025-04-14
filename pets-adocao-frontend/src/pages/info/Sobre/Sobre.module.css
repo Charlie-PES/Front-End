@@ -1,29 +1,28 @@
+
 .sobreContainer {
   max-width: 900px;
   margin: 0 auto;
   padding: 3rem 2rem;
-  background-color: #ffffff;
+  background-color: var(--bg-color, #ffffff);
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   font-family: 'Segoe UI', sans-serif;
   line-height: 1.75;
-  color: #333;
+  color: var(--text-color, #333);
   animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Título principal */
 .sobreContainer h1 {
   font-size: 2.5rem;
-  color: #f77f00;
+  color: var(--accent-color, #f77f00);
   margin-bottom: 1.5rem;
   text-align: center;
   font-weight: bold;
 }
 
-/* Subtítulos */
 .sobreContainer h2 {
   font-size: 1.8rem;
-  color: #264653;
+  color: var(--primary-color, #264653);
   margin-top: 2.5rem;
   margin-bottom: 0.5rem;
   position: relative;
@@ -37,23 +36,20 @@
   top: 8px;
   width: 6px;
   height: 70%;
-  background-color: #f4a261;
+  background-color: var(--accent-light, #f4a261);
   border-radius: 4px;
 }
 
-/* Parágrafos */
 .sobreContainer p {
   font-size: 1.1rem;
-  color: #555;
+  color: var(--paragraph-color, #555);
   margin-top: 0.5rem;
 }
 
-/* Contato com destaque */
 .sobreContainer p strong {
-  color: #333;
+  color: var(--text-color, #333);
 }
 
-/* Imagem */
 .imgContainer {
   display: flex;
   justify-content: center;
@@ -72,7 +68,6 @@
   opacity: 1;
 }
 
-/* Animação de entrada */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -84,7 +79,6 @@
   }
 }
 
-/* Responsivo para mobile */
 @media (max-width: 768px) {
   .sobreContainer {
     padding: 2rem 1.5rem;

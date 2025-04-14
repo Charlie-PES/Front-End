@@ -441,3 +441,99 @@
     max-width: 100%;
   }
 }
+
+/* Tema base com variáveis */
+:root {
+  --primary-color: #dca879;
+  --primary-hover: #bb8e68;
+  --text-color: #333;
+  --text-muted: #666;
+  --background-color: #fffdf9;
+  --background-alt: #f9f9f9;
+  --card-bg: #ffffff;
+  --border-color: #ccc;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --primary-color: #c37a3d;
+  --primary-hover: #a86030;
+  --text-color: #eee;
+  --text-muted: #bbb;
+  --background-color: #1e1e1e;
+  --background-alt: #2a2a2a;
+  --card-bg: #2e2e2e;
+  --border-color: #444;
+  --shadow-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Container */
+.homeContainer {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Textos principais */
+.bannerText h1,
+.categoryCard p,
+.petInfo h3,
+.stepCard h3,
+.testimonialCard h4,
+.newsCard p {
+  color: var(--text-color);
+}
+
+.bannerText p,
+.sectionDescription,
+.stepCard p,
+.testimonialCard p {
+  color: var(--text-muted);
+}
+
+/* Cards */
+.petCard,
+.stepCard,
+.testimonialCard,
+.newsCard {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+/* Botões */
+.adoptButton,
+.mapButton,
+.adoptNowBtn,
+.adotarBtn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.adoptButton:hover,
+.mapButton:hover,
+.adoptNowBtn:hover,
+.adotarBtn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Elementos ativos e decorativos */
+.categoryCard.active,
+.petDetails span {
+  background-color: var(--background-alt);
+}
+
+/* Seções */
+.sliderContainer,
+.feedHighlights,
+.testimonials,
+.partnersSection {
+  background-color: var(--background-alt);
+}
+
+/* Imagens */
+.bannerImage,
+.petCard img,
+.stepCard img,
+.newsCard img,
+.testimonialCard img {
+  border-radius: 6px;
+}
