@@ -35,6 +35,10 @@ const Header = () => {
           Feed
         </Link>
 
+        <Link to="/matchpage" className={styles.navLink}>
+          Match
+        </Link>
+
       </nav>
 
       <div className={styles.rightSection}>

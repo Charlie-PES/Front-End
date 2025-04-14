@@ -22,7 +22,8 @@ import PoliticaPrivacidade from './pages/info/PoliticaPrivacidade/PoliticaPrivac
 import Inscricoes from './pages/info/Inscricoes/Inscricoes';
 import Feed from './pages/info/Feed/Feed';
 import Depoimentos from './pages/info/Depoimentos/Depoimentos'; 
-import Apoiadores from './pages/info/Apoiadores/Apoiadores'; // ajuste o caminho se necessário// ajuste o caminho se necessário // ajuste o caminho se necessário
+import Apoiadores from './pages/info/Apoiadores/Apoiadores'; 
+import MatchPage from './pages/user/MatchPage/MatchPage';
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
                         <Route path="/feed" element={<Feed />} />
                         <Route path="/depoimentos" element={<Depoimentos />} />
                         <Route path="/apoiadores" element={<Apoiadores />} />
+                        <Route path="/matchpage" element={<MatchPage />} />
                     </Routes>
                 </main>
 

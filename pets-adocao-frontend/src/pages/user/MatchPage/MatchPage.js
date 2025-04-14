@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './Match.module.css';
+import styles from './MatchPage.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const Match = () => {
