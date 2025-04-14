@@ -21,7 +21,8 @@ import ContateNos from './pages/info/ContateNos';
 import PoliticaPrivacidade from './pages/info/PoliticaPrivacidade';
 import Inscricoes from './pages/info/Inscricoes';
 import Feed from './pages/info/Feed';
-import Depoimentos from './pages/info/Depoimentos'; // ajuste o caminho se necessário // ajuste o caminho se necessário
+import Depoimentos from './pages/info/Depoimentos'; 
+import Apoiadores from './pages/info/Apoiadores'; // ajuste o caminho se necessário// ajuste o caminho se necessário // ajuste o caminho se necessário
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                         <Route path="/inscricoes" element={<Inscricoes />} />
                         <Route path="/feed" element={<Feed />} />
                         <Route path="/depoimentos" element={<Depoimentos />} />
+                        <Route path="/apoiadores" element={<Apoiadores />} />
                     </Routes>
                 </main>
 

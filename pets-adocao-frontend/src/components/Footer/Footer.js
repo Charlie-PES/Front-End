@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.css';
-import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; // import necessário
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaWhatsapp } from 'react-icons/fa'; // novos ícones
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -16,28 +16,17 @@ const Footer = () => {
         <div className={styles.links}>
           <div>
             <h4>Ajuda</h4>
-            <Link to="/faq">
-              FAQ
-            </Link>
-            <Link to="/servico-consumidor">
-              Serviço ao consumidor
-            </Link>
-            <Link to="/contato">
-              Contate nós
-            </Link>
+            <Link to="/faq">FAQ</Link>
+            <Link to="/servico-consumidor">Serviço ao consumidor</Link>
+            <Link to="/contato">Contate nós</Link>
           </div>
           
           <div>
             <h4>Outros</h4>
-            <Link to="/privacidade">
-              Política de privacidade
-            </Link>
-            <Link to="/inscricoes">
-              Inscrições
-            </Link>
-            <Link to="/depoimentos">
-              Depoimentos
-            </Link>
+            <Link to="/privacidade">Política de privacidade</Link>
+            <Link to="/inscricoes">Inscrições</Link>
+            <Link to="/depoimentos">Depoimentos</Link>
+            <Link to="/apoiadores">Apoiadores</Link>
           </div>
         </div>
       </div>
@@ -46,8 +35,10 @@ const Footer = () => {
         <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
         <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+        <a href="https://wa.me/5599999999999" target="_blank" rel="noopener noreferrer"><FaWhatsapp /></a>
       </div>
-    
+
     </footer>
   );
 };
