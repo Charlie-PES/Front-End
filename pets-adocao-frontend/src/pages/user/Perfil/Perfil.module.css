@@ -80,3 +80,48 @@
     to { opacity: 1; transform: translateY(0); }
   }
   
+
+  :root {
+    --bg-light: #fffaf4;
+    --bg-dark: #1e1e1e;
+    --text-light: #333;
+    --text-dark: #f4f4f4;
+    --card-light: #ffffff;
+    --card-dark: #2a2a2a;
+    --primary-light: #f77f00;
+    --primary-dark: #ffb347;
+    --danger-light: #b63b3b;
+    --danger-dark: #ff6b6b;
+  }
+  
+  [data-theme='dark'] .container {
+    background-color: var(--bg-dark);
+  }
+  
+  [data-theme='dark'] .card {
+    background-color: var(--card-dark);
+    color: var(--text-dark);
+  }
+  
+  [data-theme='dark'] .userInfo h2,
+  [data-theme='dark'] .userInfo p {
+    color: var(--text-dark);
+  }
+  
+  [data-theme='dark'] .actionButton {
+    background-color: var(--primary-dark);
+    color: var(--text-dark);
+  }
+  
+  [data-theme='dark'] .actionButton:hover {
+    background-color: #ff9900;
+  }
+  
+  [data-theme='dark'] .logout {
+    background-color: var(--danger-dark);
+  }
+  
+  [data-theme='dark'] .logout:hover {
+    background-color: #ff4d4d;
+  }
+  

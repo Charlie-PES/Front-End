@@ -3,16 +3,17 @@
   display: flex;
   gap: 30px;
   padding: 30px 20px;
-  background-color: #fffefc;
+  background-color: var(--bg-color, #fffefc);
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
   animation: fadeIn 0.6s ease-in-out;
+  color: var(--text-color, #333);
 }
 
 /* =============== SIDEBAR DE FILTROS =============== */
 .sidebar {
   width: 260px;
-  background-color: #fff7eb;
+  background-color: var(--sidebar-bg, #fff7eb);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
@@ -24,7 +25,7 @@
 .sidebar h2 {
   font-size: 1.4rem;
   font-weight: bold;
-  color: #333;
+  color: var(--text-color, #333);
   margin-bottom: 10px;
 }
 
@@ -35,7 +36,8 @@
   font-size: 0.95rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  background-color: #fff;
+  background-color: var(--input-bg, #fff);
+  color: var(--text-color, #333);
   transition: border-color 0.3s;
 }
 
@@ -44,10 +46,11 @@
   outline: none;
 }
 
+/* Checkbox Customizado */
 .checkboxGroupTitle {
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: #333;
+  color: var(--text-color, #333);
 }
 
 .checkboxGroup {
@@ -61,12 +64,12 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  color: var(--text-color, #333);
 }
 
 .checkboxInput {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
   height: 0;
   width: 0;
 }
@@ -100,7 +103,7 @@
   display: block;
 }
 
-/* Botão de resetar filtros */
+/* Botão Resetar Filtros */
 .resetBtn {
   margin-top: 8px;
   padding: 10px;
@@ -127,7 +130,7 @@
 
 /* =============== CARD DO PET =============== */
 .petCard {
-  background-color: #fff;
+  background-color: var(--card-bg, #fff);
   border-radius: 10px;
   padding: 16px;
   text-align: center;
@@ -151,7 +154,7 @@
 
 .petCard h3 {
   font-size: 1.2rem;
-  color: #333;
+  color: var(--text-color, #333);
   margin-bottom: 8px;
 }
 
@@ -204,7 +207,7 @@
   grid-column: 1 / -1;
 }
 
-/* =============== RESPONSIVIDADE =============== */
+/* =============== RESPONSIVO =============== */
 @media (max-width: 900px) {
   .adotarContainer {
     flex-direction: column;
@@ -220,4 +223,12 @@
   .petsGrid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
+}
+
+:root[data-theme="dark"] {
+  --bg-color: #1e1e1e;
+  --text-color: #f2f2f2;
+  --input-bg: #2c2c2c;
+  --card-bg: #2a2a2a;
+  --sidebar-bg: #2d2d2d;
 }

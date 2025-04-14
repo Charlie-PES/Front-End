@@ -142,3 +142,13 @@
     width: 100%;
   }
 }
+
+/* DARK THEME OVERRIDES */
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-color: #e4e4e4;
+  --card-bg: #1f1f1f;
+  --border-color: #333;
+  --input-bg: #2c2c2c;
+  --highlight-color: #90caf9;
+}

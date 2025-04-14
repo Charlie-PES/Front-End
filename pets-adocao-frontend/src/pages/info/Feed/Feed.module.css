@@ -1,4 +1,3 @@
-/* Feed.module.css */
 
 .feedContainer {
   display: flex;
@@ -25,7 +24,7 @@
 }
 
 .sidebarBox {
-  background: #fff;
+  background: var(--card-bg, #fff);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 20px;
@@ -35,7 +34,7 @@
 .sidebarBox h3 {
   margin-bottom: 10px;
   font-size: 1.2rem;
-  color: #2e7d7b;
+  color: var(--highlight-color, #2e7d7b);
 }
 
 .sidebarBox ul {
@@ -47,13 +46,13 @@
 .sidebarBox li {
   margin-bottom: 8px;
   font-size: 0.95rem;
-  color: #444;
+  color: var(--text-color, #444);
   cursor: pointer;
   transition: color 0.3s;
 }
 
 .sidebarBox li:hover {
-  color: #2e7d7b;
+  color: var(--highlight-color, #2e7d7b);
 }
 
 .mainFeed {
@@ -64,14 +63,14 @@
 .title {
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: var(--primary-color, #2e7d7b);
+  color: var(--highlight-color, #2e7d7b);
   text-align: left;
 }
 
 .newPostBox {
-  background-color: #fff;
+  background-color: var(--card-bg, #fff);
   border-radius: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color, #ddd);
   padding: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 24px;
@@ -87,7 +86,8 @@
   padding: 8px;
   outline: none;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--input-bg, #f9f9f9);
+  color: var(--text-color, #333);
 }
 
 .postList {
@@ -97,7 +97,7 @@
 }
 
 .postCard {
-  background-color: #ffffff;
+  background-color: var(--card-bg, #ffffff);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
@@ -115,12 +115,12 @@
   align-items: center;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #444;
+  color: var(--text-color, #444);
 }
 
 .postCard p {
   font-size: 1.05rem;
-  color: #555;
+  color: var(--text-color, #555);
   margin-bottom: 12px;
 }
 
@@ -161,4 +161,14 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* DARK THEME OVERRIDES */
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-color: #e4e4e4;
+  --card-bg: #1f1f1f;
+  --border-color: #333;
+  --input-bg: #2c2c2c;
+  --highlight-color: #90caf9;
 }
