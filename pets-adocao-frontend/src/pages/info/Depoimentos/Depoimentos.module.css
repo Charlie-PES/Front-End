@@ -1,136 +1,174 @@
+/* =============== VARIÁVEIS E TEMA =============== */
+:root {
+  --bg-color: #fffaf4;
+  --text-color: #333;
+  --card-bg: #ffffff;
+  --highlight-color: #f77f00;
+  --highlight-hover: #dd6f00;
+  --border-color: #ccc;
+  --input-bg: #fff;
+}
+
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-color: #e4e4e4;
+  --card-bg: #1f1f1f;
+  --highlight-color: #f9a826;
+  --highlight-hover: #c77a00;
+  --border-color: #444;
+  --input-bg: #2a2a2a;
+}
+
+/* =============== CONTAINER PRINCIPAL =============== */
 .testimonialPage {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    font-family: 'Segoe UI', sans-serif;
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  .testimonialPage h1 {
-    text-align: center;
-    font-size: 2.4rem;
-    margin-bottom: 30px;
-    color: #333;
-  }
-  
-  /* Campo de novo depoimento */
-  .testimonialForm {
-    background: #fdf6ee;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-    margin-bottom: 50px;
-    animation: fadeInScale 0.6s ease-in-out;
-  }
-  
-  .testimonialForm textarea {
-    width: 100%;
-    height: 120px;
-    padding: 15px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    resize: none;
-    margin-bottom: 20px;
-  }
-  
-  .testimonialForm button {
-    background-color: #f77f00;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .testimonialForm button:hover {
-    background-color: #dd6f00;
-  }
-  
-  /* Carrossel */
-  .carouselWrapper {
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .carouselTrack {
-    display: flex;
-    gap: 20px;
-    animation: slideFade 0.6s ease-in-out;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    padding-bottom: 10px;
-  }
-  
-  .testimonialCard {
-    flex: 0 0 300px;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    scroll-snap-align: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeIn 0.5s ease-in-out;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.testimonialPage h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+/* =============== FORMULÁRIO DE DEPOIMENTO =============== */
+.testimonialForm {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  margin-bottom: 50px;
+  animation: fadeInScale 0.6s ease-in-out;
+}
+
+.testimonialForm textarea {
+  width: 100%;
+  height: 120px;
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  resize: none;
+  margin-bottom: 20px;
+}
+
+.testimonialForm button {
+  background-color: var(--highlight-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.testimonialForm button:hover {
+  background-color: var(--highlight-hover);
+}
+
+/* =============== CARROSSEL DE DEPOIMENTOS =============== */
+.carouselWrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.carouselTrack {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+  animation: slideFade 0.6s ease-in-out;
+}
+
+.testimonialCard {
+  flex: 0 0 300px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  scroll-snap-align: start;
+  opacity: 0;
+  animation: fadeInDelayed 0.6s ease forwards;
+}
+
+.testimonialCard h4 {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.testimonialCard p {
+  color: var(--text-color);
+  font-style: italic;
+}
+
+/* =============== ANIMAÇÕES =============== */
+@keyframes fadeInDelayed {
+  from {
     opacity: 0;
-    animation: fadeInDelayed 0.6s ease forwards;
+    transform: translateY(10px);
   }
-  
-  .testimonialCard h4 {
-    font-size: 1.1rem;
-    color: #444;
-    margin-bottom: 10px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .testimonialCard p {
-    color: #555;
-    font-style: italic;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  /* Efeitos animados */
-  @keyframes fadeInDelayed {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  @keyframes fadeInScale {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+}
+
+@keyframes slideFade {
+  0% {
+    opacity: 0.2;
+    transform: translateX(-30px);
   }
-  
-  @keyframes slideFade {
-    0% {
-      opacity: 0.2;
-      transform: translateX(-30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
-  /* Responsivo */
-  @media (max-width: 768px) {
-    .carouselTrack {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .testimonialCard {
-      flex: 0 0 100%;
-    }
+}
+
+/* =============== RESPONSIVO PARA MOBILE =============== */
+@media (max-width: 768px) {
+  .testimonialPage {
+    padding: 30px 16px;
   }
-  
+
+  .testimonialPage h1 {
+    font-size: 2rem;
+  }
+
+  .testimonialForm {
+    padding: 20px;
+  }
+
+  .carouselTrack {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonialCard {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

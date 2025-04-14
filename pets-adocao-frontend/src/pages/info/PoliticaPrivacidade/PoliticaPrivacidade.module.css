@@ -1,50 +1,50 @@
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    font-family: Arial, sans-serif;
-    animation: fadeIn 0.3s ease;
-    color: #333;
-    line-height: 1.6;
-  }
-  
-  h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 30px;
-    color: #222;
-  }
-  
-  h2 {
-    font-size: 1.25rem;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    color: #444;
-  }
-  
-  p {
-    margin-bottom: 15px;
-    font-size: 1rem;
-    color: #555;
-  }
-  
-  strong {
-    color: #f77f00;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  animation: fadeIn 0.3s ease;
+  color: var(--text-color, #333);
+  background-color: var(--bg-color, #fff);
+  line-height: 1.6;
+}
 
-  /* DARK THEME OVERRIDES */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: var(--text-color, #222);
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: var(--text-color, #444);
+}
+
+p {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: var(--text-color, #555);
+}
+
+strong {
+  color: var(--highlight-color, #f77f00);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* DARK THEME VARIABLES */
 [data-theme='dark'] {
   --bg-color: #121212;
   --text-color: #e4e4e4;
