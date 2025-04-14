@@ -2,27 +2,27 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Home from './pages/info/Home';
-import Adotar from './pages/pet/Adotar';
-import Sobre from './pages/info/Sobre';
+import Home from './pages/info/Home/Home';
+import Adotar from './pages/pet/Adotar/Adotar';
+import Sobre from './pages/info/Sobre/Sobre';
 import Cadastro from './pages/auth/Cadastro';
-import PetMatch from './pages/pet/PetMatch';
-import PetPage from './pages/pet/PetPage';
-import Mapa from './pages/info/Mapa';
-import Perfil from './pages/user/Perfil';
-import Acompanhamento from './pages/user/Acompanhamento';
-import CadastroPet from './pages/user/CadastroPet';
-import EditarPerfil from './pages/user/EditarPerfil';
-import HistoricoAdocao from './pages/user/HistoricoAdocao';
-import PetsFavoritos from './pages/user/PetsFavoritos';
-import Faq from './pages/info/Faq';
-import ServicoConsumidor from './pages/info/ServicoConsumidor';
-import ContateNos from './pages/info/ContateNos';
-import PoliticaPrivacidade from './pages/info/PoliticaPrivacidade';
-import Inscricoes from './pages/info/Inscricoes';
-import Feed from './pages/info/Feed';
-import Depoimentos from './pages/info/Depoimentos'; 
-import Apoiadores from './pages/info/Apoiadores'; // ajuste o caminho se necessário// ajuste o caminho se necessário // ajuste o caminho se necessário
+import PetMatch from './pages/pet/PetMatch/PetMatch';
+import PetPage from './pages/pet/PetPage/PetPage';
+import Mapa from './pages/info/Mapa/Mapa';
+import Perfil from './pages/user/Perfil/Perfil';
+import Acompanhamento from './pages/user/Acompanhamento/Acompanhamento';
+import CadastroPet from './pages/user/CadastroPet/CadastroPet';
+import EditarPerfil from './pages/user/EditarPerfil/EditarPerfil';
+import HistoricoAdocao from './pages/user/HistoricoAdocao/HistoricoAdocao';
+import PetsFavoritos from './pages/user/PetsFavoritos/PetsFavoritos';
+import Faq from './pages/info/Faq/Faq';
+import ServicoConsumidor from './pages/info/ServicoConsumidor/ServicoConsumidor';
+import ContateNos from './pages/info/ContateNos/ContateNos';
+import PoliticaPrivacidade from './pages/info/PoliticaPrivacidade/PoliticaPrivacidade';
+import Inscricoes from './pages/info/Inscricoes/Inscricoes';
+import Feed from './pages/info/Feed/Feed';
+import Depoimentos from './pages/info/Depoimentos/Depoimentos'; 
+import Apoiadores from './pages/info/Apoiadores/Apoiadores'; // ajuste o caminho se necessário// ajuste o caminho se necessário // ajuste o caminho se necessário
 import './App.css'; // Certifique-se de ter o CSS abaixo
 
 function App() {

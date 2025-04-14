@@ -3,8 +3,8 @@ import styles from './Mapa.module.css';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import OverlayInfo from './OverlayInfo';
-import NovoLocalOverlay from './NovoLocalOverlay';
+import OverlayInfo from '../OverlayInfo/OverlayInfo';
+import NovoLocalOverlay from '../NovoLocalOverlay/NovoLocalOverlay';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
