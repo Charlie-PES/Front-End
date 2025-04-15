@@ -210,7 +210,7 @@
 /* =============== RESPONSIVO =============== */
 @media (max-width: 900px) {
   .adotarContainer {
-    flex-direction: column;
+    justify-content: center; /* centraliza o conteúdo em telas grandes */
   }
 
   .sidebar {
@@ -221,9 +221,19 @@
   }
 
   .petsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1000px;  /* impede que os cards fiquem esticados demais */
+    margin: 0 auto;      /* centraliza o grid */
   }
 }
+
+
+
+
+
 
 :root[data-theme="dark"] {
   --bg-color: #1e1e1e;

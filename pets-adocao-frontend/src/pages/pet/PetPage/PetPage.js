@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import styles from './PetPage.module.css';
 
 const PetPage = () => {
@@ -8,20 +8,20 @@ const PetPage = () => {
   const pets = [
     {
       id: 1,
-      nome: 'Green Tea',
+      nome: 'Thor',
       sexo: 'Macho',
       raca: 'SRD',
-      cor: 'Branco e marrom',
+      cor: 'Branco e Marrom',
       idade: '3 meses',
       vacinas: 'V10',
       porte: 'Médio',
       castrado: 'Não',
-      imagem: '/images/pet1.jpg',
+      imagem: '/images/dog1.png',
       compatibilidade: 90,
     },
     {
       id: 2,
-      nome: 'White Tea',
+      nome: 'Luna',
       sexo: 'Fêmea',
       raca: 'SRD',
       cor: 'Branco',
@@ -29,20 +29,20 @@ const PetPage = () => {
       vacinas: 'V8, Raiva',
       porte: 'Pequeno',
       castrado: 'Sim',
-      imagem: '/images/pet2.jpg',
+      imagem: '/images/dog2.png',
       compatibilidade: 75,
     },
     {
       id: 3,
-      nome: 'Super Matcha',
-      sexo: 'Macho',
+      nome: 'Nina',
+      sexo: 'Fêmea',
       raca: 'Poodle',
       cor: 'Cinza',
       idade: '1 ano',
       vacinas: 'V10, Raiva',
       porte: 'Pequeno',
       castrado: 'Sim',
-      imagem: '/images/pet3.jpg',
+      imagem: '/images/dog3.png',
       compatibilidade: 85,
     },
   ];
@@ -66,7 +66,6 @@ const PetPage = () => {
       <div className={styles.main}>
         <div className={styles.leftColumn}>
           <img src={pet.imagem} alt={pet.nome} className={styles.petImage} />
-
           <div className={styles.compatibilidadeBox}>
             <p><strong>Nível de compatibilidade com você</strong></p>
             <div className={styles.barra}>
@@ -114,13 +113,16 @@ const PetPage = () => {
       </div>
 
       <div className={styles.outros}>
-        <h3>Outros para Adoção</h3>
+        <h3>Outros pets disponíveis para adoção</h3>
         <div className={styles.outrosGrid}>
           {outrosPets.map((p) => (
             <div key={p.id} className={styles.outroCard}>
               <img src={p.imagem} alt={p.nome} className={styles.outroImagem} />
               <p><strong>{p.nome}</strong></p>
               <span>{p.raca}</span>
+              <Link to={`/pet/${p.id}`} className={styles.verMaisBtn}>
+                Ver mais
+              </Link>
             </div>
           ))}
         </div>
