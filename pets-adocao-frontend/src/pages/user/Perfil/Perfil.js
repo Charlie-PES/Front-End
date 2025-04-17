@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Perfil.module.css';
-import { FaUserEdit, FaPlusCircle, FaPaw, FaHeart, FaHistory, FaSignOutAlt } from 'react-icons/fa';
+import { FaUserEdit, FaPlusCircle, FaPaw, FaHeart, FaHistory } from 'react-icons/fa';
 
 const Perfil = () => {
   const usuario = {

@@ -24,7 +24,6 @@ const Footer = () => {
           <div>
             <h4>Outros</h4>
             <Link to="/privacidade">Política de privacidade</Link>
-            <Link to="/inscricoes">Inscrições</Link>
             <Link to="/depoimentos">Depoimentos</Link>
             <Link to="/apoiadores">Apoiadores</Link>
           </div>

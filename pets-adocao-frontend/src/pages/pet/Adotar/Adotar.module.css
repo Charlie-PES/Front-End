@@ -160,7 +160,7 @@
 
 /* =============== BOTÃO ME ADOTE =============== */
 .adotarBtn {
-  background-color: #f77f00;
+  background-color: #dca879;
   color: white;
   border: none;
   padding: 10px 16px;
@@ -172,7 +172,7 @@
 }
 
 .adotarBtn:hover {
-  background-color: #dd6f00;
+  background-color: #bb8e68;
 }
 
 /* =============== ANIMAÇÕES =============== */

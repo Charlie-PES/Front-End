@@ -4,7 +4,7 @@ import styles from './Home.module.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { FaPaw, FaHeart, FaSearch } from 'react-icons/fa';
+import { FaHeart, FaSearch } from 'react-icons/fa';
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('todos');

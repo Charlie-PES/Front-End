@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/info/Home/Home';
@@ -15,16 +15,15 @@ import CadastroPet from './pages/user/CadastroPet/CadastroPet';
 import EditarPerfil from './pages/user/EditarPerfil/EditarPerfil';
 import HistoricoAdocao from './pages/user/HistoricoAdocao/HistoricoAdocao';
 import PetsFavoritos from './pages/user/PetsFavoritos/PetsFavoritos';
-import Faq from './pages/info/Faq/Faq';
-import ServicoConsumidor from './pages/info/ServicoConsumidor/ServicoConsumidor';
-import ContateNos from './pages/info/ContateNos/ContateNos';
-import PoliticaPrivacidade from './pages/info/PoliticaPrivacidade/PoliticaPrivacidade';
-import Inscricoes from './pages/info/Inscricoes/Inscricoes';
+import Faq from './pages/ExFooter/Faq/Faq';
+import ServicoConsumidor from './pages/ExFooter/ServicoConsumidor/ServicoConsumidor';
+import ContateNos from './pages/ExFooter/ContateNos/ContateNos';
+import PoliticaPrivacidade from './pages/ExFooter/PoliticaPrivacidade/PoliticaPrivacidade';
 import Feed from './pages/info/Feed/Feed';
-import Depoimentos from './pages/info/Depoimentos/Depoimentos'; 
-import Apoiadores from './pages/info/Apoiadores/Apoiadores'; 
+import Depoimentos from './pages/ExFooter/Depoimentos/Depoimentos';
+import Apoiadores from './pages/ExFooter/Apoiadores/Apoiadores';
 import MatchPage from './pages/user/MatchPage/MatchPage';
-import './App.css'; // Certifique-se de ter o CSS abaixo
+import './App.css';
 
 function App() {
     return (
@@ -51,7 +50,6 @@ function App() {
                         <Route path="/servico-consumidor" element={<ServicoConsumidor />} />
                         <Route path="/contato" element={<ContateNos />} />
                         <Route path="/privacidade" element={<PoliticaPrivacidade />} />
-                        <Route path="/inscricoes" element={<Inscricoes />} />
                         <Route path="/feed" element={<Feed />} />
                         <Route path="/depoimentos" element={<Depoimentos />} />
                         <Route path="/apoiadores" element={<Apoiadores />} />
