@@ -1,73 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth, googleProvider, signInWithPopup } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import '../styles/Login.css';
+import { ThemeContext } from '../contexts/ThemeContext';
+import { FaUserCircle } from 'react-icons/fa';
+import { login } from '../services/authService';
+import styles from './Login.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await login(email, password);
       navigate('/'); // Redireciona para a página inicial após o login
     } catch (error) {
       setError('Email ou senha inválidos');
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      navigate('/'); // Redireciona para a página inicial após o login
-    } catch (error) {
-      setError('Erro ao fazer login com Google');
-    }
-  };
-
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>Login</h2>
-        {error && <p className="error-message">{error}</p>}
+    <div className={`${styles.loginContainer} ${darkMode ? styles.darkMode : ''}`}>
+      <div className={styles.loginForm}>
+        <FaUserCircle className={styles.userIcon} size={50} />
+        <h1>Login</h1>
+        {error && <p className={styles.errorMessage}>{error}</p>}
         <form onSubmit={handleEmailLogin}>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="seu email"
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Senha:</label>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Senha</label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="sua senha"
               required
             />
           </div>
-          <button type="submit" className="login-button">
+          <button type="submit" className={styles.loginButton}>
             Entrar
           </button>
         </form>
-        <div className="divider">
-          <span>ou</span>
-        </div>
-        <button onClick={handleGoogleLogin} className="google-button">
-          Entrar com Google
-        </button>
-        <p className="register-link">
+        <p className={styles.registerLink}>
           Não tem uma conta?{' '}
-          <button onClick={() => navigate('/cadastro')} className="link-button">
+          <button onClick={() => navigate('/cadastro')} className={styles.linkButton}>
             Registre-se
           </button>
         </p>

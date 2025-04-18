@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from './Cadastro.module.css';
 import { FaUserCircle } from 'react-icons/fa';
-import { auth, googleProvider, signInWithPopup } from '../../firebase.js'; // ajuste o caminho conforme seu projeto
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { useNavigate } from 'react-router-dom';
+import { addUser } from '../../services/authService';
 
 const Cadastro = () => {
+  const { darkMode } = useContext(ThemeContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nome: '',
     cpf: '',
@@ -116,7 +120,7 @@ const Cadastro = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validações finais antes do envio
@@ -148,25 +152,39 @@ const Cadastro = () => {
       return;
     }
 
-    // Se não houver erros, prossegue com o cadastro
-    console.log('Dados enviados:', formData);
-    alert('Cadastro realizado com sucesso!');
-  };
-
-  const handleGoogleRegister = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      alert(`Bem-vindo, ${user.displayName}!`);
-      console.log('Usuário Google:', user);
+      // Determinar o tipo de usuário
+      let userType = 'usuario';
+      if (formData.queroAdotar && formData.queroSerTutor) {
+        userType = 'ambos';
+      } else if (formData.queroAdotar) {
+        userType = 'adotante';
+      } else if (formData.queroSerTutor) {
+        userType = 'tutor';
+      }
+      
+      // Criar usuário
+      await addUser({
+        email: formData.email,
+        password: formData.senha,
+        displayName: formData.nome,
+        cpf: formData.cpf,
+        type: userType
+      });
+
+      // Redirecionar para a página inicial
+      navigate('/');
     } catch (error) {
-      console.error('Erro no login com Google:', error);
-      alert('Erro ao registrar com o Google. Tente novamente.');
+      console.error('Erro ao criar conta:', error);
+      setErrors({
+        ...errors,
+        email: 'Erro ao criar conta. ' + error.message
+      });
     }
   };
 
   return (
-    <div className={styles.cadastroContainer}>
+    <div className={`${styles.cadastroContainer} ${darkMode ? styles.darkMode : ''}`}>
       <div className={styles.cadastroForm}>
         <FaUserCircle className={styles.userIcon} size={50} />
         <h1>Cadastre-se!</h1>
@@ -246,9 +264,6 @@ const Cadastro = () => {
           </div>
 
           <button type="submit" className={styles.registerButton}>Registre-se</button>
-          <button type="button" className={styles.googleButton} onClick={handleGoogleRegister}>
-            Registre-se pelo Google
-          </button>
         </form>
       </div>
     </div>

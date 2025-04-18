@@ -1,11 +1,19 @@
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from './Header.module.css';
 import React, { useContext } from 'react';
-import { FaSun, FaMoon } from 'react-icons/fa';
+import { FaSun, FaMoon, FaUserCircle } from 'react-icons/fa';
+import { logout } from '../../services/authService';
 
 const Header = () => {
   const { darkMode, toggleTheme } = useContext(ThemeContext);
+  const { user } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    window.location.reload(); // Recarrega a página para atualizar o estado
+  };
 
   return (
     <header className={styles.header}>
@@ -30,9 +38,11 @@ const Header = () => {
           Mapa
         </Link>
 
-        <Link to="/perfil" className={styles.link}>
-          Perfil
-        </Link>
+        {user && (
+          <Link to="/perfil" className={styles.link}>
+            Perfil
+          </Link>
+        )}
 
         <Link to="/feed" className={styles.link}>
           Feed
@@ -43,13 +53,27 @@ const Header = () => {
         </Link>
       </nav>
 
-      <div className={styles.rightSection}>
-        <Link to="/login" className={styles.loginButton}>
-          Entrar
-        </Link>
-        <Link to="/cadastro" className={styles.registerButton}>
-          Registrar
-        </Link>
+      <div className={styles.authButtons}>
+        {!user ? (
+          <>
+            <Link to="/login" className={styles.loginButton}>
+              Entrar
+            </Link>
+            <Link to="/cadastro" className={styles.registerButton}>
+              Registrar
+            </Link>
+          </>
+        ) : (
+          <div className={styles.userSection}>
+            <Link to="/perfil" className={styles.profileButton}>
+              <FaUserCircle size={24} />
+              <span>{user.displayName || user.email}</span>
+            </Link>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Sair
+            </button>
+          </div>
+        )}
 
         <button onClick={toggleTheme} className={styles.themeToggle}>
           {darkMode ? <FaSun /> : <FaMoon />}

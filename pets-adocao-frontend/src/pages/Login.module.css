@@ -1,0 +1,258 @@
+.loginContainer {
+  min-height: calc(90vh - 60px);
+  background-color: #fffaf4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: fadeIn 0.6s ease;
+  box-sizing: border-box;
+}
+
+.loginContainer.darkMode {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+}
+
+.loginForm {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-sizing: border-box;
+  margin: -30px auto 0;
+}
+
+.darkMode .loginForm {
+  background-color: #2d2d2d;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.userIcon {
+  color: #f77f00;
+  align-self: center;
+  margin-bottom: 10px;
+}
+
+.darkMode .userIcon {
+  color: #ff9f40;
+}
+
+.loginForm h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.darkMode .loginForm h1 {
+  color: #f5f5f5;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.darkMode .formGroup label {
+  color: #ccc;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+  color: #333;
+}
+
+.darkMode .formGroup input {
+  background-color: #3d3d3d;
+  border-color: #555;
+  color: #f5f5f5;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #f77f00;
+  box-shadow: 0 0 5px rgba(247, 127, 0, 0.3);
+}
+
+.darkMode .formGroup input:focus {
+  border-color: #ff9f40;
+  box-shadow: 0 0 5px rgba(255, 159, 64, 0.3);
+}
+
+.loginButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #f77f00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.darkMode .loginButton {
+  background-color: #ff9f40;
+}
+
+.loginButton:hover {
+  background-color: #e76f00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.darkMode .loginButton:hover {
+  background-color: #ff8f20;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.darkMode .divider::before,
+.darkMode .divider::after {
+  border-bottom: 1px solid #555;
+}
+
+.divider span {
+  padding: 0 1rem;
+  color: #666;
+}
+
+.darkMode .divider span {
+  color: #aaa;
+}
+
+.googleButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  color: #444;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.darkMode .googleButton {
+  background-color: #3d3d3d;
+  color: #f5f5f5;
+  border-color: #555;
+}
+
+.googleButton:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.darkMode .googleButton:hover {
+  background-color: #4d4d4d;
+}
+
+.registerLink {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #666;
+}
+
+.darkMode .registerLink {
+  color: #aaa;
+}
+
+.linkButton {
+  background: none;
+  border: none;
+  color: #f77f00;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+}
+
+.darkMode .linkButton {
+  color: #ff9f40;
+}
+
+.linkButton:hover {
+  color: #e76f00;
+}
+
+.darkMode .linkButton:hover {
+  color: #ff8f20;
+}
+
+.errorMessage {
+  color: #dc3545;
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #f8d7da;
+  border-radius: 4px;
+}
+
+.darkMode .errorMessage {
+  background-color: #3d2a2a;
+  color: #ff6b6b;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .loginForm {
+    padding: 30px 20px;
+  }
+
+  .loginForm h1 {
+    font-size: 1.6rem;
+  }
+
+  .formGroup input {
+    font-size: 0.95rem;
+  }
+} 

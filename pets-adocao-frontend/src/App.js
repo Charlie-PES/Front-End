@@ -24,10 +24,13 @@ import Feed from './pages/info/Feed/Feed';
 import Depoimentos from './pages/ExFooter/Depoimentos/Depoimentos';
 import Apoiadores from './pages/ExFooter/Apoiadores/Apoiadores';
 import MatchPage from './pages/user/MatchPage/MatchPage';
+import AdminPage from './pages/admin/AdminPage';
+import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
 
 function App() {
     return (
+        <AuthProvider>
             <div className="app-container">
                 <Header />
 
@@ -56,11 +59,13 @@ function App() {
                         <Route path="/depoimentos" element={<Depoimentos />} />
                         <Route path="/apoiadores" element={<Apoiadores />} />
                         <Route path="/matchpage" element={<MatchPage />} />
+                        <Route path="/admin" element={<AdminPage />} />
                     </Routes>
                 </main>
 
                 <Footer />
             </div>
+        </AuthProvider>
     );
 }
 

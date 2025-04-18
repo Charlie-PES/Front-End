@@ -1,243 +1,264 @@
 .cadastroContainer {
-    min-height: 100vh;
-    background-color: #fffaf4;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 20px;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #fffaf4;
+    transition: background-color 0.3s ease;
     animation: fadeIn 0.6s ease;
-    box-sizing: border-box;
-  }
-  
-  .cadastroForm {
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.darkMode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.cadastroForm {
     background-color: #ffffff;
-    padding: 40px 30px;
+    padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     width: 100%;
     max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    box-sizing: border-box;
-  }
-  
-  .userIcon {
-    color: #f77f00;
-    align-self: center;
-    margin-bottom: 10px;
-  }
-  
-  h1 {
-    text-align: center;
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  
-  form label {
-    font-weight: 500;
-    margin-bottom: 4px;
-    color: #444;
-  }
-  
-  form input[type='text'],
-  form input[type='email'],
-  form input[type='password'] {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  form input:focus {
-    outline: none;
-    border-color: #f77f00;
-    box-shadow: 0 0 5px rgba(247, 127, 0, 0.3);
-  }
-  
-  .checkboxContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  
-  .checkboxContainer label {
-    font-size: 0.95rem;
-    color: #555;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  
-  .registerButton,
-  .googleButton {
-    padding: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 10px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .registerButton {
-    background-color: #f77f00;
-    color: white;
-    border: none;
-  }
-  
-  .registerButton:hover {
-    background-color: #e76f00;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  }
-  
-  .googleButton {
-    background-color: #fff;
-    color: #444;
-    border: 1px solid #ccc;
-  }
-  
-  .googleButton:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-  
-  @keyframes fadeIn {
+    animation: slideUp 0.8s ease;
+}
+
+@keyframes slideUp {
     from {
-      opacity: 0;
-      transform: translateY(15px);
+        opacity: 0;
+        transform: translateY(30px);
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  @media (max-width: 480px) {
-    .cadastroForm {
-      padding: 30px 20px;
-    }
-  
-    h1 {
-      font-size: 1.6rem;
-    }
-  
-    form input {
-      font-size: 0.95rem;
-    }
-  }
+}
 
-  .formGroup {
+.darkMode .cadastroForm {
+    background-color: #2d2d2d;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.userIcon {
+    display: block;
+    margin: 0 auto 1rem;
+    color: #f77f00;
+    animation: scaleIn 0.6s ease 0.3s both;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.darkMode .userIcon {
+    color: #ffa726;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    transition: color 0.3s ease;
+    animation: fadeIn 0.6s ease 0.4s both;
+}
+
+.darkMode h1 {
+    color: #ffffff;
+}
+
+.formGroup {
     margin-bottom: 1.5rem;
-  }
-  
-  .formGroup label {
+    animation: fadeIn 0.6s ease 0.5s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+label {
     display: block;
     margin-bottom: 0.5rem;
     color: #555;
-    font-weight: 500;
-  }
-  
-  .formGroup input {
+    transition: color 0.3s ease;
+}
+
+.darkMode label {
+    color: #b0b0b0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
-  }
-  
-  .formGroup input:focus {
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
     outline: none;
-    border-color: #dca879;
-    box-shadow: 0 0 0 2px rgba(220, 168, 121, 0.2);
-  }
-  
-  .inputError {
-    border-color: #dc3545 !important;
-    background-color: #fff8f8;
-  }
-  
-  .inputError:focus {
-    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2) !important;
-  }
-  
-  .errorMessage {
-    color: #dc3545;
+    border-color: #f77f00;
+    box-shadow: 0 0 0 2px rgba(247, 127, 0, 0.1);
+}
+
+.darkMode input[type="text"],
+.darkMode input[type="email"],
+.darkMode input[type="password"] {
+    background-color: #3d3d3d;
+    border-color: #4a4a4a;
+    color: #ffffff;
+}
+
+.darkMode input[type="text"]:focus,
+.darkMode input[type="email"]:focus,
+.darkMode input[type="password"]:focus {
+    border-color: #ffa726;
+    box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.1);
+}
+
+.inputError {
+    border-color: #ff4444 !important;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.errorMessage {
+    color: #ff4444;
     font-size: 0.875rem;
     margin-top: 0.25rem;
     display: block;
-  }
-  
-  .checkboxContainer {
+    animation: fadeIn 0.3s ease;
+}
+
+.checkboxContainer {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin: 1.5rem 0;
-  }
-  
-  .checkboxContainer label {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.6s ease 0.6s both;
+}
+
+.checkboxContainer label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #555;
     cursor: pointer;
-  }
-  
-  .checkboxContainer input[type="checkbox"] {
-    width: 1.2rem;
-    height: 1.2rem;
-    cursor: pointer;
-  }
-  
-  .registerButton {
+    transition: transform 0.2s ease;
+}
+
+.checkboxContainer label:hover {
+    transform: translateX(5px);
+}
+
+.registerButton,
+.googleButton {
     width: 100%;
     padding: 0.75rem;
-    background-color: #dca879;
-    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.6s ease 0.7s both;
+}
+
+.registerButton {
+    background-color: #f77f00;
+    color: white;
     margin-bottom: 1rem;
-  }
-  
-  .registerButton:hover {
-    background-color: #c0926a;
-  }
-  
-  .googleButton {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: white;
+}
+
+.darkMode .registerButton {
+    background-color: #ffa726;
+}
+
+.googleButton {
+    background-color: #ffffff;
     color: #333;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  
-  .googleButton:hover {
-    background-color: #f5f5f5;
-  }
+}
+
+.darkMode .googleButton {
+    background-color: #3d3d3d;
+    color: #ffffff;
+    border-color: #4a4a4a;
+}
+
+.registerButton:hover,
+.googleButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.registerButton:active,
+.googleButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .cadastroForm {
+        padding: 1.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 0.625rem;
+    }
+
+    .registerButton,
+    .googleButton {
+        padding: 0.625rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cadastroForm {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .userIcon {
+        size: 40px;
+    }
+}
