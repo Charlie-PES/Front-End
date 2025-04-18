@@ -1,22 +1,24 @@
-import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../contexts/ThemeContext';
-import { useAuth } from '../../contexts/AuthContext';
-import styles from './Header.module.css';
 import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './Header.module.css';
+import { useAuth } from '../../contexts/AuthContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { FaSun, FaMoon, FaUserCircle } from 'react-icons/fa';
 import { logout } from '../../services/authService';
 
 const Header = () => {
   const { darkMode, toggleTheme } = useContext(ThemeContext);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    window.location.reload(); // Recarrega a página para atualizar o estado
+    navigate('/');
+    window.location.reload();
   };
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${darkMode ? styles.darkMode : ''}`}>
       <div className={styles.logoContainer}>
         <img src="/images/logo.png" alt="Logo" className={styles.logo} />
       </div>
@@ -25,29 +27,18 @@ const Header = () => {
         <Link to="/home" className={styles.link}>
           Home
         </Link>
-
         <Link to="/adotar" className={styles.link}>
           Adotar
         </Link>
-
         <Link to="/sobre" className={styles.link}>
           Sobre
         </Link>
-
         <Link to="/mapa" className={styles.link}>
           Mapa
         </Link>
-
-        {user && (
-          <Link to="/perfil" className={styles.link}>
-            Perfil
-          </Link>
-        )}
-
         <Link to="/feed" className={styles.link}>
           Feed
         </Link>
-
         <Link to="/matchpage" className={styles.link}>
           Match
         </Link>

@@ -1,0 +1,184 @@
+.container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+}
+
+.profileCard {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.avatarContainer {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  background-color: #dca879;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.avatarIcon {
+  color: #fff;
+}
+
+.userName {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.icon {
+  color: #dca879;
+  font-size: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+.infoItem h3 {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.infoItem p {
+  margin: 0.25rem 0 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.ongSection,
+.tutorSection {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.ongSection h2,
+.tutorSection h2 {
+  color: #333;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.ongSection p,
+.tutorSection p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.ongSection strong,
+.tutorSection strong {
+  color: #333;
+}
+
+/* Dark Mode */
+:global(.darkMode) .profileCard {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+:global(.darkMode) .userName {
+  color: #fff;
+}
+
+:global(.darkMode) .infoItem {
+  background-color: #363636;
+}
+
+:global(.darkMode) .infoItem h3 {
+  color: #aaa;
+}
+
+:global(.darkMode) .infoItem p {
+  color: #fff;
+}
+
+:global(.darkMode) .ongSection h2,
+:global(.darkMode) .tutorSection h2 {
+  color: #fff;
+}
+
+:global(.darkMode) .ongSection p,
+:global(.darkMode) .tutorSection p {
+  color: #aaa;
+}
+
+:global(.darkMode) .ongSection strong,
+:global(.darkMode) .tutorSection strong {
+  color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .profileCard {
+    padding: 1.5rem;
+  }
+
+  .userName {
+    font-size: 1.5rem;
+  }
+
+  .avatarContainer {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .profileCard {
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .infoItem {
+    padding: 0.75rem;
+  }
+
+  .userName {
+    font-size: 1.3rem;
+  }
+
+  .avatarContainer {
+    width: 80px;
+    height: 80px;
+  }
+} 
