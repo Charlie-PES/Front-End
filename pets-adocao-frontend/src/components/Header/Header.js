@@ -44,8 +44,11 @@ const Header = () => {
       </nav>
 
       <div className={styles.rightSection}>
-        <Link to="/cadastro" className={styles.loginLink}>
-          Logar/Registrar
+        <Link to="/login" className={styles.loginButton}>
+          Entrar
+        </Link>
+        <Link to="/cadastro" className={styles.registerButton}>
+          Registrar
         </Link>
 
         <button onClick={toggleTheme} className={styles.themeToggle}>

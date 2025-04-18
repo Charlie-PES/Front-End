@@ -6,6 +6,7 @@ import Home from './pages/info/Home/Home';
 import Adotar from './pages/pet/Adotar/Adotar';
 import Sobre from './pages/info/Sobre/Sobre';
 import Cadastro from './pages/auth/Cadastro';
+import Login from './pages/Login';
 import PetMatch from './pages/pet/PetMatch/PetMatch';
 import PetPage from './pages/pet/PetPage/PetPage';
 import Mapa from './pages/info/Mapa/Mapa';
@@ -37,6 +38,7 @@ function App() {
                         <Route path="/adotar" element={<Adotar />} />
                         <Route path="/sobre" element={<Sobre />} />
                         <Route path="/cadastro" element={<Cadastro />} />
+                        <Route path="/login" element={<Login />} />
                         <Route path="/match/:id" element={<PetMatch />} />
                         <Route path="/pet/:id" element={<PetPage />} />
                         <Route path="/mapa" element={<Mapa />} />
