@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styles from './Feed.module.css';
 import { ThemeContext } from '../../../contexts/ThemeContext';
-import { FaHeart, FaComment, FaShare, FaCalendarAlt, FaTag, FaFilter, FaSearch, FaPaw, FaUserCircle, FaImage, FaSmile, FaPaperPlane, FaNewspaper, FaSpinner, FaHashtag, FaTimes } from 'react-icons/fa';
+import { FaHeart, FaComment, FaShare, FaCalendarAlt, FaTag, FaFilter, FaSearch, FaPaw, FaUserCircle, FaImage, FaSmile, FaPaperPlane, FaNewspaper, FaSpinner, FaHashtag, FaTimes, FaDog, FaCat } from 'react-icons/fa';
 
 /**
  * Componente Feed
@@ -24,7 +24,7 @@ import { FaHeart, FaComment, FaShare, FaCalendarAlt, FaTag, FaFilter, FaSearch, 
  */
 const Feed = () => {
   const { id } = useParams();
-  const { darkMode } = useContext(ThemeContext);
+  const { darkMode, toggleTheme } = useContext(ThemeContext);
   const [filtroAtivo, setFiltroAtivo] = useState('todos');
   const [busca, setBusca] = useState('');
   const [novoPost, setNovoPost] = useState('');
@@ -512,7 +512,6 @@ const Feed = () => {
     <div className={`${styles.feedContainer} ${darkMode ? styles.darkMode : ''}`}>
       {!noticiaAtual ? (
         <>
-          {/* Barra de pesquisa fixa no topo */}
           <div className={styles.searchContainer}>
             <div className={styles.searchContainerInner}>
               <div className={styles.searchBar}>
@@ -524,8 +523,22 @@ const Feed = () => {
                   onChange={(e) => setBusca(e.target.value)}
                 />
               </div>
-              <button className={styles.mobileFilterToggle} onClick={toggleSidebar}>
+              <button 
+                className={styles.mobileFilterToggle} 
+                onClick={toggleSidebar}
+              >
                 <FaFilter /> Filtros
+              </button>
+              <button 
+                className={styles.themeToggle}
+                onClick={toggleTheme}
+                aria-label={darkMode ? "Ativar modo claro" : "Ativar modo escuro"}
+              >
+                {darkMode ? (
+                  <FaCat className={`${styles.themeIcon} ${styles.dark}`} />
+                ) : (
+                  <FaDog className={`${styles.themeIcon} ${styles.light}`} />
+                )}
               </button>
             </div>
           </div>
