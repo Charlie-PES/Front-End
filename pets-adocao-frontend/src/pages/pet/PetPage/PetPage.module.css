@@ -1,186 +1,553 @@
+/**
+ * PetPage.module.css
+ * 
+ * Estilos para a página de detalhes do pet.
+ * 
+ * Características:
+ * - Suporte a modo claro e escuro
+ * - Layout responsivo
+ * - Animações e transições suaves
+ * - Design moderno com cards e elementos visuais
+ * - Acessibilidade com contraste adequado
+ */
+
+/* Variáveis de cores para modo claro */
+:root {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --accent-color: #ff6b35;
+  --accent-hover: #e55a2b;
+  --border-color: #e0e0e0;
+  --success-color: #4caf50;
+  --error-color: #f44336;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --badge-bg: #ff6b35;
+  --badge-text: #ffffff;
+  --compatibility-bg: #f0f0f0;
+  --compatibility-fill: #ff6b35;
+  --status-sim-bg: #e8f5e9;
+  --status-sim-text: #2e7d32;
+  --status-nao-bg: #ffebee;
+  --status-nao-text: #c62828;
+}
+
+/* Variáveis de cores para modo escuro */
+.darkMode {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent-color: #ff9f43;
+  --accent-hover: #ff8f1f;
+  --border-color: #333333;
+  --success-color: #66bb6a;
+  --error-color: #ef5350;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --badge-bg: #ff9f43;
+  --badge-text: #121212;
+  --compatibility-bg: #2a2a2a;
+  --compatibility-fill: #ff9f43;
+  --status-sim-bg: #1b5e20;
+  --status-sim-text: #a5d6a7;
+  --status-nao-bg: #b71c1c;
+  --status-nao-text: #ffcdd2;
+}
+
+/* Container principal */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  font-family: 'Segoe UI', sans-serif;
-  animation: fadeIn 0.4s ease;
-  color: var(--text-color, #333);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Link de voltar */
+.voltarLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: color 0.2s ease;
+}
+
+.voltarLink:hover {
+  color: var(--accent-hover);
+}
+
+/* Layout principal */
 .main {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  margin-bottom: 40px;
 }
 
-.petImage {
-  max-width: 320px;
-  width: 100%;
-  border-radius: 16px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.petImage:hover {
-  transform: scale(1.03);
-}
-
-.info {
-  flex: 1;
+/* Coluna esquerda */
+.leftColumn {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  min-width: 300px;
 }
 
-.section {
-  background-color: var(--card-bg, #fff7f0);
-  padding: 24px;
-  border-radius: 14px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+/* Container da imagem */
+.imageContainer {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.petImage {
+  width: 100%;
+  height: auto;
+  display: block;
   transition: transform 0.3s ease;
 }
 
-.section:hover {
-  transform: translateY(-3px);
+.imageContainer:hover .petImage {
+  transform: scale(1.05);
 }
 
-.section h3 {
-  margin-bottom: 12px;
-  font-size: 1.3rem;
-  color: var(--highlight-color, #f77f00);
+.petBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
-.historico {
-  list-style: disc;
-  padding-left: 20px;
-  margin-top: 10px;
-  color: var(--text-color, #444);
-  font-size: 0.95rem;
-}
-
+/* Box de compatibilidade */
 .compatibilidadeBox {
-  background-color: var(--card-bg, #fafafa);
-  padding: 24px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.compatibilidadeBox h3 {
+  margin: 0 0 15px 0;
+  color: var(--text-color);
+  font-size: 18px;
+}
+
+.compatibilidadeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.compatibilidadeValor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.valor {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.label {
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
 .barra {
-  background-color: #e0f2e9;
-  height: 26px;
-  border-radius: 20px;
+  height: 8px;
+  background-color: var(--compatibility-bg);
+  border-radius: 4px;
   overflow: hidden;
-  margin: 14px 0;
 }
 
 .preenchido {
-  background-color: #48bb78;
   height: 100%;
-  text-align: center;
-  line-height: 26px;
-  color: white;
-  font-weight: bold;
-  transition: width 0.4s ease;
-  border-radius: 20px 0 0 20px;
+  background-color: var(--compatibility-fill);
+  border-radius: 4px;
+  transition: width 1s ease-out;
 }
 
+/* Botão de adotar */
 .adotarBtn {
-  background-color: var(--highlight-color, #f77f00);
+  width: 100%;
+  padding: 12px;
+  background-color: var(--accent-color);
   color: white;
-  padding: 12px 28px;
-  font-weight: bold;
-  font-size: 1rem;
   border: none;
   border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.adotarBtn:hover {
-  background-color: #e56d00;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.adotarBtn:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
 }
 
+.adotarBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Coluna direita */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Seções */
+.section {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.section h3 {
+  margin: 0 0 15px 0;
+  color: var(--text-color);
+  font-size: 18px;
+}
+
+/* Grid de informações */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoLabel {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.infoValue {
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+/* Status */
+.statusSim, .statusNao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.statusSim {
+  background-color: var(--status-sim-bg);
+  color: var(--status-sim-text);
+}
+
+.statusNao {
+  background-color: var(--status-nao-bg);
+  color: var(--status-nao-text);
+}
+
+/* Histórico */
+.historico {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+.historicoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.historicoItem:last-child {
+  border-bottom: none;
+}
+
+.historicoIcone {
+  font-size: 20px;
+}
+
+.historicoTexto {
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.tempoCuidado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Informações do responsável */
+.responsavelInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.responsavelItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.responsavelLabel {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.responsavelValue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-color);
+}
+
+.icone {
+  color: var(--accent-color);
+}
+
+/* Outros pets */
 .outros {
-  margin-top: 60px;
+  margin-top: 40px;
 }
 
 .outros h3 {
-  font-size: 1.6rem;
-  margin-bottom: 20px;
-  text-align: center;
-  color: var(--text-color, #444);
+  margin: 0 0 20px 0;
+  color: var(--text-color);
+  font-size: 20px;
 }
 
 .outrosGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
-  justify-content: center;
 }
 
 .outroCard {
-  width: 180px;
-  background-color: var(--card-bg, #fff);
-  padding: 14px;
+  background-color: var(--card-bg);
   border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.07);
-  transition: transform 0.3s ease;
-  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .outroCard:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px var(--shadow-color);
+}
+
+.outroImagemContainer {
+  position: relative;
+  height: 200px;
 }
 
 .outroImagem {
   width: 100%;
-  height: 110px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
 }
 
-/* Animação inicial */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+.outroBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
+.outroInfo {
+  padding: 15px;
+}
+
+.outroInfo h4 {
+  margin: 0 0 8px 0;
+  color: var(--text-color);
+  font-size: 16px;
+}
+
+.outroInfo p {
+  margin: 0 0 12px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.outroCompatibilidade {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.outroBarra {
+  flex: 1;
+  height: 6px;
+  background-color: var(--compatibility-bg);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.outroPreenchido {
+  height: 100%;
+  background-color: var(--compatibility-fill);
+  border-radius: 3px;
+  transition: width 1s ease-out;
+}
+
+.outroCompatibilidade span {
+  font-size: 14px;
+  color: var(--text-secondary);
+  min-width: 40px;
+  text-align: right;
+}
+
+.verMaisBtn {
+  display: block;
+  padding: 10px;
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.verMaisBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Estados de carregamento e erro */
+.loadingContainer, .errorContainer, .sucessoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 20px;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  font-size: 24px;
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
+
+.errorContainer h2, .sucessoContainer h2 {
+  color: var(--text-color);
+  margin: 0 0 15px 0;
+}
+
+.errorContainer p, .sucessoContainer p {
+  color: var(--text-secondary);
+  margin: 0 0 20px 0;
+}
+
+.sucessoIcon {
+  font-size: 48px;
+  color: var(--success-color);
+  margin-bottom: 20px;
+}
+
+/* Animações */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media queries para responsividade */
+@media (max-width: 1024px) {
   .main {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
   }
-
-  .petImage {
-    max-width: 100%;
-  }
-
-  .info {
-    width: 100%;
-  }
-
-  .outrosGrid {
-    flex-direction: column;
-    align-items: center;
+  
+  .leftColumn {
+    max-width: 500px;
+    margin: 0 auto;
   }
 }
 
-/* Tema escuro */
-[data-theme='dark'] {
-  --bg-color: #121212;
-  --text-color: #e4e4e4;
-  --card-bg: #1f1f1f;
-  --border-color: #333;
-  --input-bg: #2c2c2c;
-  --highlight-color: #f9a826;
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  .infoGrid, .responsavelInfo {
+    grid-template-columns: 1fr;
+  }
+  
+  .outrosGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .outroImagemContainer {
+    height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .section {
+    padding: 15px;
+  }
+  
+  .compatibilidadeBox {
+    padding: 15px;
+  }
+  
+  .valor {
+    font-size: 20px;
+  }
+  
+  .outroImagemContainer {
+    height: 160px;
+  }
 }
