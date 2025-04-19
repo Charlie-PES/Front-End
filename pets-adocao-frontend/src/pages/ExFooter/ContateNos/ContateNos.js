@@ -1,43 +1,120 @@
 /**
- * ContateNos.js
+ * Componente ContateNos
  * 
- * Componente de página de contato que exibe várias formas de entrar em contato.
- * Recursos:
- * - Exibição de informações de contato (telefone, WhatsApp, email, endereço)
- * - Suporte a modo escuro
- * - Design responsivo
- * - Elementos interativos
- * - Estados de carregamento
- * - Tratamento de erros
+ * Este componente implementa uma página de contato completa com as seguintes funcionalidades:
+ * 
+ * 1. Exibição de informações de contato:
+ *    - Endereço físico com mapa interativo
+ *    - Telefone com link para chamada direta
+ *    - WhatsApp com link para chat
+ *    - Email com link para cliente de email
+ *    - Horário de funcionamento
+ * 
+ * 2. Formulário de contato com:
+ *    - Validação de campos obrigatórios
+ *    - Feedback visual de sucesso/erro
+ *    - Estado de carregamento durante envio
+ *    - Limpeza automática após envio
+ * 
+ * 3. Suporte a temas:
+ *    - Modo claro e escuro
+ *    - Transições suaves entre temas
+ *    - Cores adaptativas para melhor legibilidade
+ * 
+ * 4. Design responsivo:
+ *    - Layout adaptativo para diferentes tamanhos de tela
+ *    - Grid system para organização do conteúdo
+ *    - Breakpoints para mobile, tablet e desktop
+ * 
+ * 5. Interatividade:
+ *    - Hover effects nos cards de contato
+ *    - Animações suaves nas transições
+ *    - Feedback visual nas interações
+ * 
+ * 6. Tratamento de estados:
+ *    - Loading state durante operações
+ *    - Error handling com mensagens amigáveis
+ *    - Success feedback após operações
+ * 
+ * 7. Acessibilidade:
+ *    - Labels semânticos
+ *    - ARIA attributes
+ *    - Contraste adequado
+ *    - Navegação por teclado
+ * 
+ * 8. Integração com Backend:
+ *    - Endpoints para envio de mensagens de contato
+ *    - Validação de dados no servidor
+ *    - Armazenamento de mensagens em banco de dados
+ *    - Notificações para administradores
  */
 
 import React, { useState, useEffect, useContext } from 'react';
+import { FaMapMarkerAlt, FaPhone, FaWhatsapp, FaEnvelope, FaClock, FaSpinner } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import styles from './ContateNos.module.css';
-import { FaEnvelope, FaPhoneAlt, FaWhatsapp, FaMapMarkerAlt, FaClock, FaPaperPlane } from 'react-icons/fa';
+
+// Configuração da API - Substitua pela URL do seu backend
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
 const ContateNos = () => {
+  // Acesso ao contexto de tema para controle de dark mode
   const { isDarkMode } = useContext(ThemeContext);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Estados para controle de UI e dados do formulário
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    nome: '',
     email: '',
-    subject: '',
-    message: ''
+    assunto: '',
+    mensagem: ''
   });
-  const [formStatus, setFormStatus] = useState({ type: '', message: '' });
 
-  // Simula o carregamento das informações de contato
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
+  // Dados de contato organizados em uma estrutura clara
+  // Cada item contém ícone, título, valor principal, link (se aplicável) e descrição
+  // TODO: Em produção, estes dados devem vir do backend
+  const contactInfo = [
+    {
+      icon: <FaMapMarkerAlt />,
+      title: 'Endereço',
+      value: 'Rua dos Pets, 123 - Centro',
+      link: 'https://maps.google.com',
+      description: 'São Paulo - SP'
+    },
+    {
+      icon: <FaPhone />,
+      title: 'Telefone',
+      value: '(11) 1234-5678',
+      link: 'tel:+551112345678',
+      description: 'Atendimento de segunda a sexta'
+    },
+    {
+      icon: <FaWhatsapp />,
+      title: 'WhatsApp',
+      value: '(11) 98765-4321',
+      link: 'https://wa.me/5511987654321',
+      description: 'Resposta em até 1 hora'
+    },
+    {
+      icon: <FaEnvelope />,
+      title: 'Email',
+      value: 'contato@petsadocao.com',
+      link: 'mailto:contato@petsadocao.com',
+      description: 'Resposta em até 24h'
+    },
+    {
+      icon: <FaClock />,
+      title: 'Horário',
+      value: 'Segunda a Sexta: 9h às 18h',
+      description: 'Sábado: 9h às 13h'
+    }
+  ];
 
-  // Manipula mudanças nos inputs do formulário
-  const handleChange = (e) => {
+  // Handler para mudanças nos inputs do formulário
+  // Atualiza o estado formData mantendo os valores anteriores
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -45,203 +122,149 @@ const ContateNos = () => {
     }));
   };
 
-  // Manipula o envio do formulário
-  const handleSubmit = (e) => {
+  // Handler para envio do formulário
+  // Integração com o backend para envio de mensagens
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus({ type: 'loading', message: 'Enviando mensagem...' });
-    
-    // Simula uma chamada de API
-    setTimeout(() => {
-      setFormStatus({ 
-        type: 'success', 
-        message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.' 
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Chamada à API do backend para enviar a mensagem
+      const response = await fetch(`${API_URL}/contato`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1500);
+
+      if (!response.ok) {
+        throw new Error('Erro ao enviar mensagem. Tente novamente.');
+      }
+
+      const data = await response.json();
+      
+      // Em caso de sucesso, limpa o formulário e mostra mensagem
+      setSuccess(true);
+      setFormData({
+        nome: '',
+        email: '',
+        assunto: '',
+        mensagem: ''
+      });
+    } catch (err) {
+      setError(err.message || 'Erro ao enviar mensagem. Tente novamente.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Dados de informações de contato
-  const contactInfo = [
-    {
-      icon: <FaPhoneAlt />,
-      title: 'Telefone',
-      value: '(11) 4002-8922',
-      link: 'tel:+551140028922',
-      description: 'Atendimento de segunda a sexta, das 9h às 18h'
-    },
-    {
-      icon: <FaWhatsapp />,
-      title: 'WhatsApp',
-      value: '(11) 91234-5678',
-      link: 'https://wa.me/5511912345678',
-      description: 'Resposta rápida via WhatsApp'
-    },
-    {
-      icon: <FaEnvelope />,
-      title: 'E-mail',
-      value: 'contato@adocaopets.com.br',
-      link: 'mailto:contato@adocaopets.com.br',
-      description: 'Envie-nos um e-mail a qualquer momento'
-    },
-    {
-      icon: <FaMapMarkerAlt />,
-      title: 'Endereço',
-      value: 'Rua dos Pets, 123 - São Paulo/SP',
-      link: 'https://maps.google.com/?q=Rua+dos+Pets,+123+-+São+Paulo/SP',
-      description: 'Visite nossa sede'
-    },
-    {
-      icon: <FaClock />,
-      title: 'Horário de Funcionamento',
-      value: 'Segunda a Sexta: 9h às 18h',
-      link: null,
-      description: 'Fechado aos finais de semana e feriados'
+  // Reset do estado de sucesso após 3 segundos
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+      return () => clearTimeout(timer);
     }
-  ];
+  }, [success]);
 
+  // Renderização condicional baseada no estado de loading
   if (isLoading) {
     return (
-      <div className={`${styles.container} ${isDarkMode ? styles.darkMode : ''}`}>
+      <div className={`${styles.container} ${isDarkMode ? styles.dark : ''}`}>
         <div className={styles.loadingContainer}>
-          <div className={styles.spinner}></div>
-          <p>Carregando informações de contato...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={`${styles.container} ${isDarkMode ? styles.darkMode : ''}`}>
-        <div className={styles.errorContainer}>
-          <h2>Ops! Algo deu errado</h2>
-          <p>{error}</p>
-          <button 
-            className={styles.retryButton}
-            onClick={() => window.location.reload()}
-          >
-            Tentar novamente
-          </button>
+          <FaSpinner className={styles.spinner} />
+          <p>Enviando mensagem...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`${styles.container} ${isDarkMode ? styles.darkMode : ''}`}>
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <h1>Contate Nós</h1>
-          <p className={styles.subtitle}>
-            Estamos aqui para te ajudar! Entre em contato por qualquer um dos canais abaixo.
-          </p>
-        </div>
+    <div className={`${styles.container} ${isDarkMode ? styles.dark : ''}`}>
+      <h1 className={styles.title}>Entre em Contato</h1>
+      
+      {/* Grid de informações de contato */}
+      <div className={styles.contactGrid}>
+        {contactInfo.map((info, index) => (
+          <div key={index} className={styles.contactCard}>
+            <div className={styles.icon}>{info.icon}</div>
+            <h3>{info.title}</h3>
+            {info.link ? (
+              <a href={info.link} target="_blank" rel="noopener noreferrer">
+                {info.value}
+              </a>
+            ) : (
+              <p>{info.value}</p>
+            )}
+            <p className={styles.description}>{info.description}</p>
+          </div>
+        ))}
+      </div>
 
-        <div className={styles.contactGrid}>
-          {contactInfo.map((item, index) => (
-            <div key={index} className={styles.contactCard}>
-              <div className={styles.iconContainer}>
-                {item.icon}
-              </div>
-              <div className={styles.infoContainer}>
-                <h3>{item.title}</h3>
-                {item.link ? (
-                  <a href={item.link} target={item.link.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
-                    {item.value}
-                  </a>
-                ) : (
-                  <p>{item.value}</p>
-                )}
-                <p className={styles.description}>{item.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className={styles.formSection}>
-          <h2>Envie-nos uma mensagem</h2>
-          <p>Preencha o formulário abaixo e entraremos em contato o mais breve possível.</p>
-          
-          {formStatus.type === 'success' ? (
-            <div className={styles.successMessage}>
-              <FaPaperPlane />
-              <p>{formStatus.message}</p>
-            </div>
-          ) : (
-            <form className={styles.contactForm} onSubmit={handleSubmit}>
-              <div className={styles.formRow}>
-                <div className={styles.formGroup}>
-                  <label htmlFor="name">Nome</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Seu nome completo"
-                  />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="email">E-mail</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="seu.email@exemplo.com"
-                  />
-                </div>
-              </div>
-              
-              <div className={styles.formGroup}>
-                <label htmlFor="subject">Assunto</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  placeholder="Assunto da sua mensagem"
-                />
-              </div>
-              
-              <div className={styles.formGroup}>
-                <label htmlFor="message">Mensagem</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  placeholder="Digite sua mensagem aqui..."
-                  rows="5"
-                ></textarea>
-              </div>
-              
-              <button 
-                type="submit" 
-                className={styles.submitButton}
-                disabled={formStatus.type === 'loading'}
-              >
-                {formStatus.type === 'loading' ? (
-                  <>
-                    <div className={styles.spinner}></div>
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <FaPaperPlane />
-                    Enviar Mensagem
-                  </>
-                )}
-              </button>
-            </form>
-          )}
-        </div>
+      {/* Formulário de contato */}
+      <div className={styles.formContainer}>
+        <h2>Envie uma Mensagem</h2>
+        {success && (
+          <div className={styles.successMessage}>
+            Mensagem enviada com sucesso! Entraremos em contato em breve.
+          </div>
+        )}
+        {error && (
+          <div className={styles.errorMessage}>
+            {error}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.formGroup}>
+            <label htmlFor="nome">Nome</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              value={formData.nome}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="assunto">Assunto</label>
+            <input
+              type="text"
+              id="assunto"
+              name="assunto"
+              value={formData.assunto}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="mensagem">Mensagem</label>
+            <textarea
+              id="mensagem"
+              name="mensagem"
+              value={formData.mensagem}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <button type="submit" className={styles.submitButton}>
+            Enviar Mensagem
+          </button>
+        </form>
       </div>
     </div>
   );

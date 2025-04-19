@@ -1,42 +1,269 @@
-## 🐾 Pets Adoção - Front-End
-Projeto front-end de um sistema de adoção de pets. Desenvolvido em React, com funcionalidades de visualização de pets, filtros, match de compatibilidade, mapa de ONGs, cadastro e login com Google (via Firebase).
+# Pets Adoção - Frontend
 
-## 💻 Requisitos
-Node.js v18 ou superior (recomendada v20+)
+Este é o frontend do projeto Pets Adoção, uma plataforma para adoção de animais de estimação.
 
-npm v9 ou superior
+## Visão Geral
 
-## Dependências do projeto:
+O frontend foi desenvolvido com React e inclui as seguintes funcionalidades:
 
-npm install
+- Feed de notícias e posts sociais
+- Página de detalhes de pets para adoção
+- Formulário de cadastro de pets
+- Página de contato
+- Suporte a tema claro/escuro
+- Design responsivo para dispositivos móveis
 
-npm install react-scripts@5.0.1 eslint@8.56.0 eslint-config-react-app babel-eslint @babel/preset-react @babel/preset-env --save-dev
+## Estrutura do Projeto
 
-npm install react-leaflet@4 leaflet
+```
+pets-adocao-frontend/
+├── public/                  # Arquivos estáticos
+├── src/                     # Código fonte
+│   ├── components/          # Componentes reutilizáveis
+│   ├── contexts/            # Contextos React (tema, autenticação)
+│   ├── hooks/               # Hooks personalizados
+│   ├── pages/               # Páginas da aplicação
+│   ├── services/            # Serviços para comunicação com API
+│   ├── utils/               # Funções utilitárias
+│   ├── App.js               # Componente principal
+│   └── index.js             # Ponto de entrada
+└── package.json             # Dependências e scripts
+```
 
-npm install firebase ESSSE VAI SAIR
+## Instalação e Execução
 
-## 🚀 Rodando o projeto
-Inicie o ambiente de desenvolvimento: npm start
+1. Clone o repositório
+2. Instale as dependências:
+   ```
+   npm install
+   ```
+3. Execute o projeto em modo de desenvolvimento:
+   ```
+   npm start
+   ```
+4. Para build de produção:
+   ```
+   npm run build
+   ```
 
-A aplicação será iniciada em:📍 http://localhost:3000
+## Integração com Backend
 
+O frontend está preparado para se integrar com um backend. Abaixo estão as instruções para implementar o backend necessário.
 
-## 🌐 Funcionalidades:
-✅ Página inicial com categorias
+### Endpoints da API
 
-✅ Lista de pets com filtros (porte, sexo, etc.)
+O frontend espera que o backend implemente os seguintes endpoints:
 
-✅ Página do pet com histórico e compatibilidade
+#### 1. Autenticação
 
-✅ Sistema de Match com visual animado
+- `POST /api/auth/login` - Login de usuário
+- `POST /api/auth/register` - Registro de usuário
+- `GET /api/auth/me` - Obter dados do usuário autenticado
 
-✅ Página de perfil do usuário com ações
+#### 2. Pets
 
-✅ Mapa com localização de ONGs e abrigos (Leaflet)
+- `GET /api/pets` - Listar todos os pets disponíveis para adoção
+- `GET /api/pets/:id` - Obter detalhes de um pet específico
+- `POST /api/pets` - Cadastrar um novo pet
+- `PUT /api/pets/:id` - Atualizar informações de um pet
+- `DELETE /api/pets/:id` - Remover um pet
 
-✅ Cadastro de usuário com login via Google (Firebase)
+#### 3. Feed
 
+- `GET /api/feed` - Obter posts do feed (notícias e posts sociais)
+- `POST /api/feed` - Criar um novo post
+- `GET /api/feed/hashtags` - Obter hashtags populares
 
-## 📄 Licença
-Este projeto está sob a licença MIT.
+#### 4. Contato
+
+- `POST /api/contato` - Enviar mensagem de contato
+
+### Estrutura de Dados
+
+#### Pet
+
+```json
+{
+  "id": "string",
+  "nome": "string",
+  "tipo": "string",
+  "raca": "string",
+  "idade": "number",
+  "sexo": "string",
+  "cor": "string",
+  "porte": "string",
+  "castrado": "boolean",
+  "vacinas": "string",
+  "imagem": "string (URL)",
+  "compatibilidade": {
+    "criancas": "boolean",
+    "outrosPets": "boolean",
+    "apartamento": "boolean"
+  },
+  "historico": "string",
+  "responsavel": {
+    "nome": "string",
+    "telefone": "string",
+    "email": "string"
+  },
+  "dataCadastro": "string (ISO date)",
+  "status": "string (disponível, adotado, etc)"
+}
+```
+
+#### Post do Feed
+
+```json
+{
+  "id": "string",
+  "tipo": "string (noticia, social)",
+  "titulo": "string",
+  "conteudo": "string",
+  "imagem": "string (URL)",
+  "autor": {
+    "id": "string",
+    "nome": "string",
+    "avatar": "string (URL)"
+  },
+  "data": "string (ISO date)",
+  "hashtags": ["string"],
+  "curtidas": "number",
+  "comentarios": "number"
+}
+```
+
+#### Mensagem de Contato
+
+```json
+{
+  "nome": "string",
+  "email": "string",
+  "assunto": "string",
+  "mensagem": "string",
+  "data": "string (ISO date)"
+}
+```
+
+## Implementação do Backend
+
+### Tecnologias Recomendadas
+
+- **Node.js** com **Express** para o servidor
+- **MongoDB** ou **PostgreSQL** para o banco de dados
+- **JWT** para autenticação
+- **Multer** para upload de imagens
+- **Nodemailer** para envio de emails
+
+### Estrutura do Backend
+
+```
+pets-adocao-backend/
+├── src/
+│   ├── config/              # Configurações (banco de dados, email, etc)
+│   ├── controllers/         # Controladores para cada recurso
+│   ├── middlewares/         # Middlewares (autenticação, validação, etc)
+│   ├── models/              # Modelos de dados
+│   ├── routes/              # Rotas da API
+│   ├── services/            # Lógica de negócios
+│   ├── utils/               # Funções utilitárias
+│   └── app.js               # Aplicação Express
+├── .env                     # Variáveis de ambiente
+└── package.json             # Dependências e scripts
+```
+
+### Passos para Implementação
+
+1. **Configuração Inicial**:
+   - Crie um novo projeto Node.js
+   - Instale as dependências necessárias
+   - Configure o banco de dados
+   - Configure variáveis de ambiente
+
+2. **Autenticação**:
+   - Implemente registro e login de usuários
+   - Configure JWT para autenticação
+   - Crie middleware de autenticação
+
+3. **Modelos de Dados**:
+   - Crie modelos para Pets, Posts, Usuários, etc
+   - Configure validações e relacionamentos
+
+4. **Rotas e Controladores**:
+   - Implemente as rotas da API conforme documentado acima
+   - Crie controladores para processar as requisições
+
+5. **Upload de Imagens**:
+   - Configure Multer para upload de imagens
+   - Implemente armazenamento local ou em serviço de nuvem
+
+6. **Notificações**:
+   - Configure Nodemailer para envio de emails
+   - Implemente notificações para novos contatos e adoções
+
+7. **Testes**:
+   - Escreva testes para as funcionalidades principais
+   - Configure CI/CD para testes automatizados
+
+8. **Deploy**:
+   - Configure o servidor para produção
+   - Implemente HTTPS e outras medidas de segurança
+   - Configure CORS para permitir requisições do frontend
+
+### Exemplo de Implementação Básica
+
+```javascript
+// app.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const petRoutes = require('./src/routes/petRoutes');
+const feedRoutes = require('./src/routes/feedRoutes');
+const contatoRoutes = require('./src/routes/contatoRoutes');
+const authRoutes = require('./src/routes/authRoutes');
+
+dotenv.config();
+const app = express();
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Conexão com o banco de dados
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// Rotas
+app.use('/api/pets', petRoutes);
+app.use('/api/feed', feedRoutes);
+app.use('/api/contato', contatoRoutes);
+app.use('/api/auth', authRoutes);
+
+// Iniciar servidor
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
+```
+
+## Configuração de Ambiente
+
+Para conectar o frontend ao backend, crie um arquivo `.env` na raiz do projeto frontend com as seguintes variáveis:
+
+```
+REACT_APP_API_URL=http://localhost:3001/api
+```
+
+## Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
+3. Faça commit das suas alterações (`git commit -m 'Adiciona nova feature'`)
+4. Faça push para a branch (`git push origin feature/nova-feature`)
+5. Abra um Pull Request
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT.
