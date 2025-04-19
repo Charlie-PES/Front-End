@@ -1,21 +1,31 @@
 /* =============== VARIÁVEIS E TEMA =============== */
 :root {
-  --bg-color: #fffaf4;
-  --text-color: #333;
-  --card-bg: #ffffff;
-  --highlight-color: #f77f00;
-  --highlight-hover: #dd6f00;
-  --border-color: #ccc;
-  --input-bg: #fff;
+  /* Cores do tema claro - padronizadas com o projeto */
+  --primary-color: #f77f00; /* Laranja escuro */
+  --secondary-color: #fffaf4; /* Bege claro */
+  --accent-color: #ffd166; /* Amarelo */
+  --background-color: #ffffff; /* Branco */
+  --text-color: #333333; /* Cinza escuro */
+  --border-color: #e0e0e0; /* Cinza claro */
+  --card-background: #ffffff; /* Branco */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --hover-color: #f5f5f5;
+  --input-bg: #ffffff;
+  --transition-speed: 0.3s;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-[data-theme='dark'] {
-  --bg-color: #121212;
-  --text-color: #e4e4e4;
-  --card-bg: #1f1f1f;
-  --highlight-color: #f9a826;
-  --highlight-hover: #c77a00;
-  --border-color: #444;
+/* Variáveis para modo escuro - padronizadas com o projeto */
+.darkMode {
+  --primary-color: #ffd166; /* Amarelo */
+  --secondary-color: #121212; /* Preto */
+  --accent-color: #f77f00; /* Laranja escuro */
+  --background-color: #1a1a1a; /* Preto mais claro */
+  --text-color: #e4e4e4; /* Branco */
+  --border-color: #333333; /* Cinza escuro */
+  --card-background: #2d2d2d; /* Cinza mais claro */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --hover-color: #3d3d3d;
   --input-bg: #2a2a2a;
 }
 
@@ -23,152 +33,421 @@
 .testimonialPage {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
-  font-family: 'Segoe UI', sans-serif;
-  animation: fadeIn 0.5s ease-in-out;
-  background-color: var(--bg-color);
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: var(--background-color);
   color: var(--text-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  font-family: var(--font-family);
 }
 
-.testimonialPage h1 {
+/* =============== CABEÇALHO DA PÁGINA =============== */
+.pageHeader {
   text-align: center;
-  font-size: 2.4rem;
-  margin-bottom: 30px;
-  color: var(--text-color);
+  margin-bottom: 3rem;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: 1rem;
+  color: white;
+  box-shadow: 0 4px 15px var(--shadow-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.pageHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+  background-size: cover;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.headerIcon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+.pageHeader h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pageHeader p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+/* =============== SEÇÕES =============== */
+.testimonialFormSection,
+.testimonialsSection {
+  margin-bottom: 3rem;
+}
+
+.testimonialFormSection h2,
+.testimonialsSection h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.testimonialFormSection h2::after,
+.testimonialsSection h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--accent-color);
+  border-radius: 3px;
 }
 
 /* =============== FORMULÁRIO DE DEPOIMENTO =============== */
 .testimonialForm {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-  margin-bottom: 50px;
-  animation: fadeInScale 0.6s ease-in-out;
+  background: var(--card-background);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.testimonialForm textarea {
+.testimonialForm:hover {
+  box-shadow: 0 6px 16px var(--shadow-color);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.formGroup input,
+.formGroup textarea {
   width: 100%;
-  height: 120px;
-  padding: 15px;
+  padding: 0.8rem 1rem;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: 1px solid var(--border-color);
   background-color: var(--input-bg);
   color: var(--text-color);
-  resize: none;
-  margin-bottom: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.testimonialForm button {
-  background-color: var(--highlight-color);
+.formGroup textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(247, 127, 0, 0.2);
+}
+
+.submitButton {
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.testimonialForm button:hover {
-  background-color: var(--highlight-hover);
+.submitButton:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.submitButton:disabled {
+  background-color: var(--border-color);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* =============== CARROSSEL DE DEPOIMENTOS =============== */
 .carouselWrapper {
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  padding: 1rem 0;
 }
 
 .carouselTrack {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 20px;
+  gap: 1.5rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding-bottom: 10px;
-  animation: slideFade 0.6s ease-in-out;
+  padding: 0.5rem;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.carouselTrack::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .testimonialCard {
-  flex: 0 0 300px;
-  background: var(--card-bg);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  flex: 0 0 350px;
+  background: var(--card-background);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  border: 1px solid var(--border-color);
   scroll-snap-align: start;
-  opacity: 0;
-  animation: fadeInDelayed 0.6s ease forwards;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
 }
 
-.testimonialCard h4 {
+.testimonialCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.avatar,
+.avatarPlaceholder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.userInfo h4 {
   font-size: 1.1rem;
+  margin: 0 0 0.2rem 0;
   color: var(--text-color);
-  margin-bottom: 10px;
 }
 
-.testimonialCard p {
+.date {
+  font-size: 0.85rem;
   color: var(--text-color);
-  font-style: italic;
+  opacity: 0.7;
+}
+
+.cardContent {
+  position: relative;
+  padding: 0 0 1rem 0;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.quoteIcon {
+  color: var(--primary-color);
+  opacity: 0.3;
+  font-size: 1.5rem;
+  position: absolute;
+  top: -0.5rem;
+  left: -0.5rem;
+}
+
+.cardContent p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  opacity: 0.7;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.actionButton:hover {
+  color: var(--primary-color);
+  opacity: 1;
+}
+
+/* Indicadores de navegação */
+.carouselIndicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background-color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+/* =============== ESTADOS DE CARREGAMENTO E ERRO =============== */
+.loadingContainer,
+.errorContainer,
+.emptyContainer {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--card-background);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  border: 1px solid var(--border-color);
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  animation: spin 1s linear infinite;
+}
+
+.errorContainer button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.errorContainer button:hover {
+  background-color: var(--accent-color);
 }
 
 /* =============== ANIMAÇÕES =============== */
-@keyframes fadeInDelayed {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes slideFade {
+@keyframes float {
   0% {
-    opacity: 0.2;
-    transform: translateX(-30px);
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
   }
   100% {
-    opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0px);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
 /* =============== RESPONSIVO PARA MOBILE =============== */
 @media (max-width: 768px) {
   .testimonialPage {
-    padding: 30px 16px;
+    padding: 1.5rem;
   }
 
-  .testimonialPage h1 {
-    font-size: 2rem;
+  .pageHeader {
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .pageHeader h1 {
+    font-size: 2.2rem;
   }
 
   .testimonialForm {
-    padding: 20px;
-  }
-
-  .carouselTrack {
-    flex-direction: column;
-    align-items: center;
+    padding: 1.5rem;
   }
 
   .testimonialCard {
-    flex: 0 0 100%;
-    max-width: 100%;
+    flex: 0 0 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageHeader h1 {
+    font-size: 2rem;
+  }
+
+  .pageHeader p {
+    font-size: 1rem;
+  }
+
+  .testimonialFormSection h2,
+  .testimonialsSection h2 {
+    font-size: 1.5rem;
+  }
+
+  .testimonialCard {
+    flex: 0 0 280px;
+    padding: 1.2rem;
+  }
+
+  .cardContent p {
+    font-size: 0.95rem;
   }
 }
