@@ -1,186 +1,480 @@
+/* 
+ * Estilos para o componente Mapa
+ * 
+ * Este arquivo define os estilos para a página de mapa, incluindo:
+ * - Suporte a modo claro e escuro
+ * - Layout responsivo com sidebar e área de mapa
+ * - Animações e transições
+ * - Efeitos de hover e interações
+ */
 
+/* Variáveis de cores para modo claro e escuro */
 :root {
-  --bg-color: #fffaf4;
-  --text-color: #333;
-  --input-bg: #fff;
+  /* Modo claro */
+  --light-bg: #f5f5f0; /* beige */
+  --light-text: #333333;
+  --light-card-bg: #ffffff;
+  --light-card-border: #e0e0e0;
+  --light-card-hover: #f9f9f9;
+  --light-accent: #d35400; /* dark orange */
+  --light-secondary: #f0f0e6;
+  --light-input-bg: #ffffff;
+  --light-input-border: #d0d0d0;
+  --light-input-focus: #d35400;
+  --light-button-bg: #d35400;
+  --light-button-text: #ffffff;
+  --light-button-hover: #b34700;
+  --light-overlay-bg: rgba(0, 0, 0, 0.5);
+  
+  /* Modo escuro */
+  --dark-bg: #121212;
+  --dark-text: #f0f0f0;
+  --dark-card-bg: #1e1e1e;
+  --dark-card-border: #333333;
+  --dark-card-hover: #2a2a2a;
+  --dark-accent: #ffd700; /* yellow */
+  --dark-secondary: #1a1a1a;
+  --dark-input-bg: #2a2a2a;
+  --dark-input-border: #444444;
+  --dark-input-focus: #ffd700;
+  --dark-button-bg: #ffd700;
+  --dark-button-text: #121212;
+  --dark-button-hover: #e6c300;
+  --dark-overlay-bg: rgba(0, 0, 0, 0.7);
 }
 
-[data-theme='dark'] {
-  --bg-color: #1e1e1e;
-  --text-color: #eee;
-  --input-bg: #2e2e2e;
-}
-
-/* Mapa.module.css */
-
+/* Container principal */
 .mapaContainer {
-  font-family: 'Arial', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  animation: fadeIn 0.4s ease-in-out;
+  padding: 2rem;
+  background-color: var(--light-bg);
+  color: var(--light-text);
   min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
 }
 
+/* Modo escuro */
+.darkMode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+/* Cabeçalho do mapa */
 .mapaHeader {
-  font-size: 2rem;
-  font-weight: bold;
   text-align: center;
-  color: var(--text-color);
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.mapaTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--light-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.darkMode .mapaTitle {
+  color: var(--dark-accent);
+}
+
+.mapIcon {
+  margin-right: 0.75rem;
+  font-size: 2rem;
+}
+
+.mapaSubtitle {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--light-text);
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+.darkMode .mapaSubtitle {
+  color: var(--dark-text);
+}
+
+/* Layout do mapa */
 .mapaLayout {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
-  flex-wrap: wrap;
-  width: 100%;
+  position: relative;
+  height: calc(100vh - 200px);
+  min-height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Sidebar de filtros */
 .sidebarContainer {
-  width: 320px;
-  flex-shrink: 0;
+  width: 300px;
+  background-color: var(--light-card-bg);
+  border-right: 1px solid var(--light-card-border);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.darkMode .sidebarContainer {
+  background-color: var(--dark-card-bg);
+  border-right: 1px solid var(--dark-card-border);
 }
 
 .sidebar {
-  padding: 30px;
-  background: linear-gradient(to bottom, #fdaf6f, #f78e15da);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
   height: 100%;
+  overflow-y: auto;
 }
 
-.sidebar h2 {
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sidebarHeader h3 {
   font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--light-accent);
+  transition: color 0.3s ease;
 }
 
-.sidebar p {
-  font-size: 0.95rem;
-  margin-bottom: 16px;
-  color: #444;
+.darkMode .sidebarHeader h3 {
+  color: var(--dark-accent);
 }
 
-.sidebar input,
-.sidebar select {
-  padding: 10px;
+.closeFiltersBtn {
+  background: none;
+  border: none;
+  color: var(--light-text);
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.darkMode .closeFiltersBtn {
+  color: var(--dark-text);
+}
+
+.closeFiltersBtn:hover {
+  opacity: 1;
+}
+
+/* Container de busca */
+.searchContainer {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--light-text);
+  opacity: 0.5;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.darkMode .searchIcon {
+  color: var(--dark-text);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: var(--input-bg);
-  font-size: 0.95rem;
-  transition: border-color 0.3s ease;
-  color: var(--text-color);
+  border: 1px solid var(--light-input-border);
+  background-color: var(--light-input-bg);
+  color: var(--light-text);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-.sidebar input:focus,
-.sidebar select:focus {
-  border-color: #f2c728;
+.darkMode .searchInput {
+  background-color: var(--dark-input-bg);
+  border: 1px solid var(--dark-input-border);
+  color: var(--dark-text);
+}
+
+.searchInput:focus {
   outline: none;
+  border-color: var(--light-input-focus);
+  box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.2);
 }
 
+.darkMode .searchInput:focus {
+  border-color: var(--dark-input-focus);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.searchInput::placeholder {
+  color: var(--light-text);
+  opacity: 0.5;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.darkMode .searchInput::placeholder {
+  color: var(--dark-text);
+}
+
+/* Grupos de filtro */
+.filterGroup {
+  margin-bottom: 1.25rem;
+}
+
+.filterGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--light-text);
+  transition: color 0.3s ease;
+}
+
+.darkMode .filterGroup label {
+  color: var(--dark-text);
+}
+
+.filterInput, .filterSelect {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--light-input-border);
+  background-color: var(--light-input-bg);
+  color: var(--light-text);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.darkMode .filterInput, .darkMode .filterSelect {
+  background-color: var(--dark-input-bg);
+  border: 1px solid var(--dark-input-border);
+  color: var(--dark-text);
+}
+
+.filterInput:focus, .filterSelect:focus {
+  outline: none;
+  border-color: var(--light-input-focus);
+  box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.2);
+}
+
+.darkMode .filterInput:focus, .darkMode .filterSelect:focus {
+  border-color: var(--dark-input-focus);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+/* Botão para limpar filtros */
+.clearFiltersBtn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--light-card-border);
+  background-color: var(--light-secondary);
+  color: var(--light-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.darkMode .clearFiltersBtn {
+  background-color: var(--dark-secondary);
+  border: 1px solid var(--dark-card-border);
+  color: var(--dark-text);
+}
+
+.clearFiltersBtn:hover {
+  background-color: var(--light-card-hover);
+}
+
+.darkMode .clearFiltersBtn:hover {
+  background-color: var(--dark-card-hover);
+}
+
+/* Container do mapa */
 .mapContainer {
   flex: 1;
-  max-width: 1000px;
   position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  height: 600px;
-}
-
-.mapArea {
-  height: 100%;
-  width: 100%;
-  position: relative;
-  background-color: #e0f7fa;
-  border-radius: 16px;
-}
-
-.map {
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  border-radius: 16px;
-}
-
-.addButton {
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-  background-color: #ed9f20;
-  color: white;
-  border: none;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  font-size: 32px;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  z-index: 999;
-}
-
-.addButton:hover {
-  background-color: #e16500;
-  transform: scale(1.1);
-}
-
-.formulario {
-  position: absolute;
-  bottom: 95px;
-  right: 25px;
-  background-color: var(--input-bg);
-  padding: 20px;
-  border-radius: 14px;
-  width: 300px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  animation: fadeInScale 0.3s ease-out;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  color: var(--text-color);
-}
-
-.formulario input,
-.formulario textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  background-color: var(--input-bg);
-  color: var(--text-color);
-}
-
-.formulario button {
-  background-color: #2e7d7b;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
+  background-color: var(--light-secondary);
   transition: background-color 0.3s ease;
 }
 
-.formulario button:hover {
-  background-color: #1e5d5b;
+.darkMode .mapContainer {
+  background-color: var(--dark-secondary);
 }
 
-/* MARCADORES ANIMADOS */
-@keyframes dropIn {
+/* Controles do mapa */
+.mapControls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 5;
+}
+
+.filterToggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--light-card-bg);
+  color: var(--light-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.darkMode .filterToggleBtn {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+}
+
+.filterToggleBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filterToggleBtn svg {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Botão de adicionar local (agora no canto inferior direito) */
+.addLocationButton {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(211, 84, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.darkMode .addButton {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.addButton:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(211, 84, 0, 0.4);
+}
+
+.darkMode .addButton:hover {
+  box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+}
+
+.addButton.active {
+  background-color: var(--light-accent);
+  box-shadow: 0 0 0 4px rgba(211, 84, 0, 0.2);
+  animation: pulse 1.5s infinite;
+}
+
+.darkMode .addButton.active {
+  background-color: var(--dark-accent);
+  box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.2);
+}
+
+.addButton svg {
+  font-size: 1.5rem;
+}
+
+.addButtonText {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.addButton:hover .addButtonText {
+  opacity: 1;
+}
+
+/* Indicador de modo de adição */
+.addModeIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.addModeIcon {
+  font-size: 1.5rem;
+  color: var(--light-accent);
+}
+
+.darkMode .addModeIcon {
+  color: var(--dark-accent);
+}
+
+/* Área do mapa */
+.mapArea {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Marcador de novo local */
+.markerDrop {
+  animation: dropMarker 0.5s ease-out;
+}
+
+@keyframes dropMarker {
   0% {
-    transform: translateY(-25px);
+    transform: translateY(-20px);
     opacity: 0;
   }
   100% {
@@ -189,55 +483,637 @@
   }
 }
 
-.markerAnimated {
-  animation: dropIn 0.5s ease-out;
+/* Animação de pulso para marcadores novos */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(211, 84, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(211, 84, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(211, 84, 0, 0);
+  }
 }
 
-/* OVERLAY SUAVE */
-@keyframes fadeInScale {
+/* Conteúdo do popup */
+.popupContent {
+  padding: 0.75rem;
+  min-width: 220px;
+}
+
+.popupContent h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--light-accent);
+  transition: color 0.3s ease;
+}
+
+.darkMode .popupContent h3 {
+  color: var(--dark-accent);
+}
+
+.popupContent p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.viewDetailsBtn {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .viewDetailsBtn {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+}
+
+.viewDetailsBtn:hover {
+  background-color: var(--light-button-hover);
+}
+
+.darkMode .viewDetailsBtn:hover {
+  background-color: var(--dark-button-hover);
+}
+
+/* Overlay de detalhes */
+.overlayInfo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--light-overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.darkMode .overlayInfo {
+  background-color: var(--dark-overlay-bg);
+}
+
+.overlayContent {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  background-color: var(--light-card-bg);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-out;
+}
+
+.darkMode .overlayContent {
+  background-color: var(--dark-card-bg);
+}
+
+.closeOverlayBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--light-text);
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.darkMode .closeOverlayBtn {
+  color: var(--dark-text);
+}
+
+.closeOverlayBtn:hover {
+  opacity: 1;
+}
+
+.overlayHeader {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--light-card-border);
+}
+
+.darkMode .overlayHeader {
+  border-bottom: 1px solid var(--dark-card-border);
+}
+
+.overlayHeader h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--light-accent);
+  transition: color 0.3s ease;
+}
+
+.darkMode .overlayHeader h2 {
+  color: var(--dark-accent);
+}
+
+.overlaySubtitle {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--light-text);
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+.darkMode .overlaySubtitle {
+  color: var(--dark-text);
+}
+
+.overlayDetails {
+  padding: 1.5rem;
+}
+
+.detailGroup {
+  margin-bottom: 1.5rem;
+}
+
+.detailGroup h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--light-accent);
+  transition: color 0.3s ease;
+}
+
+.darkMode .detailGroup h3 {
+  color: var(--dark-accent);
+}
+
+.detailGroup p {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.animalTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.animalTag {
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  background-color: var(--light-secondary);
+  color: var(--light-text);
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.darkMode .animalTag {
+  background-color: var(--dark-secondary);
+  color: var(--dark-text);
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialLink {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .socialLink {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+}
+
+.socialLink:hover {
+  background-color: var(--light-button-hover);
+}
+
+.darkMode .socialLink:hover {
+  background-color: var(--dark-button-hover);
+}
+
+.overlayActions {
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  border-top: 1px solid var(--light-card-border);
+}
+
+.darkMode .overlayActions {
+  border-top: 1px solid var(--dark-card-border);
+}
+
+.actionButton {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .actionButton {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+}
+
+.actionButton:hover {
+  background-color: var(--light-button-hover);
+}
+
+.darkMode .actionButton:hover {
+  background-color: var(--dark-button-hover);
+}
+
+/* Overlay para adicionar novo local */
+.overlayNovoLocal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--light-overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.darkMode .overlayNovoLocal {
+  background-color: var(--dark-overlay-bg);
+}
+
+.novoLocalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-weight: 500;
+  color: var(--light-text);
+  transition: color 0.3s ease;
+}
+
+.darkMode .formGroup label {
+  color: var(--dark-text);
+}
+
+.formGroup input, .formGroup textarea {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--light-input-border);
+  background-color: var(--light-input-bg);
+  color: var(--light-text);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.darkMode .formGroup input, .darkMode .formGroup textarea {
+  background-color: var(--dark-input-bg);
+  border: 1px solid var(--dark-input-border);
+  color: var(--dark-text);
+}
+
+.formGroup input:focus, .formGroup textarea:focus {
+  outline: none;
+  border-color: var(--light-input-focus);
+  box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.2);
+}
+
+.darkMode .formGroup input:focus, .darkMode .formGroup textarea:focus {
+  border-color: var(--dark-input-focus);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+}
+
+.formNote {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  opacity: 0.7;
+  transition: color 0.3s ease;
+}
+
+.darkMode .formNote {
+  color: var(--dark-text);
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancelButton {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--light-card-border);
+  background-color: var(--light-secondary);
+  color: var(--light-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.darkMode .cancelButton {
+  background-color: var(--dark-secondary);
+  border: 1px solid var(--dark-card-border);
+  color: var(--dark-text);
+}
+
+.cancelButton:hover {
+  background-color: var(--light-card-hover);
+}
+
+.darkMode .cancelButton:hover {
+  background-color: var(--dark-card-hover);
+}
+
+.submitButton {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.darkMode .submitButton {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+}
+
+.submitButton:hover {
+  background-color: var(--light-button-hover);
+}
+
+.darkMode .submitButton:hover {
+  background-color: var(--dark-button-hover);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Estados de carregamento e erro */
+.loadingContainer, .errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(211, 84, 0, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--light-accent);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.darkMode .loadingSpinner {
+  border: 4px solid rgba(255, 215, 0, 0.2);
+  border-top-color: var(--dark-accent);
+}
+
+.errorIcon {
+  font-size: 3rem;
+  color: var(--light-accent);
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.darkMode .errorIcon {
+  color: var(--dark-accent);
+}
+
+.retryButton {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .retryButton {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+}
+
+.retryButton:hover {
+  background-color: var(--light-button-hover);
+}
+
+.darkMode .retryButton:hover {
+  background-color: var(--dark-button-hover);
+}
+
+/* Animações */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media queries para responsividade */
+@media (max-width: 1024px) {
+  .mapaLayout {
+    height: calc(100vh - 180px);
+  }
+  
+  .sidebarContainer {
+    width: 280px;
   }
 }
 
 @media (max-width: 768px) {
+  .mapaContainer {
+    padding: 1.5rem 1rem;
+  }
+  
+  .mapaTitle {
+    font-size: 2rem;
+  }
+  
+  .mapaSubtitle {
+    font-size: 1rem;
+  }
+  
   .mapaLayout {
+    height: calc(100vh - 160px);
     flex-direction: column;
   }
-
-  .sidebarContainer,
-  .mapContainer {
+  
+  .sidebarContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
-
-  .mapContainer {
-    height: 400px;
+  
+  .sidebarContainer.showFilters {
+    transform: translateX(0);
   }
-
+  
+  .mapControls {
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+    flex-direction: row;
+  }
+  
+  .addLocationButton {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
   .addButton {
-    bottom: 15px;
-    right: 15px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
   }
-
-  .formulario {
-    right: 15px;
-    bottom: 80px;
-    width: calc(100% - 30px);
+  
+  .addButtonText {
+    display: none;
+  }
+  
+  .overlayContent {
+    max-height: 80vh;
+  }
+  
+  .formRow {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+@media (max-width: 480px) {
+  .mapaContainer {
+    padding: 1rem 0.75rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .mapaTitle {
+    font-size: 1.75rem;
+  }
+  
+  .mapIcon {
+    font-size: 1.5rem;
+  }
+  
+  .mapControls {
+    bottom: 0.75rem;
+    right: 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .addLocationButton {
+    bottom: 0.75rem;
+    right: 0.75rem;
+  }
+  
+  .addButton {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  
+  .filterToggleBtn {
+    padding: 0.6rem;
+  }
+  
+  .filterToggleBtn span {
+    display: none;
+  }
+  
+  .overlayContent {
+    padding: 1rem;
+  }
+  
+  .overlayHeader h2 {
+    font-size: 1.5rem;
+  }
+  
+  .overlayActions {
+    flex-direction: column;
+  }
+  
+  .addModeIndicator {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
