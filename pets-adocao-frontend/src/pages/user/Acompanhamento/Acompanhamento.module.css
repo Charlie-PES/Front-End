@@ -1,122 +1,427 @@
 /* Acompanhamento.module.css */
+/* Variáveis de cores para o tema claro */
+:root {
+  --color-background: #fef6f0;
+  --color-card-bg: #ffffff;
+  --color-text: #333333;
+  --color-text-secondary: #666666;
+  --color-primary: #d49b67;
+  --color-primary-dark: #bb7e46;
+  --color-primary-light: #fcd1a7;
+  --color-secondary: #f77f00;
+  --color-secondary-dark: #d96a00;
+  --color-border: #e0d5c5;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+  --color-warning: #ff9800;
+  --color-info: #2196f3;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-input-bg: #ffffff;
+  --color-input-border: #cccccc;
+  --color-input-focus: #d49b67;
+  --color-table-header: #f5e6d3;
+  --color-table-row-hover: #fef6f0;
+  --color-table-border: #e0d5c5;
+}
+
+/* Variáveis de cores para o tema escuro */
+.darkMode {
+  --color-background: #1a1a1a;
+  --color-card-bg: #2d2d2d;
+  --color-text: #f5f5f5;
+  --color-text-secondary: #cccccc;
+  --color-primary: #ffb74d;
+  --color-primary-dark: #f57c00;
+  --color-primary-light: #ffe97d;
+  --color-secondary: #ff9800;
+  --color-secondary-dark: #f57c00;
+  --color-border: #444444;
+  --color-success: #81c784;
+  --color-error: #e57373;
+  --color-warning: #ffb74d;
+  --color-info: #64b5f6;
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --color-input-bg: #333333;
+  --color-input-border: #555555;
+  --color-input-focus: #ffb74d;
+  --color-table-header: #333333;
+  --color-table-row-hover: #2d2d2d;
+  --color-table-border: #444444;
+}
+
+/* Container principal */
 .container {
-    padding: 40px 20px;
-    max-width: 900px;
-    margin: 0 auto;
-    font-family: 'Arial', sans-serif;
-    animation: fadeIn 0.4s ease-in-out;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Cabeçalho da página */
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  color: var(--color-secondary);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* Mensagens de feedback */
+.message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out;
+}
+
+.success {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.error {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+/* Cards */
+.card {
+  background-color: var(--color-card-bg);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--color-shadow);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--color-shadow);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cardHeader h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.sectionIcon {
+  color: var(--color-secondary);
+}
+
+/* Grid de informações do pet */
+.petInfoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Grupos de formulário */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--color-input-border);
+  border-radius: 0.5rem;
+  background-color: var(--color-input-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--color-input-focus);
+  box-shadow: 0 0 0 2px rgba(212, 155, 103, 0.2);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Input com ícone */
+.inputWithIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.inputWithIcon input {
+  padding-left: 2.5rem;
+}
+
+/* Tabelas */
+.tableContainer {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th {
+  background-color: var(--color-table-header);
+  color: var(--color-text);
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 2px solid var(--color-table-border);
+}
+
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-table-border);
+  vertical-align: top;
+}
+
+.table tr:hover {
+  background-color: var(--color-table-row-hover);
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: 2rem;
+}
+
+/* Botões */
+.addButton,
+.saveButton,
+.reportBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addButton {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.saveButton {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.reportBtn {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.addButton:hover,
+.saveButton:hover,
+.reportBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+.addButton:active,
+.saveButton:active,
+.reportBtn:active {
+  transform: translateY(0);
+}
+
+/* Botões de ação nas tabelas */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.actionButton:nth-child(2) {
+  background-color: var(--color-error);
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+/* Seção de relatório */
+.reportSection {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .container {
+    padding: 1.5rem;
   }
   
-  .title {
+  .petInfoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .header h1 {
     font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
   }
   
-  .card {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
   
-  h3 {
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  
-  input:focus {
-    border-color: #f77f00;
-    outline: none;
-  }
-  
-  button {
-    background-color: #d49b67;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #bb7e46;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    font-size: 0.95rem;
+  .petInfoGrid {
+    grid-template-columns: 1fr;
   }
   
   .table th,
   .table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+    padding: 0.75rem;
   }
   
-  .actions button {
-    margin-right: 10px;
-    padding: 6px 10px;
+  .actions {
+    flex-direction: column;
+  }
+  
+  .actionButton {
+    width: 100%;
+  }
+  
+  .reportSection {
+    justify-content: center;
+  }
+  
+  .reportBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .cardHeader h2 {
+    font-size: 1.25rem;
+  }
+  
+  .table {
     font-size: 0.85rem;
   }
-  
-  .actions button:last-child {
-    background-color: #ccc;
-    color: #333;
-  }
-  
-  .footerButton {
-    margin-top: 30px;
-    float: right;
-    background-color: #b67d4c;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 10px;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .container {
-      padding: 20px;
-    }
-  
-    .title {
-      font-size: 1.5rem;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    button {
-      width: 100%;
-    }
-  }
+}
   

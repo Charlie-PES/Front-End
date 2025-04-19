@@ -1,71 +1,378 @@
+/* Variáveis de cores para light mode */
+:root {
+  --color-background: #f5f5f5;
+  --color-card-bg: #ffffff;
+  --color-text: #333333;
+  --color-text-secondary: #666666;
+  --color-border: #e0e0e0;
+  --color-primary: #ff6b35;
+  --color-primary-hover: #ff5722;
+  --color-secondary: #4a90e2;
+  --color-secondary-hover: #357abd;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+  --color-warning: #ff9800;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+}
+
+/* Variáveis de cores para dark mode */
+.darkMode {
+  --color-background: #121212;
+  --color-card-bg: #1e1e1e;
+  --color-text: #ffffff;
+  --color-text-secondary: #b0b0b0;
+  --color-border: #333333;
+  --color-primary: #ff9f43;
+  --color-primary-hover: #ffb74d;
+  --color-secondary: #64b5f6;
+  --color-secondary-hover: #90caf9;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Container principal */
 .container {
-    padding: 40px 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-    animation: fadeIn 0.4s ease-in-out;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Cabeçalho */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.header .icon {
+  color: var(--color-primary);
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Controles de filtro e busca */
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.searchContainer,
+.filterContainer,
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-card-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-speed);
+}
+
+.searchContainer:focus-within,
+.filterContainer:focus-within,
+.sortContainer:focus-within {
+  box-shadow: var(--shadow-md);
+}
+
+.searchIcon,
+.filterIcon,
+.sortIcon {
+  color: var(--color-text-secondary);
+}
+
+.searchInput,
+.filterSelect,
+.sortSelect {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  min-width: 200px;
+}
+
+.sortButton {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  transition: color var(--transition-speed);
+}
+
+.sortButton:hover {
+  color: var(--color-primary);
+}
+
+/* Estado de carregamento */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 1rem;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mensagem de erro */
+.errorMessage {
+  background-color: var(--color-error);
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Estado vazio */
+.emptyContainer {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--color-card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.emptyContainer h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.emptyContainer p {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.browseButton {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.browseButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Grid de cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: var(--color-card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-in-out;
+  animation-fill-mode: both;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.imageContainer {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.petImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-speed);
+}
+
+.card:hover .petImage {
+  transform: scale(1.05);
+}
+
+.speciesIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--color-card-bg);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  color: var(--color-primary);
+}
+
+.petInfo {
+  padding: 1.5rem;
+}
+
+.petInfo h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.infoLabel {
+  color: var(--color-text-secondary);
+}
+
+.infoValue {
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dateIcon {
+  color: var(--color-primary);
+}
+
+.description {
+  margin-top: 1rem;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Paginação */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.paginationButton {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.paginationButton:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  color: var(--color-text-secondary);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
   }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-    font-size: 32px;
+
+  .header h1 {
+    font-size: 2rem;
   }
-  
-  .empty {
-    text-align: center;
-    font-size: 18px;
-    color: #777;
+
+  .controls {
+    flex-direction: column;
   }
-  
-  .cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
-  }
-  
-  .card {
-    background-color: #fffaf3;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    padding: 20px;
-    width: 280px;
-    transition: transform 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-6px);
-  }
-  
-  .petImage {
+
+  .searchContainer,
+  .filterContainer,
+  .sortContainer {
     width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
   }
-  
-  .petInfo h3 {
-    margin-bottom: 10px;
-    color: #444;
+
+  .searchInput,
+  .filterSelect,
+  .sortSelect {
+    width: 100%;
   }
-  
-  .petInfo p {
-    margin: 4px 0;
-    color: #555;
-    font-size: 14px;
+
+  .cards {
+    grid-template-columns: 1fr;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
   

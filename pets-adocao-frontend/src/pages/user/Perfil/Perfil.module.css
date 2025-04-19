@@ -286,6 +286,11 @@
   text-decoration: none;
   border-radius: var(--border-radius-md);
   transition: all var(--transition-normal);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: left;
 }
 
 /* Hover do botão de ação */
@@ -299,6 +304,21 @@
 .actionIcon {
   font-size: 1.5rem;
   color: var(--color-primary);
+}
+
+/* Estilo específico para o botão de logout */
+.actionButton:last-child {
+  background-color: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.actionButton:last-child .actionIcon {
+  color: var(--color-error);
+}
+
+.actionButton:last-child:hover {
+  background-color: rgba(244, 67, 54, 0.2);
+  border-color: var(--color-error);
 }
 
 /* Animação de fade in */

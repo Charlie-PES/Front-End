@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Perfil.module.css';
 import { FaUserEdit, FaPlusCircle, FaPaw, FaHeart, FaHistory, FaSignOutAlt, FaCamera, FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import { logout } from '../../../services/authService';
 
 const Perfil = () => {
   const { darkMode } = useContext(ThemeContext);
   const [activeTab, setActiveTab] = useState('info');
+  const navigate = useNavigate();
   
   const usuario = {
     nome: 'Teste',
@@ -17,6 +19,12 @@ const Perfil = () => {
     dataCadastro: '15/03/2023',
     petsAdotados: 3,
     petsFavoritos: 5
+  };
+
+  // Função para lidar com o logout
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
   const renderUserInfo = () => (
@@ -87,10 +95,10 @@ const Perfil = () => {
           <FaHeart className={styles.actionIcon} />
           <span>Pets Favoritos</span>
         </Link>
-        <Link to="/login" className={styles.actionButton}>
+        <button onClick={handleLogout} className={styles.actionButton}>
           <FaSignOutAlt className={styles.actionIcon} />
           <span>Sair</span>
-        </Link>
+        </button>
       </div>
     </div>
   );
