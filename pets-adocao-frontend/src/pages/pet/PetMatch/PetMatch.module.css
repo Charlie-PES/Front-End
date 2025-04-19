@@ -1,154 +1,610 @@
+/* 
+ * Estilos para o componente PetMatch
+ * 
+ * Este arquivo define os estilos para a página de compatibilidade entre usuário e pet, incluindo:
+ * - Suporte a modo claro e escuro
+ * - Layout responsivo
+ * - Animações e transições
+ * - Efeitos de hover e interações
+ */
+
+/* Variáveis de cores para modo claro e escuro */
+:root {
+  /* Modo claro */
+  --light-bg: #f5f5f0; /* beige */
+  --light-text: #333333;
+  --light-card-bg: #ffffff;
+  --light-card-border: #e0e0e0;
+  --light-card-hover: #f9f9f9;
+  --light-accent: #d35400; /* dark orange */
+  --light-secondary: #f0f0e6;
+  --light-success: #36d17c;
+  --light-warning: #c0f2cc;
+  --light-error: #ffb3b3;
+  --light-button-bg: #d35400;
+  --light-button-text: #ffffff;
+  --light-button-hover: #b34700;
+  
+  /* Modo escuro */
+  --dark-bg: #121212;
+  --dark-text: #f0f0f0;
+  --dark-card-bg: #1e1e1e;
+  --dark-card-border: #333333;
+  --dark-card-hover: #2a2a2a;
+  --dark-accent: #ffd700; /* yellow */
+  --dark-secondary: #1a1a1a;
+  --dark-success: #36d17c;
+  --dark-warning: #c0f2cc;
+  --dark-error: #ffb3b3;
+  --dark-button-bg: #ffd700;
+  --dark-button-text: #121212;
+  --dark-button-hover: #e6c300;
+}
+
+/* Container principal */
 .matchContainer {
-  padding: 2rem;
-  text-align: center;
-  background-color: #fdfdfd;
   min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  animation: fadeIn 0.6s ease;
-}
-
-.matchContainer h1 {
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-.matchBox {
+  padding: 2rem;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
   justify-content: center;
   align-items: flex-start;
 }
 
+/* Modo escuro */
+.darkMode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+/* Conteúdo do match */
+.matchContent {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--light-card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.darkMode .matchContent {
+  background-color: var(--dark-card-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.matchContent.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Título e subtítulo */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--light-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.darkMode .title {
+  color: var(--dark-accent);
+}
+
+.titleIcon {
+  margin-right: 0.75rem;
+  font-size: 2rem;
+  color: var(--light-accent);
+  transition: color 0.3s ease;
+}
+
+.darkMode .titleIcon {
+  color: var(--dark-accent);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--light-text);
+  opacity: 0.8;
+  text-align: center;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.darkMode .subtitle {
+  color: var(--dark-text);
+}
+
+/* Score de compatibilidade */
+.matchScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.scoreCircle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.scoreInner {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: var(--light-card-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .scoreInner {
+  background-color: var(--dark-card-bg);
+}
+
+.scoreValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--light-accent);
+  transition: color 0.3s ease;
+}
+
+.darkMode .scoreValue {
+  color: var(--dark-accent);
+}
+
+.scoreLabel {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--light-text);
+  transition: color 0.3s ease;
+}
+
+.darkMode .scoreLabel {
+  color: var(--dark-text);
+}
+
+.scoreDescription {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--light-text);
+  transition: color 0.3s ease;
+}
+
+.darkMode .scoreDescription {
+  color: var(--dark-text);
+}
+
+/* Informações do pet */
 .petInfo {
-  flex: 1;
-  min-width: 280px;
-  max-width: 320px;
+  margin-bottom: 2rem;
 }
 
 .petCard {
-  background: #ffffff;
-  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  background-color: var(--light-secondary);
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  margin-bottom: 1.5rem;
+  padding: 1rem;
+  transition: background-color 0.3s ease;
 }
 
-.petCard img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 1rem;
+.darkMode .petCard {
+  background-color: var(--dark-secondary);
 }
 
-.detailTitle {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #444;
-}
-
-.inputField {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.petImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1.5rem;
+  border: 3px solid var(--light-accent);
   transition: border-color 0.3s ease;
 }
 
-.inputField:focus {
-  outline: none;
-  border-color: #4caf50;
+.darkMode .petImage {
+  border-color: var(--dark-accent);
+}
+
+.petDetails {
+  flex: 1;
+}
+
+.petName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--light-text);
+  transition: color 0.3s ease;
+}
+
+.darkMode .petName {
+  color: var(--dark-text);
+}
+
+.petType {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--light-text);
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+.darkMode .petType {
+  color: var(--dark-text);
+}
+
+.petTypeIcon {
+  margin-right: 0.5rem;
+  color: var(--light-accent);
+  transition: color 0.3s ease;
+}
+
+.darkMode .petTypeIcon {
+  color: var(--dark-accent);
+}
+
+.petAge {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  opacity: 0.7;
+  transition: color 0.3s ease;
+}
+
+.darkMode .petAge {
+  color: var(--dark-text);
+}
+
+/* Seção de compatibilidade */
+.compatibilitySection {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--light-text);
+  transition: color 0.3s ease;
+}
+
+.darkMode .sectionTitle {
+  color: var(--dark-text);
 }
 
 .parametros {
-  flex: 2;
-  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .parametroRow {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 15px;
+  background-color: var(--light-card-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.sideIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  border: 2px solid #ddd;
-  background: white;
+.darkMode .parametroRow {
+  background-color: var(--dark-card-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.parametroInfo {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.parametroName {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: var(--light-text);
+  transition: color 0.3s ease;
+}
+
+.darkMode .parametroName {
+  color: var(--dark-text);
+}
+
+.parametroValues {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.userValue,
+.petValue {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--light-text);
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+.darkMode .userValue,
+.darkMode .petValue {
+  color: var(--dark-text);
+}
+
+.valueIcon {
+  margin-right: 0.5rem;
+  font-size: 1rem;
 }
 
 .parametroBar {
-  flex: 1;
-  padding: 12px;
+  width: 60px;
+  height: 60px;
   border-radius: 8px;
-  color: #fff;
-  font-weight: 600;
-  text-align: center;
-  transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
 }
 
-.parametroBar:hover {
-  transform: scale(1.02);
+.barLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-.goButton {
-  margin-top: 2.5rem;
-  padding: 14px 26px;
-  background-color: #4caf50;
+.matchIcon {
+  font-size: 1.5rem;
   color: white;
+}
+
+/* Botão */
+.goButton {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
   border: none;
-  font-size: 1.1rem;
   border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.darkMode .goButton {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+}
+
+.goButton:hover {
+  background-color: var(--light-button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.darkMode .goButton:hover {
+  background-color: var(--dark-button-hover);
+}
+
+/* Estados de carregamento e erro */
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(211, 84, 0, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--light-accent);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.darkMode .spinner {
+  border: 4px solid rgba(255, 215, 0, 0.2);
+  border-top-color: var(--dark-accent);
+}
+
+.errorIcon {
+  font-size: 3rem;
+  color: var(--light-error);
+  margin-bottom: 1rem;
+}
+
+.darkMode .errorIcon {
+  color: var(--dark-error);
+}
+
+.retryButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.goButton:hover {
-  background-color: #449d48;
+.darkMode .retryButton {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
+.retryButton:hover {
+  background-color: var(--light-button-hover);
+}
+
+.darkMode .retryButton:hover {
+  background-color: var(--dark-button-hover);
+}
+
+/* Animações */
+@keyframes spin {
   to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: rotate(360deg);
   }
 }
 
+/* Media queries para responsividade */
 @media (max-width: 768px) {
-  .matchBox {
-    flex-direction: column;
-    align-items: center;
+  .matchContainer {
+    padding: 1.5rem;
   }
-
-  .parametroRow {
-    flex-direction: column;
+  
+  .matchContent {
+    padding: 1.5rem;
   }
-
-  .parametroBar {
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .scoreCircle {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .scoreInner {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .scoreValue {
+    font-size: 2rem;
+  }
+  
+  .petCard {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .petImage {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .petDetails {
     width: 100%;
   }
+  
+  .parametroRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .parametroInfo {
+    margin-right: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .parametroBar {
+    width: 100%;
+    height: 40px;
+  }
 }
 
-/* DARK THEME OVERRIDES */
-[data-theme='dark'] {
-  --bg-color: #121212;
-  --text-color: #e4e4e4;
-  --card-bg: #1f1f1f;
-  --border-color: #333;
-  --input-bg: #2c2c2c;
-  --highlight-color: #90caf9;
+@media (max-width: 480px) {
+  .matchContainer {
+    padding: 1rem;
+  }
+  
+  .matchContent {
+    padding: 1.25rem;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .titleIcon {
+    font-size: 1.5rem;
+  }
+  
+  .scoreCircle {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .scoreInner {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .scoreValue {
+    font-size: 1.5rem;
+  }
+  
+  .scoreLabel {
+    font-size: 0.8rem;
+  }
+  
+  .scoreDescription {
+    font-size: 0.9rem;
+  }
+  
+  .petName {
+    font-size: 1.25rem;
+  }
+  
+  .petType,
+  .petAge {
+    font-size: 0.8rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+  
+  .parametroName {
+    font-size: 0.9rem;
+  }
+  
+  .userValue,
+  .petValue {
+    font-size: 0.8rem;
+  }
 }

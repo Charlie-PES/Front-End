@@ -1,112 +1,414 @@
-/* MatchPage.module.css */
+/* 
+ * Estilos para o componente MatchPage
+ * 
+ * Este arquivo define os estilos para a página de match de pets, incluindo:
+ * - Suporte a modo claro e escuro
+ * - Layout responsivo
+ * - Animações e transições
+ * - Efeitos de hover e interações
+ */
 
+/* Variáveis de cores para modo claro e escuro */
+:root {
+  /* Modo claro */
+  --light-bg: #f5f5f0; /* beige */
+  --light-text: #333333;
+  --light-card-bg: #ffffff;
+  --light-card-border: #e0e0e0;
+  --light-card-hover: #f9f9f9;
+  --light-accent: #d35400; /* dark orange */
+  --light-secondary: #f0f0e6;
+  --light-input-bg: #ffffff;
+  --light-input-border: #d0d0d0;
+  --light-input-focus: #d35400;
+  --light-button-bg: #d35400;
+  --light-button-text: #ffffff;
+  --light-button-hover: #b34700;
+  --light-error: #e74c3c;
+  --light-success: #2ecc71;
+  
+  /* Modo escuro */
+  --dark-bg: #121212;
+  --dark-text: #f0f0f0;
+  --dark-card-bg: #1e1e1e;
+  --dark-card-border: #333333;
+  --dark-card-hover: #2a2a2a;
+  --dark-accent: #ffd700; /* yellow */
+  --dark-secondary: #1a1a1a;
+  --dark-input-bg: #2a2a2a;
+  --dark-input-border: #444444;
+  --dark-input-focus: #ffd700;
+  --dark-button-bg: #ffd700;
+  --dark-button-text: #121212;
+  --dark-button-hover: #e6c300;
+  --dark-error: #e74c3c;
+  --dark-success: #2ecc71;
+}
+
+/* Container principal */
 .matchContainer {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    font-family: 'Segoe UI', sans-serif;
-    animation: fadeIn 0.5s ease-in-out;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Modo escuro */
+.darkMode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+/* Conteúdo do match */
+.matchContent {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--light-card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.darkMode .matchContent {
+  background-color: var(--dark-card-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.matchContent.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Título e subtítulo */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--light-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.darkMode .title {
+  color: var(--dark-accent);
+}
+
+.titleIcon {
+  margin-right: 0.75rem;
+  font-size: 2rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--light-text);
+  opacity: 0.8;
+  text-align: center;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+.darkMode .subtitle {
+  color: var(--dark-text);
+}
+
+/* Formulário */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-weight: 500;
+  color: var(--light-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.darkMode .formGroup label {
+  color: var(--dark-text);
+}
+
+.inputIcon {
+  color: var(--light-accent);
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.darkMode .inputIcon {
+  color: var(--dark-accent);
+}
+
+.formGroup input,
+.formGroup select {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--light-input-border);
+  background-color: var(--light-input-bg);
+  color: var(--light-text);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.darkMode .formGroup input,
+.darkMode .formGroup select {
+  background-color: var(--dark-input-bg);
+  border: 1px solid var(--dark-input-border);
+  color: var(--dark-text);
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: var(--light-input-focus);
+  box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.2);
+}
+
+.darkMode .formGroup input:focus,
+.darkMode .formGroup select:focus {
+  border-color: var(--dark-input-focus);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.formGroup input::placeholder {
+  color: var(--light-text);
+  opacity: 0.5;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.darkMode .formGroup input::placeholder {
+  color: var(--dark-text);
+}
+
+/* Erros de formulário */
+.inputError {
+  border-color: var(--light-error) !important;
+}
+
+.darkMode .inputError {
+  border-color: var(--dark-error) !important;
+}
+
+.errorText {
+  color: var(--light-error);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.darkMode .errorText {
+  color: var(--dark-error);
+}
+
+/* Mensagens de erro e sucesso */
+.errorMessage,
+.successMessage {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.errorMessage {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--light-error);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.darkMode .errorMessage {
+  background-color: rgba(231, 76, 60, 0.2);
+  color: var(--dark-error);
+  border: 1px solid rgba(231, 76, 60, 0.4);
+}
+
+.successMessage {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: var(--light-success);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.darkMode .successMessage {
+  background-color: rgba(46, 204, 113, 0.2);
+  color: var(--dark-success);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+/* Botões */
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.saveButton,
+.matchButton {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.saveButton {
+  background-color: var(--light-secondary);
+  color: var(--light-text);
+  border: 1px solid var(--light-card-border);
+}
+
+.darkMode .saveButton {
+  background-color: var(--dark-secondary);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-card-border);
+}
+
+.matchButton {
+  background-color: var(--light-button-bg);
+  color: var(--light-button-text);
+}
+
+.darkMode .matchButton {
+  background-color: var(--dark-button-bg);
+  color: var(--dark-button-text);
+}
+
+.saveButton:hover,
+.matchButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.saveButton:hover {
+  background-color: var(--light-card-hover);
+}
+
+.darkMode .saveButton:hover {
+  background-color: var(--dark-card-hover);
+}
+
+.matchButton:hover {
+  background-color: var(--light-button-hover);
+}
+
+.darkMode .matchButton:hover {
+  background-color: var(--dark-button-hover);
+}
+
+.buttonIcon {
+  font-size: 1.1rem;
+}
+
+/* Estado de carregamento */
+.loading {
+  position: relative;
+  color: transparent !important;
+}
+
+.spinner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+.darkMode .spinner {
+  border: 3px solid rgba(18, 18, 18, 0.3);
+  border-top-color: #121212;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
+  .matchContainer {
+    padding: 1.5rem;
   }
   
-  .matchTitle {
-    font-size: 2.4rem;
-    color: #2e7d7b;
-    text-align: center;
-    margin-bottom: 30px;
+  .matchContent {
+    padding: 1.5rem;
   }
   
-  .matchForm {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    animation: fadeInUp 0.5s ease forwards;
+  .title {
+    font-size: 2rem;
   }
   
-  .matchForm label {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .matchForm input,
-  .matchForm select,
-  .matchForm textarea {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+  .subtitle {
     font-size: 1rem;
-    width: 100%;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
   }
   
-  .matchForm input:focus,
-  .matchForm select:focus,
-  .matchForm textarea:focus {
-    border-color: #2e7d7b;
-    outline: none;
+  .buttons {
+    flex-direction: column;
   }
   
   .saveButton,
-  .findButton {
-    padding: 14px;
-    background-color: #2e7d7b;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    text-align: center;
+  .matchButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .matchContainer {
+    padding: 1rem;
   }
   
-  .saveButton:hover,
-  .findButton:hover {
-    background-color: #1e5d5b;
+  .matchContent {
+    padding: 1.25rem;
   }
   
-  .findButton {
-    margin-top: 20px;
-    background-color: #38b000;
+  .title {
+    font-size: 1.75rem;
   }
   
-  .findButton:hover {
-    background-color: #2f8d00;
+  .titleIcon {
+    font-size: 1.5rem;
   }
   
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .formGroup input,
+  .formGroup select {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.95rem;
   }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .matchContainer {
-      padding: 20px 15px;
-    }
-  
-    .matchTitle {
-      font-size: 2rem;
-    }
-  }
+}
   

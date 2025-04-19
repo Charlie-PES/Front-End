@@ -51,6 +51,8 @@
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Modo escuro */
@@ -109,6 +111,7 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem; /* Add margin to create space between header and map */
 }
 
 /* Sidebar de filtros */
@@ -987,6 +990,34 @@
   }
 }
 
+/* Estilos específicos para os controles do Leaflet */
+:global(.leaflet-control-zoom) {
+  margin-top: 10px !important; /* Add margin to the top of zoom controls */
+  border: none !important; /* Remove default border */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important; /* Add shadow for better visibility */
+}
+
+:global(.leaflet-control-zoom a) {
+  background-color: var(--light-card-bg) !important;
+  color: var(--light-text) !important;
+  border: 1px solid var(--light-card-border) !important;
+  transition: background-color 0.3s ease, color 0.3s ease !important;
+}
+
+.darkMode :global(.leaflet-control-zoom a) {
+  background-color: var(--dark-card-bg) !important;
+  color: var(--dark-text) !important;
+  border: 1px solid var(--dark-card-border) !important;
+}
+
+:global(.leaflet-control-zoom a:hover) {
+  background-color: var(--light-card-hover) !important;
+}
+
+.darkMode :global(.leaflet-control-zoom a:hover) {
+  background-color: var(--dark-card-hover) !important;
+}
+
 /* Media queries para responsividade */
 @media (max-width: 1024px) {
   .mapaLayout {
@@ -1014,6 +1045,7 @@
   .mapaLayout {
     height: calc(100vh - 160px);
     flex-direction: column;
+    margin-top: 0.75rem; /* Adjust margin for smaller screens */
   }
   
   .sidebarContainer {
@@ -1041,7 +1073,7 @@
     bottom: 1rem;
     right: 1rem;
   }
-  
+
   .addButton {
     width: 50px;
     height: 50px;
@@ -1059,6 +1091,10 @@
   .formRow {
     flex-direction: column;
     gap: 0.5rem;
+  }
+  
+  :global(.leaflet-control-zoom) {
+    margin-top: 5px !important; /* Adjust margin for smaller screens */
   }
 }
 
@@ -1085,7 +1121,7 @@
     bottom: 0.75rem;
     right: 0.75rem;
   }
-  
+
   .addButton {
     width: 45px;
     height: 45px;
@@ -1115,5 +1151,10 @@
   .addModeIndicator {
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
+  }
+  
+  .mapaLayout {
+    height: calc(100vh - 140px);
+    margin-top: 0.5rem; /* Further adjust margin for very small screens */
   }
 }

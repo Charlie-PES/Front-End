@@ -1,44 +1,320 @@
-/* Variáveis de cores */
+/* 
+ * Estilos para o componente Feed
+ * 
+ * Este arquivo define os estilos para a página de feed de notícias e posts sociais,
+ * incluindo suporte a modo claro e escuro, layout responsivo, animações e transições.
+ */
+
+/* Variáveis de cores para modo claro e escuro */
 :root {
-  --color-primary: #dca879;
-  --color-primary-dark: #bb8e68;
-  --color-primary-light: #f0d5bb;
-  --color-text: #333;
-  --color-text-secondary: #666;
-  --color-background: #fff;
-  --color-background-secondary: #f8f8f8;
-  --color-card: #fff;
-  --color-card-hover: #f8f8f8;
-  --color-border: #eee;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --shadow-color-hover: rgba(0, 0, 0, 0.15);
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  /* Modo claro */
+  --light-bg: #f5f5f0; /* beige */
+  --light-text: #333333;
+  --light-text-secondary: #666666;
+  --light-card-bg: #ffffff;
+  --light-card-hover: #f8f8f8;
+  --light-border: #eeeeee;
+  --light-accent: #d35400; /* laranja escuro */
+  --light-accent-hover: #b34700;
+  --light-primary: #dca879; /* beige */
+  --light-primary-dark: #bb8e68;
+  --light-primary-light: #f0d5bb;
+  --light-shadow: rgba(0, 0, 0, 0.1);
+  --light-shadow-hover: rgba(0, 0, 0, 0.15);
+  --light-gradient: linear-gradient(135deg, var(--light-primary) 0%, var(--light-primary-dark) 100%);
+  
+  /* Modo escuro */
+  --dark-bg: #121212; /* preto */
+  --dark-text: #f0f0f0;
+  --dark-text-secondary: #b3b3b3;
+  --dark-card-bg: #2d2d2d; /* cinza */
+  --dark-card-hover: #363636;
+  --dark-border: #404040;
+  --dark-accent: #ffd700; /* amarelo */
+  --dark-accent-hover: #e6c300;
+  --dark-primary: #dca879;
+  --dark-primary-dark: #bb8e68;
+  --dark-primary-light: #f0d5bb;
+  --dark-shadow: rgba(0, 0, 0, 0.3);
+  --dark-shadow-hover: rgba(0, 0, 0, 0.4);
+  --dark-gradient: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-primary-dark) 100%);
+  
+  /* Transições e animações */
   --transition-default: all 0.3s ease;
   --border-radius: 20px;
 }
 
-/* Dark Mode */
-.darkMode {
-  --color-text: #fff;
-  --color-text-secondary: #bbb;
-  --color-background: #1a1a1a;
-  --color-background-secondary: #2d2d2d;
-  --color-card: #2d2d2d;
-  --color-card-hover: #363636;
-  --color-border: #404040;
-  --shadow-color: rgba(0, 0, 0, 0.3);
-  --shadow-color-hover: rgba(0, 0, 0, 0.4);
-}
-
+/* Aplicação de variáveis para modo claro (padrão) */
 .feedContainer {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   min-height: 100vh;
   animation: fadeIn 0.3s ease-in;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--color-text);
-  background-color: var(--color-background);
+  color: var(--light-text);
+  background-color: var(--light-bg);
+  transition: var(--transition-default);
+}
+
+/* Aplicação de variáveis para modo escuro */
+.darkMode {
+  color: var(--dark-text);
+  background-color: var(--dark-bg);
+}
+
+.darkMode .feedCard,
+.darkMode .criarPostBox,
+.darkMode .noticiaDetalhada,
+.darkMode .sidebar {
+  background-color: var(--dark-card-bg);
+  box-shadow: 0 2px 10px var(--dark-shadow);
+}
+
+.darkMode .feedCard:hover {
+  box-shadow: 0 4px 15px var(--dark-shadow-hover);
+}
+
+.darkMode .searchBar,
+.darkMode .filtroBtn,
+.darkMode .actionBtn,
+.darkMode .interacoes button,
+.darkMode .hashtagBtn {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+}
+
+.darkMode .searchBar input {
+  color: var(--dark-text);
+}
+
+.darkMode .searchBar input::placeholder {
+  color: var(--dark-text-secondary);
+}
+
+.darkMode .postTextarea {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.darkMode .postarBtn {
+  background-color: var(--dark-accent);
+  color: var(--dark-bg);
+}
+
+.darkMode .postarBtn:hover {
+  background-color: var(--dark-accent-hover);
+}
+
+.darkMode .postarBtn:disabled {
+  background-color: var(--dark-text-secondary);
+}
+
+.darkMode .cardHeader,
+.darkMode .cardFooter,
+.darkMode .noticiaHeader,
+.darkMode .noticiaFooter,
+.darkMode .sidebarHeader,
+.darkMode .sidebarSection {
+  border-color: var(--dark-border);
+}
+
+.darkMode .autorNome {
+  color: var(--dark-text);
+}
+
+.darkMode .postData,
+.darkMode .cardContent p,
+.darkMode .metaInfo,
+.darkMode .sidebarHeader h3,
+.darkMode .sidebarSection h4 {
+  color: var(--dark-text-secondary);
+}
+
+.darkMode .categoria,
+.darkMode .hashtagBtn.ativo {
+  background-color: var(--dark-accent);
+  color: var(--dark-bg);
+}
+
+.darkMode .voltarLink {
+  color: var(--dark-accent);
+}
+
+.darkMode .voltarLink:hover {
+  color: var(--dark-accent-hover);
+}
+
+/* Layout do Feed */
+.feedLayout {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Sidebar com filtros e hashtags */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background-color: var(--light-card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px var(--light-shadow);
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  transition: var(--transition-default);
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--light-border);
+}
+
+.sidebarHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--light-text);
+}
+
+.closeSidebar {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--light-text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.closeSidebar:hover {
+  color: var(--light-accent);
+}
+
+.sidebarSection {
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--light-border);
+}
+
+.sidebarSection:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sidebarSection h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: var(--light-text-secondary);
+}
+
+/* Filtros */
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filtroBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  cursor: pointer;
+  transition: var(--transition-default);
+  font-size: 14px;
+  text-align: left;
+}
+
+.filtroBtn:hover {
+  background-color: var(--light-card-hover);
+  transform: translateX(5px);
+}
+
+.filtroBtn.ativo {
+  background-color: var(--light-accent);
+  color: white;
+}
+
+/* Hashtags */
+.hashtagsContainer {
+  margin-top: 20px;
+}
+
+.hashtagsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hashtagBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 15px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  cursor: pointer;
+  transition: var(--transition-default);
+  font-size: 14px;
+  text-align: left;
+}
+
+.hashtagBtn:hover {
+  background-color: var(--light-card-hover);
+  transform: translateX(5px);
+}
+
+.hashtagBtn.ativo {
+  background-color: var(--light-accent);
+  color: white;
+}
+
+.hashtagCount {
+  margin-left: auto;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.clearFilterBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  cursor: pointer;
+  transition: var(--transition-default);
+  font-size: 14px;
+}
+
+.clearFilterBtn:hover {
+  background-color: var(--light-card-hover);
+}
+
+/* Conteúdo principal */
+.mainContent {
+  flex: 1;
+  min-width: 0; /* Previne overflow em flexbox */
 }
 
 /* Controles do Feed */
@@ -46,82 +322,88 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: var(--color-background);
+  background-color: var(--light-bg);
   padding: 15px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--light-border);
+  transition: var(--transition-default);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.darkMode .feedControls {
+  background-color: var(--dark-bg);
+  border-bottom: 1px solid var(--dark-border);
 }
 
 .searchBar {
   display: flex;
   align-items: center;
-  background-color: var(--color-card-background);
+  background-color: var(--light-card-bg);
   border-radius: 25px;
   padding: 10px 20px;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
+  transition: var(--transition-default);
+  box-shadow: 0 2px 5px var(--light-shadow);
+  flex: 1;
+  max-width: 500px;
 }
 
 .searchBar:focus-within {
-  box-shadow: 0 0 0 2px var(--color-primary);
+  box-shadow: 0 0 0 2px var(--light-accent);
+}
+
+.darkMode .searchBar:focus-within {
+  box-shadow: 0 0 0 2px var(--dark-accent);
 }
 
 .searchBar input {
   flex: 1;
   border: none;
   background: none;
-  color: var(--color-text);
+  color: var(--light-text);
   font-size: 16px;
   margin-left: 10px;
   outline: none;
 }
 
 .searchBar input::placeholder {
-  color: var(--color-text-secondary);
+  color: var(--light-text-secondary);
 }
 
-.filtros {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.filtroBtn {
-  display: flex;
+.mobileFilterToggle {
+  display: none;
   align-items: center;
-  gap: 5px;
-  padding: 8px 16px;
+  gap: 8px;
+  padding: 10px 15px;
   border: none;
   border-radius: 20px;
-  background-color: var(--color-card-background);
-  color: var(--color-text);
+  background-color: var(--light-card-bg);
+  color: var(--light-text);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-default);
+  box-shadow: 0 2px 5px var(--light-shadow);
 }
 
-.filtroBtn:hover {
-  background-color: var(--color-hover);
+.mobileFilterToggle:hover {
+  background-color: var(--light-card-hover);
 }
 
-.filtroBtn.ativo {
-  background-color: var(--color-primary);
-  color: white;
-}
-
+/* Criação de Post */
 .criarPostContainer {
   margin-bottom: 20px;
 }
 
 .criarPostBox {
-  background-color: var(--color-card-background);
+  background-color: var(--light-card-bg);
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px var(--light-shadow);
+  transition: var(--transition-default);
 }
 
 .criarPostBox:hover {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 15px var(--light-shadow-hover);
 }
 
 .criarPostHeader {
@@ -135,25 +417,36 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid var(--light-accent);
+  transition: var(--transition-default);
+}
+
+.darkMode .userAvatar {
+  border-color: var(--dark-accent);
 }
 
 .postTextarea {
   flex: 1;
   min-height: 100px;
   padding: 10px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--light-border);
   border-radius: 10px;
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: var(--light-bg);
+  color: var(--light-text);
   resize: none;
   font-size: 16px;
   outline: none;
-  transition: all 0.3s ease;
+  transition: var(--transition-default);
 }
 
 .postTextarea:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  border-color: var(--light-accent);
+  box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.2);
+}
+
+.darkMode .postTextarea:focus {
+  border-color: var(--dark-accent);
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
 }
 
 .criarPostFooter {
@@ -175,36 +468,43 @@
   padding: 8px 16px;
   border: none;
   border-radius: 20px;
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: var(--light-bg);
+  color: var(--light-text);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-default);
 }
 
 .actionBtn:hover {
-  background-color: var(--color-hover);
+  background-color: var(--light-card-hover);
+  transform: translateY(-2px);
 }
 
 .postarBtn {
   padding: 8px 24px;
   border: none;
   border-radius: 20px;
-  background-color: var(--color-primary);
+  background-color: var(--light-accent);
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-default);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .postarBtn:hover {
-  background-color: var(--color-primary-hover);
+  background-color: var(--light-accent-hover);
+  transform: translateY(-2px);
 }
 
 .postarBtn:disabled {
-  background-color: var(--color-text-secondary);
+  background-color: var(--light-text-secondary);
   cursor: not-allowed;
+  transform: none;
 }
 
+/* Feed de Posts */
 .feedCascata {
   display: flex;
   flex-direction: column;
@@ -212,16 +512,16 @@
 }
 
 .feedCard {
-  background-color: var(--color-card-background);
+  background-color: var(--light-card-bg);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px var(--light-shadow);
+  transition: var(--transition-default);
 }
 
 .feedCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 15px var(--light-shadow-hover);
 }
 
 .cardLink {
@@ -234,7 +534,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--light-border);
 }
 
 .autorInfo {
@@ -248,22 +548,28 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid var(--light-accent);
+  transition: var(--transition-default);
+}
+
+.darkMode .autorInfo img {
+  border-color: var(--dark-accent);
 }
 
 .autorNome {
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--light-text);
 }
 
 .postData {
   font-size: 14px;
-  color: var(--color-text-secondary);
+  color: var(--light-text-secondary);
 }
 
 .categoria {
   padding: 4px 12px;
   border-radius: 15px;
-  background-color: var(--color-primary);
+  background-color: var(--light-accent);
   color: white;
   font-size: 14px;
 }
@@ -275,12 +581,12 @@
 .cardContent h2 {
   margin: 0 0 10px 0;
   font-size: 20px;
-  color: var(--color-text);
+  color: var(--light-text);
 }
 
 .cardContent p {
   margin: 0 0 15px 0;
-  color: var(--color-text-secondary);
+  color: var(--light-text-secondary);
   line-height: 1.5;
 }
 
@@ -288,22 +594,33 @@
   margin: 15px 0;
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 2px 5px var(--light-shadow);
+}
+
+.darkMode .cardImagem {
+  box-shadow: 0 2px 5px var(--dark-shadow);
 }
 
 .cardImagem img {
   width: 100%;
   height: auto;
   object-fit: cover;
+  transition: var(--transition-default);
+}
+
+.cardImagem img:hover {
+  transform: scale(1.02);
 }
 
 .cardFooter {
   padding: 15px 20px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--light-border);
 }
 
 .interacoes {
   display: flex;
   gap: 15px;
+  margin-bottom: 10px;
 }
 
 .interacoes button {
@@ -313,53 +630,86 @@
   padding: 8px 16px;
   border: none;
   border-radius: 20px;
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: var(--light-bg);
+  color: var(--light-text);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-default);
 }
 
 .interacoes button:hover {
-  background-color: var(--color-hover);
+  background-color: var(--light-card-hover);
+  transform: translateY(-2px);
 }
 
+/* Hashtags nos posts */
+.postHashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.postHashtag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 15px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  font-size: 12px;
+  transition: var(--transition-default);
+}
+
+.postHashtag:hover {
+  background-color: var(--light-card-hover);
+  color: var(--light-accent);
+}
+
+.darkMode .postHashtag:hover {
+  color: var(--dark-accent);
+}
+
+/* Navegação e Detalhes */
 .voltarLink {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: var(--color-primary);
+  color: var(--light-accent);
   text-decoration: none;
   margin-bottom: 20px;
-  transition: all 0.3s ease;
+  transition: var(--transition-default);
+  font-weight: 500;
 }
 
 .voltarLink:hover {
-  color: var(--color-primary-hover);
+  color: var(--light-accent-hover);
+  transform: translateX(-5px);
 }
 
 .noticiaDetalhada {
-  background-color: var(--color-card-background);
+  background-color: var(--light-card-bg);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px var(--light-shadow);
 }
 
 .noticiaHeader {
   padding: 20px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--light-border);
 }
 
 .noticiaHeader h1 {
   margin: 0 0 15px 0;
   font-size: 24px;
-  color: var(--color-text);
+  color: var(--light-text);
 }
 
 .metaInfo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--color-text-secondary);
+  color: var(--light-text-secondary);
   font-size: 14px;
 }
 
@@ -373,32 +723,84 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: var(--transition-default);
+}
+
+.noticiaImagem img:hover {
+  transform: scale(1.02);
 }
 
 .noticiaConteudo {
   padding: 20px;
   line-height: 1.6;
-  color: var(--color-text);
+  color: var(--light-text);
 }
 
 .noticiaFooter {
   padding: 20px;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--light-border);
 }
 
-.darkMode {
-  --color-background: #1a1a1a;
-  --color-text: #ffffff;
-  --color-text-secondary: #b3b3b3;
-  --color-border: #333333;
-  --color-card-background: #2d2d2d;
-  --color-hover: #3d3d3d;
-  --color-primary: #4a90e2;
-  --color-primary-hover: #357abd;
-  --color-success: #4caf50;
-  --color-error: #f44336;
+/* Estados de carregamento e erro */
+.loadingContainer,
+.errorContainer,
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  background-color: var(--light-card-bg);
+  border-radius: 15px;
+  box-shadow: 0 2px 10px var(--light-shadow);
 }
 
+.darkMode .loadingContainer,
+.darkMode .errorContainer,
+.darkMode .emptyContainer {
+  background-color: var(--dark-card-bg);
+  box-shadow: 0 2px 10px var(--dark-shadow);
+}
+
+.spinner {
+  font-size: 2rem;
+  color: var(--light-accent);
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+.darkMode .spinner {
+  color: var(--dark-accent);
+}
+
+.retryButton {
+  margin-top: 15px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--light-accent);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+.darkMode .retryButton {
+  background-color: var(--dark-accent);
+  color: var(--dark-bg);
+}
+
+.retryButton:hover {
+  background-color: var(--light-accent-hover);
+  transform: translateY(-2px);
+}
+
+.darkMode .retryButton:hover {
+  background-color: var(--dark-accent-hover);
+}
+
+/* Animações */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -410,20 +812,54 @@
   }
 }
 
-@media (max-width: 768px) {
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 1024px) {
   .feedContainer {
     padding: 15px;
   }
-
-  .filtros {
-    overflow-x: auto;
-    padding-bottom: 5px;
+  
+  .sidebar {
+    width: 250px;
   }
+}
 
-  .filtroBtn {
-    white-space: nowrap;
+@media (max-width: 768px) {
+  .feedLayout {
+    flex-direction: column;
   }
-
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    z-index: 1000;
+    border-radius: 0;
+    transition: left 0.3s ease;
+  }
+  
+  .sidebar.visible {
+    left: 0;
+  }
+  
+  .closeSidebar {
+    display: block;
+  }
+  
+  .mobileFilterToggle {
+    display: flex;
+  }
+  
   .cardHeader {
     flex-direction: column;
     align-items: flex-start;
@@ -436,6 +872,10 @@
 
   .interacoes {
     flex-wrap: wrap;
+  }
+  
+  .noticiaHeader h1 {
+    font-size: 22px;
   }
 }
 
@@ -458,5 +898,20 @@
 
   .noticiaHeader h1 {
     font-size: 20px;
+  }
+  
+  .criarPostFooter {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .postActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .postarBtn {
+    width: 100%;
+    justify-content: center;
   }
 } 
