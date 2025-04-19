@@ -1,54 +1,99 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../../../contexts/ThemeContext';
 import styles from './PoliticaPrivacidade.module.css';
 
 const PoliticaPrivacidade = () => {
+  const { darkMode } = useContext(ThemeContext);
+
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${darkMode ? styles.darkMode : ''}`}>
       <h1>Política de Privacidade</h1>
+      
+      <div className={styles.section}>
+        <h2>1. Introdução</h2>
+        <p>
+          Bem-vindo à nossa plataforma de adoção de pets. Esta Política de Privacidade descreve como coletamos, 
+          usamos e protegemos suas informações pessoais quando você utiliza nossos serviços.
+        </p>
+        <p>
+          Ao acessar ou usar nossa plataforma, você concorda com os termos desta Política de Privacidade. 
+          Se você não concordar com estes termos, por favor, não utilize nossos serviços.
+        </p>
+      </div>
 
-      <p>
-        Esta Política de Privacidade descreve como coletamos, usamos e protegemos suas informações pessoais no sistema de adoção de pets.
-      </p>
+      <div className={styles.section}>
+        <h2>2. Informações que Coletamos</h2>
+        <p>Coletamos os seguintes tipos de informações:</p>
+        <ul>
+          <li>Informações de cadastro (nome, email, telefone, endereço)</li>
+          <li>Informações sobre seus pets (fotos, descrições, histórico médico)</li>
+          <li>Dados de uso da plataforma (interações, preferências, histórico de navegação)</li>
+          <li>Informações de pagamento (quando aplicável)</li>
+        </ul>
+      </div>
 
-      <h2>1. Coleta de informações</h2>
-      <p>
-        Coletamos informações que você fornece voluntariamente ao se cadastrar, como nome, e-mail, telefone, localização e preferências de adoção.
-      </p>
+      <div className={styles.section}>
+        <h2>3. Como Usamos suas Informações</h2>
+        <p>Utilizamos suas informações para:</p>
+        <ul>
+          <li>Gerenciar sua conta e fornecer nossos serviços</li>
+          <li>Facilitar o processo de adoção de pets</li>
+          <li>Enviar comunicações importantes sobre sua conta</li>
+          <li>Melhorar nossos serviços e experiência do usuário</li>
+          <li>Cumprir obrigações legais</li>
+        </ul>
+      </div>
 
-      <h2>2. Uso das informações</h2>
-      <p>
-        As informações são utilizadas para personalizar sua experiência, possibilitar adoções, contatos com responsáveis e melhorar os serviços da plataforma.
-      </p>
+      <div className={styles.highlight}>
+        <p>
+          <strong>Importante:</strong> Nunca compartilhamos suas informações pessoais com terceiros sem seu consentimento explícito, 
+          exceto quando exigido por lei ou para proteger nossos direitos.
+        </p>
+      </div>
 
-      <h2>3. Compartilhamento</h2>
-      <p>
-        Seus dados poderão ser compartilhados apenas com ONGs, tutores responsáveis e parceiros diretamente envolvidos no processo de adoção.
-      </p>
+      <div className={styles.section}>
+        <h2>4. Segurança de Dados</h2>
+        <p>
+          Implementamos medidas de segurança técnicas e organizacionais para proteger suas informações pessoais 
+          contra acesso não autorizado, alteração, divulgação ou destruição.
+        </p>
+      </div>
 
-      <h2>4. Cookies</h2>
-      <p>
-        Utilizamos cookies para armazenar informações sobre sua navegação e preferências, otimizando seu uso da plataforma.
-      </p>
+      <div className={styles.section}>
+        <h2>5. Seus Direitos</h2>
+        <p>Você tem o direito de:</p>
+        <ul>
+          <li>Acessar suas informações pessoais</li>
+          <li>Corrigir informações imprecisas</li>
+          <li>Solicitar a exclusão de seus dados</li>
+          <li>Retirar seu consentimento a qualquer momento</li>
+          <li>Receber uma cópia de seus dados em formato portátil</li>
+        </ul>
+      </div>
 
-      <h2>5. Segurança</h2>
-      <p>
-        Adotamos medidas de segurança para proteger suas informações contra acessos não autorizados, alteração, divulgação ou destruição.
-      </p>
+      <div className={styles.section}>
+        <h2>6. Cookies e Tecnologias Similares</h2>
+        <p>
+          Utilizamos cookies e tecnologias similares para melhorar sua experiência, analisar o tráfego do site 
+          e personalizar conteúdo. Você pode controlar o uso de cookies através das configurações do seu navegador.
+        </p>
+      </div>
 
-      <h2>6. Seus direitos</h2>
-      <p>
-        Você pode solicitar acesso, alteração ou exclusão dos seus dados a qualquer momento entrando em contato com nossa equipe de suporte.
-      </p>
+      <div className={styles.section}>
+        <h2>7. Alterações na Política de Privacidade</h2>
+        <p>
+          Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos você sobre quaisquer alterações 
+          significativas publicando a nova Política de Privacidade nesta página e atualizando a data de "última atualização".
+        </p>
+      </div>
 
-      <h2>7. Alterações nesta política</h2>
-      <p>
-        Reservamo-nos o direito de modificar esta política a qualquer momento. Quaisquer mudanças serão publicadas nesta página.
-      </p>
-
-      <h2>8. Contato</h2>
-      <p>
-        Em caso de dúvidas, entre em contato pelo e-mail: <strong>privacidade@adocaopets.com.br</strong>
-      </p>
+      <div className={styles.section}>
+        <h2>8. Contato</h2>
+        <p>
+          Se você tiver dúvidas sobre esta Política de Privacidade ou sobre como tratamos suas informações pessoais, 
+          entre em contato conosco através do email: <a href="mailto:privacidade@petsadocao.com.br">privacidade@petsadocao.com.br</a>
+        </p>
+      </div>
     </div>
   );
 };

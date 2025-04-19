@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { FaHeart, FaSearch } from 'react-icons/fa';
+import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight, FaBone, FaCat, FaUserFriends, FaCut } from 'react-icons/fa';
+import { ThemeContext } from '../../../contexts/ThemeContext';
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('todos');
+  const { darkMode } = useContext(ThemeContext);
 
   const pets = [
     {
@@ -77,9 +79,60 @@ const Home = () => {
   ];
 
   const noticias = [
-    { titulo: 'Campanha de vacinação começa em maio', imagem: '/images/feed1.jpg' },
-    { titulo: 'Feira de adoção neste sábado em SP', imagem: '/images/feed2.jpg' },
-    { titulo: 'Novo abrigo inaugurado em BH', imagem: '/images/feed3.jpg' },
+    { 
+      id: 1,
+      titulo: 'Campanha de vacinação gratuita começa em maio', 
+      imagem: '/images/feed1.jpg',
+      data: '15 Mai',
+      categoria: 'SAÚDE PET',
+      comentarios: '3 COMENTÁRIOS',
+      resumo: 'Diversas clínicas veterinárias participarão da campanha oferecendo vacinação gratuita para cães e gatos.'
+    },
+    { 
+      id: 2,
+      titulo: 'Mega feira de adoção acontece neste fim de semana', 
+      imagem: '/images/feed2.jpg',
+      data: '18 Mai',
+      categoria: 'EVENTOS',
+      comentarios: '5 COMENTÁRIOS',
+      resumo: 'Mais de 200 pets estarão disponíveis para adoção no evento que acontece no Parque Ibirapuera.'
+    },
+    { 
+      id: 3,
+      titulo: 'Novo abrigo com capacidade para 500 pets é inaugurado', 
+      imagem: '/images/feed3.jpg',
+      data: '20 Mai',
+      categoria: 'NOVIDADES',
+      comentarios: '2 COMENTÁRIOS',
+      resumo: 'O espaço conta com área médica, hotel e creche para pets.'
+    },
+    {
+      id: 4,
+      titulo: 'Projeto de castração móvel atenderá comunidades carentes',
+      imagem: '/images/feed4.jpg',
+      data: '22 Mai',
+      categoria: 'PROJETOS',
+      comentarios: '8 COMENTÁRIOS',
+      resumo: 'Unidade móvel percorrerá diferentes bairros oferecendo castração gratuita.'
+    },
+    {
+      id: 5,
+      titulo: 'Pesquisa revela: pets ajudam na recuperação de pacientes',
+      imagem: '/images/feed5.jpg',
+      data: '25 Mai',
+      categoria: 'PESQUISA',
+      comentarios: '12 COMENTÁRIOS',
+      resumo: 'Estudo comprova benefícios da interação com animais durante tratamentos médicos.'
+    },
+    {
+      id: 6,
+      titulo: 'Nova lei aumenta punição para maus-tratos a animais',
+      imagem: '/images/feed6.jpg',
+      data: '27 Mai',
+      categoria: 'LEGISLAÇÃO',
+      comentarios: '15 COMENTÁRIOS',
+      resumo: 'Penas mais severas para casos de abandono e maus-tratos entram em vigor.'
+    }
   ];
 
   const depoimentos = [
@@ -87,6 +140,92 @@ const Home = () => {
     { nome: 'Juliana', texto: 'Muito obrigada por essa plataforma maravilhosa!', foto: '/images/avatar2.jpg' },
     { nome: 'Fernanda', texto: 'Encontrei a Luna e agora somos inseparáveis.', foto: '/images/avatar3.jpg' },
   ];
+
+  const successStats = [
+    {
+      number: "480",
+      text: "Adoções Realizadas",
+      icon: <FaBone />
+    },
+    {
+      number: "2283",
+      text: "Pets Cadastrados",
+      icon: <FaCat />
+    },
+    {
+      number: "3639",
+      text: "Usuários Ativos",
+      icon: <FaUserFriends />
+    },
+    {
+      number: "4355",
+      text: "Pets Cuidados",
+      icon: <FaCut />
+    }
+  ];
+
+  const testimonials = [
+    {
+      text: "A experiência com o site foi incrível! Encontrei minha Luna e hoje somos inseparáveis. O processo de adoção foi simples e transparente.",
+      author: "Maria Silva",
+      location: "São Paulo",
+      image: "/images/avatar1.jpg"
+    },
+    {
+      text: "Graças a esta plataforma, consegui dar um lar para dois gatinhos maravilhosos. A equipe foi super atenciosa durante todo o processo.",
+      author: "João Santos",
+      location: "Rio de Janeiro",
+      image: "/images/avatar2.jpg"
+    },
+    {
+      text: "Adotar mudou minha vida! O processo foi muito profissional e hoje tenho dois companheiros incríveis que trouxeram mais alegria para minha casa.",
+      author: "Ana Oliveira",
+      location: "Belo Horizonte",
+      image: "/images/avatar3.jpg"
+    }
+  ];
+
+  const blogPosts = [
+    {
+      date: "13 Mar",
+      category: "PET GROOMING, PET SITTING",
+      title: "Some toughly useful much walking before",
+      image: "/images/blog1.jpg",
+      comments: "0 COMMENT"
+    },
+    {
+      date: "14 Mar",
+      category: "PET CARE, PET SITTING",
+      title: "Acute yellow re-laid less or affirmatively cats",
+      image: "/images/blog2.jpg",
+      comments: "5 COMMENTS"
+    },
+    {
+      date: "14 Mar",
+      category: "PET CARE",
+      title: "Some toughly useful much walking before",
+      image: "/images/blog3.jpg",
+      comments: "0 COMMENT"
+    }
+  ];
+
+  const NextArrow = (props) => {
+    const { onClick } = props;
+    return (
+      <div className={`${styles.sliderArrow} ${styles.nextArrow}`} onClick={onClick}>
+        <FaChevronRight />
+      </div>
+    );
+  };
+
+  const PrevArrow = (props) => {
+    const { onClick } = props;
+    return (
+      <div className={`${styles.sliderArrow} ${styles.prevArrow}`} onClick={onClick}>
+        <FaChevronLeft />
+      </div>
+    );
+  };
 
   const sliderSettings = {
     dots: true,
@@ -96,9 +235,24 @@ const Home = () => {
     autoplaySpeed: 3000,
     slidesToShow: 3,
     slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 768, settings: { slidesToShow: 1 } }
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false
+        }
+      }
     ]
   };
 
@@ -107,8 +261,7 @@ const Home = () => {
     : pets.filter(pet => pet.categoria === activeCategory);
 
   return (
-    <div className={styles.homeContainer}>
-
+    <div className={`${styles.homeContainer} ${darkMode ? styles.darkMode : ''}`}>
       {/* Banner principal */}
       <section className={styles.banner}>
         <div className={styles.bannerText}>
@@ -128,19 +281,31 @@ const Home = () => {
 
       {/* Categorias */}
       <section className={styles.categories}>
-        <button className={`${styles.categoryCard} ${activeCategory === 'todos' ? styles.active : ''}`} onClick={() => setActiveCategory('todos')}>
+        <button 
+          className={`${styles.categoryCard} ${activeCategory === 'todos' ? styles.active : ''}`} 
+          onClick={() => setActiveCategory('todos')}
+        >
           <img src="/images/all.png" alt="Todos" />
           <p>Todos</p>
         </button>
-        <button className={`${styles.categoryCard} ${activeCategory === 'cachorro' ? styles.active : ''}`} onClick={() => setActiveCategory('cachorro')}>
+        <button 
+          className={`${styles.categoryCard} ${activeCategory === 'cachorro' ? styles.active : ''}`} 
+          onClick={() => setActiveCategory('cachorro')}
+        >
           <img src="/images/dog1.png" alt="Cachorros" />
           <p>Cachorros</p>
         </button>
-        <button className={`${styles.categoryCard} ${activeCategory === 'gato' ? styles.active : ''}`} onClick={() => setActiveCategory('gato')}>
+        <button 
+          className={`${styles.categoryCard} ${activeCategory === 'gato' ? styles.active : ''}`} 
+          onClick={() => setActiveCategory('gato')}
+        >
           <img src="/images/cat1.png" alt="Gatos" />
           <p>Gatos</p>
         </button>
-        <button className={`${styles.categoryCard} ${activeCategory === 'outros' ? styles.active : ''}`} onClick={() => setActiveCategory('outros')}>
+        <button 
+          className={`${styles.categoryCard} ${activeCategory === 'outros' ? styles.active : ''}`} 
+          onClick={() => setActiveCategory('outros')}
+        >
           <img src="/images/misc1.png" alt="Outros" />
           <p>Outros animais</p>
         </button>
@@ -191,40 +356,86 @@ const Home = () => {
       {/* Parceiros */}
       <section className={styles.partnersSection}>
         <h2>Apoiadores</h2>
-        <Slider {...sliderSettings}>
+        <div className={styles.partnerGrid}>
           {parceiros.map((logo, i) => (
             <div key={i} className={styles.partnerLogo}>
               <img src={logo} alt={`parceiro ${i + 1}`} />
             </div>
           ))}
-        </Slider>
+        </div>
       </section>
 
-      {/* Notícias */}
-      <section className={styles.feedHighlights}>
-        <h2>Últimas do nosso feed</h2>
-        <Slider {...sliderSettings}>
-          {noticias.map((n, i) => (
-            <div key={i} className={styles.newsCard}>
-              <img src={n.imagem} alt={n.titulo} />
-              <p>{n.titulo}</p>
+      {/* Contador de Sucesso */}
+      <section className={styles.successCounter}>
+        <div className={styles.testimonialHeader}>
+          <span className={styles.sectionTag}>IMPACTO SOCIAL</span>
+          <h2>Fazendo a Diferença</h2>
+          <p>Juntos estamos transformando a vida de pets e famílias em todo o Brasil</p>
+        </div>
+        <div className={styles.statsGrid}>
+          {successStats.map((stat, index) => (
+            <div key={index} className={styles.statCard}>
+              <div className={styles.statIcon}>{stat.icon}</div>
+              <h3>{stat.number}</h3>
+              <p>{stat.text}</p>
             </div>
           ))}
-        </Slider>
+        </div>
       </section>
 
       {/* Depoimentos */}
-      <section className={styles.testimonials}>
-        <h2>Depoimentos de quem já adotou</h2>
-        <Slider {...sliderSettings}>
-          {depoimentos.map((d, i) => (
-            <div key={i} className={styles.testimonialCard}>
-              <img src={d.foto} alt={d.nome} />
-              <h4>{d.nome}</h4>
-              <p>{d.texto}</p>
+      <section className={styles.testimonialSection}>
+        <div className={styles.testimonialHeader}>
+          <span className={styles.sectionTag}>DEPOIMENTOS</span>
+          <h2>Histórias de Sucesso</h2>
+          <p>Descubra como a adoção responsável tem transformado vidas e criado laços eternos entre pets e suas novas famílias.</p>
+        </div>
+        <div className={styles.testimonialGrid}>
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className={styles.testimonialCard}>
+              <div className={styles.testimonialContent}>
+                <p>{testimonial.text}</p>
+                <div className={styles.testimonialAuthor}>
+                  <span>{testimonial.author}</span>
+                  <span className={styles.location}>{testimonial.location}</span>
+                </div>
+              </div>
             </div>
           ))}
-        </Slider>
+        </div>
+      </section>
+
+      {/* Blog/Feed como última seção */}
+      <section className={styles.blogSection}>
+        <div className={styles.testimonialHeader}>
+          <span className={styles.sectionTag}>ÚLTIMAS NOTÍCIAS</span>
+          <h2>Fique por dentro das novidades</h2>
+          <p>Acompanhe as últimas notícias sobre pets, eventos de adoção e dicas para cuidar do seu melhor amigo.</p>
+        </div>
+        <div className={styles.blogGrid}>
+          {noticias.map((noticia, index) => (
+            <div key={index} className={styles.blogCard}>
+              <div className={styles.blogImage}>
+                <img src={noticia.imagem} alt={noticia.titulo} />
+                <div className={styles.dateTag}>
+                  <span>{noticia.data}</span>
+                </div>
+              </div>
+              <div className={styles.blogContent}>
+                <div className={styles.blogMeta}>
+                  <span className={styles.category}>{noticia.categoria}</span>
+                  <span className={styles.comments}>{noticia.comentarios}</span>
+                </div>
+                <h3>{noticia.titulo}</h3>
+                <p className={styles.blogExcerpt}>{noticia.resumo}</p>
+                <Link to={`/feed/${noticia.id}`} className={styles.readMore}>
+                  Ler mais
+                  <span className={styles.readMoreArrow}>→</span>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

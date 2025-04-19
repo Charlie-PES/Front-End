@@ -1,161 +1,408 @@
+/* Variáveis de cores */
+:root {
+  --color-primary: #dca879;
+  --color-primary-dark: #bb8e68;
+  --color-primary-light: #f0d5bb;
+  --color-text: #333;
+  --color-text-secondary: #666;
+  --color-background: #fff;
+  --color-background-secondary: #f8f8f8;
+  --color-card: #fff;
+  --color-card-hover: #f8f8f8;
+  --color-border: #eee;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-hover: rgba(0, 0, 0, 0.15);
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  --transition-default: all 0.3s ease;
+  --border-radius: 20px;
+}
+
+/* Dark Mode */
+.darkMode {
+  --color-text: #fff;
+  --color-text-secondary: #bbb;
+  --color-background: #1a1a1a;
+  --color-background-secondary: #2d2d2d;
+  --color-card: #2d2d2d;
+  --color-card-hover: #363636;
+  --color-border: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-color-hover: rgba(0, 0, 0, 0.4);
+}
 
 .feedContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 40px;
-  padding: 40px 20px;
-  background-color: var(--bg-color, #fffaf4);
-  color: var(--text-color, #333);
-  min-height: 100vh;
-  font-family: 'Arial', sans-serif;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.leftSidebar {
-  width: 240px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding-top: 10px;
-  position: sticky;
-  top: 80px;
-  height: fit-content;
-}
-
-.sidebarBox {
-  background: var(--card-bg, #fff);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.sidebarBox h3 {
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-  color: var(--highlight-color, #2e7d7b);
-}
-
-.sidebarBox ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebarBox li {
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  color: var(--text-color, #444);
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.sidebarBox li:hover {
-  color: var(--highlight-color, #2e7d7b);
-}
-
-.mainFeed {
-  flex: 1;
   max-width: 800px;
-}
-
-.title {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  color: var(--highlight-color, #2e7d7b);
-  text-align: left;
-}
-
-.newPostBox {
-  background-color: var(--card-bg, #fff);
-  border-radius: 12px;
-  border: 1px solid var(--border-color, #ddd);
-  padding: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
-  animation: fadeIn 0.4s ease;
-}
-
-.newPostBox textarea {
-  width: 100%;
-  min-height: 80px;
-  resize: none;
-  border: none;
-  font-size: 1rem;
-  padding: 8px;
-  outline: none;
-  border-radius: 8px;
-  background-color: var(--input-bg, #f9f9f9);
-  color: var(--text-color, #333);
-}
-
-.postList {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.postCard {
-  background-color: var(--card-bg, #ffffff);
-  border-radius: 12px;
+  margin: 0 auto;
   padding: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
-  animation: fadeIn 0.4s ease;
+  min-height: 100vh;
+  animation: fadeIn 0.3s ease-in;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-background);
 }
 
-.postCard:hover {
-  transform: translateY(-4px);
+/* Controles do Feed */
+.feedControls {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-background);
+  padding: 15px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.postHeader {
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-card-background);
+  border-radius: 25px;
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.searchBar:focus-within {
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  font-size: 16px;
+  margin-left: 10px;
+  outline: none;
+}
+
+.searchBar input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filtroBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--color-card-background);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filtroBtn:hover {
+  background-color: var(--color-hover);
+}
+
+.filtroBtn.ativo {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.criarPostContainer {
+  margin-bottom: 20px;
+}
+
+.criarPostBox {
+  background-color: var(--color-card-background);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.criarPostBox:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.criarPostHeader {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.postTextarea {
+  flex: 1;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  resize: none;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.postTextarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.criarPostFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: var(--text-color, #444);
+  margin-top: 15px;
 }
 
-.postCard p {
-  font-size: 1.05rem;
-  color: var(--text-color, #555);
-  margin-bottom: 12px;
+.postActions {
+  display: flex;
+  gap: 10px;
 }
 
-.postImage {
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.actionBtn:hover {
+  background-color: var(--color-hover);
+}
+
+.postarBtn {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.postarBtn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.postarBtn:disabled {
+  background-color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+.feedCascata {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feedCard {
+  background-color: var(--color-card-background);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feedCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.autorInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.autorInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.autorNome {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.postData {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.categoria {
+  padding: 4px 12px;
+  border-radius: 15px;
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 14px;
+}
+
+.cardContent {
+  padding: 20px;
+}
+
+.cardContent h2 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  color: var(--color-text);
+}
+
+.cardContent p {
+  margin: 0 0 15px 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.cardImagem {
+  margin: 15px 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cardImagem img {
   width: 100%;
   height: auto;
-  border-radius: 10px;
   object-fit: cover;
-  max-height: 400px;
-  margin-top: 10px;
 }
 
-@media (max-width: 1024px) {
-  .feedContainer {
-    flex-direction: column;
-    padding: 30px 16px;
-  }
+.cardFooter {
+  padding: 15px 20px;
+  border-top: 1px solid var(--color-border);
+}
 
-  .leftSidebar {
-    width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 16px;
-  }
+.interacoes {
+  display: flex;
+  gap: 15px;
+}
 
-  .mainFeed {
-    width: 100%;
-    max-width: 100%;
-  }
+.interacoes button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interacoes button:hover {
+  background-color: var(--color-hover);
+}
+
+.voltarLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.voltarLink:hover {
+  color: var(--color-primary-hover);
+}
+
+.noticiaDetalhada {
+  background-color: var(--color-card-background);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.noticiaHeader {
+  padding: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.noticiaHeader h1 {
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  color: var(--color-text);
+}
+
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.noticiaImagem {
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.noticiaImagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noticiaConteudo {
+  padding: 20px;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.noticiaFooter {
+  padding: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.darkMode {
+  --color-background: #1a1a1a;
+  --color-text: #ffffff;
+  --color-text-secondary: #b3b3b3;
+  --color-border: #333333;
+  --color-card-background: #2d2d2d;
+  --color-hover: #3d3d3d;
+  --color-primary: #4a90e2;
+  --color-primary-hover: #357abd;
+  --color-success: #4caf50;
+  --color-error: #f44336;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -163,12 +410,53 @@
   }
 }
 
-/* DARK THEME OVERRIDES */
-[data-theme='dark'] {
-  --bg-color: #121212;
-  --text-color: #e4e4e4;
-  --card-bg: #1f1f1f;
-  --border-color: #333;
-  --input-bg: #2c2c2c;
-  --highlight-color: #90caf9;
+@media (max-width: 768px) {
+  .feedContainer {
+    padding: 15px;
+  }
+
+  .filtros {
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+
+  .filtroBtn {
+    white-space: nowrap;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .categoria {
+    align-self: flex-start;
+  }
+
+  .interacoes {
+    flex-wrap: wrap;
+  }
 }
+
+@media (max-width: 480px) {
+  .feedContainer {
+    padding: 10px;
+  }
+
+  .criarPostBox {
+    padding: 15px;
+  }
+
+  .postTextarea {
+    min-height: 80px;
+  }
+
+  .cardContent h2 {
+    font-size: 18px;
+  }
+
+  .noticiaHeader h1 {
+    font-size: 20px;
+  }
+} 

@@ -1,0 +1,466 @@
+/* Variáveis de cores */
+:root {
+  --color-primary: #dca879;
+  --color-primary-dark: #bb8e68;
+  --color-primary-light: #f0d5bb;
+  --color-text: #333;
+  --color-text-secondary: #666;
+  --color-background: #fff;
+  --color-background-secondary: #f8f8f8;
+  --color-card: #fff;
+  --color-card-hover: #f8f8f8;
+  --color-border: #eee;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-hover: rgba(0, 0, 0, 0.15);
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  --transition-default: all 0.3s ease;
+  --border-radius: 20px;
+}
+
+/* Dark Mode */
+.darkMode {
+  --color-text: #fff;
+  --color-text-secondary: #bbb;
+  --color-background: #1a1a1a;
+  --color-background-secondary: #2d2d2d;
+  --color-card: #2d2d2d;
+  --color-card-hover: #363636;
+  --color-border: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-color-hover: rgba(0, 0, 0, 0.4);
+}
+
+.feedContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+/* Controles do Feed */
+.feedControls {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.searchBar {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.searchBar svg {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-card);
+  color: var(--color-text);
+  font-size: 1rem;
+  transition: var(--transition-default);
+}
+
+.searchBar input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.searchBar input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.filtroBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--color-card);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition-default);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.filtroBtn svg {
+  font-size: 1.1rem;
+}
+
+.filtroBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color-hover);
+}
+
+.filtroBtn.ativo {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+/* Grid de posts */
+.feedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  width: 100%;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Card de post */
+.feedCard {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  transition: var(--transition-default);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.feedCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px var(--shadow-color-hover);
+}
+
+.cardImagem {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.cardImagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-default);
+}
+
+.feedCard:hover .cardImagem img {
+  transform: scale(1.05);
+}
+
+.categoria {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--gradient-primary);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.cardContent {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.autorInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.autorInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.autorInfo span {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.cardContent h2 {
+  color: var(--color-text);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.cardContent p {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid var(--color-border);
+}
+
+.interacoes {
+  display: flex;
+  gap: 15px;
+}
+
+.interacoes button {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: var(--transition-default);
+  padding: 5px;
+}
+
+.interacoes button:hover {
+  color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.data {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Post Social Preview */
+.postSocialPreview {
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Notícia Detalhada */
+.noticiaDetalhada {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
+}
+
+.voltarLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  margin: 20px 0;
+  transition: var(--transition-default);
+}
+
+.voltarLink:hover {
+  color: var(--color-primary-dark);
+  transform: translateX(-5px);
+}
+
+.noticiaHeader {
+  padding: 30px;
+  text-align: center;
+}
+
+.noticiaHeader h1 {
+  color: var(--color-text);
+  font-size: 2rem;
+  margin: 0 0 20px;
+  line-height: 1.3;
+}
+
+.noticiaImagem {
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
+
+.noticiaImagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noticiaConteudo {
+  padding: 40px;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+.noticiaConteudo p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.noticiaFooter {
+  padding: 20px 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .feedContainer {
+    padding: 20px 15px;
+  }
+
+  .feedGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .filtros {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filtroBtn {
+    flex-shrink: 0;
+  }
+
+  .noticiaDetalhada {
+    margin: 0;
+  }
+
+  .noticiaHeader {
+    padding: 20px;
+  }
+
+  .noticiaHeader h1 {
+    font-size: 1.5rem;
+  }
+
+  .noticiaImagem {
+    height: 300px;
+  }
+
+  .noticiaConteudo {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .feedContainer {
+    padding: 15px 10px;
+  }
+
+  .searchBar input {
+    padding: 12px 12px 12px 40px;
+    font-size: 0.9rem;
+  }
+
+  .filtroBtn {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+  }
+
+  .cardImagem {
+    height: 180px;
+  }
+
+  .cardContent {
+    padding: 15px;
+  }
+
+  .cardContent h2 {
+    font-size: 1.1rem;
+  }
+
+  .postSocialPreview {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .interacoes {
+    gap: 10px;
+  }
+
+  .interacoes button {
+    font-size: 0.8rem;
+  }
+
+  .noticiaImagem {
+    height: 200px;
+  }
+
+  .noticiaConteudo {
+    padding: 15px;
+  }
+
+  .noticiaConteudo p {
+    font-size: 1rem;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+} 

@@ -1,74 +1,323 @@
+/* Variáveis de cores */
+:root {
+  --bg-color: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-color: #333333;
+  --text-secondary: #555555;
+  --primary-color: #264653;
+  --accent-color: #f77f00;
+  --accent-light: #f4a261;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --transition-speed: 0.3s;
+  --border-radius: 12px;
+  --card-padding: 2rem;
+}
+
+/* Dark Mode */
+.darkMode {
+  --bg-color: #121212;
+  --bg-secondary: #1e1e1e;
+  --text-color: #f0f0f0;
+  --text-secondary: #bbbbbb;
+  --primary-color: #4a9cc5;
+  --accent-color: #ff9f43;
+  --accent-light: #ffb976;
+  --border-color: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.5);
+}
 
 .sobreContainer {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 2rem;
-  background-color: var(--bg-color, #ffffff);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   font-family: 'Segoe UI', sans-serif;
   line-height: 1.75;
-  color: var(--text-color, #333);
-  animation: fadeIn 0.6s ease-in-out;
 }
 
-.sobreContainer h1 {
-  font-size: 2.5rem;
-  color: var(--accent-color, #f77f00);
-  margin-bottom: 1.5rem;
-  text-align: center;
-  font-weight: bold;
-}
-
-.sobreContainer h2 {
-  font-size: 1.8rem;
-  color: var(--primary-color, #264653);
-  margin-top: 2.5rem;
-  margin-bottom: 0.5rem;
+/* Hero Section */
+.hero {
   position: relative;
-  padding-left: 12px;
+  height: 60vh;
+  min-height: 400px;
+  background-color: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-color);
+  overflow: hidden;
 }
 
-.sobreContainer h2::before {
+.hero::before {
   content: '';
   position: absolute;
+  top: 0;
   left: 0;
-  top: 8px;
-  width: 6px;
-  height: 70%;
-  background-color: var(--accent-light, #f4a261);
-  border-radius: 4px;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-color);
+  opacity: 0.8;
 }
 
-.sobreContainer p {
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  animation: fadeInUp 1s ease;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  animation: fadeInUp 1s ease 0.2s backwards;
+}
+
+/* Missão Section */
+.missao {
+  padding: 5rem 2rem;
+  background-color: var(--bg-secondary);
+}
+
+.missaoContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.missao h2 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.missao h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, var(--accent-color), var(--accent-light));
+  border-radius: 2px;
+}
+
+.missao p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Valores Section */
+.valores {
+  padding: 5rem 2rem;
+  background-color: var(--bg-color);
+  position: relative;
+}
+
+.valores h2 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.valoresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.valorCard {
+  background-color: var(--bg-secondary);
+  padding: var(--card-padding);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: all var(--transition-speed) ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.valorCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--accent-color), var(--accent-light));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+
+.valorCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+.valorCard:hover::before {
+  transform: scaleX(1);
+}
+
+.valorIcone {
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  transition: transform var(--transition-speed) ease;
+}
+
+.valorCard:hover .valorIcone {
+  transform: scale(1.1);
+}
+
+.valorCard h3 {
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.valorCard p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Estatísticas Section */
+.estatisticas {
+  padding: 5rem 2rem;
+  background-color: var(--bg-secondary);
+}
+
+.estatisticasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.statCard {
+  background-color: var(--bg-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  text-align: center;
+  transition: all var(--transition-speed) ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+.statIcone {
+  font-size: 2rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.statCard h3 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.statCard p {
+  color: var(--text-secondary);
   font-size: 1.1rem;
-  color: var(--paragraph-color, #555);
-  margin-top: 0.5rem;
 }
 
-.sobreContainer p strong {
-  color: var(--text-color, #333);
+/* Impacto Section */
+.impacto {
+  padding: 5rem 2rem;
+  background-color: var(--bg-color);
 }
 
-.imgContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
+.impactoContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.imgContainer img {
-  width: 130px;
-  height: auto;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  opacity: 0.9;
+.impacto h2 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.imgContainer img:hover {
-  transform: scale(1.05);
-  opacity: 1;
+.impacto > p {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
 }
 
-@keyframes fadeIn {
+.impactoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.impactoCard {
+  background-color: var(--bg-secondary);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.impactoCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+.impactoCard h3 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.impactoCard ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.impactoCard li {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.impactoCard li::before {
+  content: '•';
+  color: var(--accent-color);
+  position: absolute;
+  left: 0;
+  font-size: 1.5rem;
+}
+
+/* Animações */
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -79,24 +328,65 @@
   }
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
-  .sobreContainer {
-    padding: 2rem 1.5rem;
+  .hero {
+    height: 50vh;
+    min-height: 300px;
   }
 
-  .sobreContainer h1 {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+
+  .missao, .valores, .estatisticas, .impacto {
+    padding: 3rem 1.5rem;
+  }
+
+  .missao h2, .valores h2, .estatisticas h2, .impacto h2 {
     font-size: 2rem;
   }
 
-  .sobreContainer h2 {
-    font-size: 1.4rem;
+  .valorCard, .statCard, .impactoCard {
+    padding: 1.5rem;
   }
 
-  .sobreContainer p {
-    font-size: 1rem;
+  .statCard h3 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 40vh;
+    min-height: 250px;
   }
 
-  .imgContainer img {
-    width: 100px;
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .missao, .valores, .estatisticas, .impacto {
+    padding: 2rem 1rem;
+  }
+
+  .missao h2, .valores h2, .estatisticas h2, .impacto h2 {
+    font-size: 1.8rem;
+  }
+
+  .valorIcone {
+    font-size: 2rem;
+  }
+
+  .statCard h3 {
+    font-size: 1.8rem;
+  }
+
+  .impactoCard h3 {
+    font-size: 1.5rem;
   }
 }

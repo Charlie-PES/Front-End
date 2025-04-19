@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { FaChevronDown, FaChevronUp, FaPaw, FaHeart, FaQuestion, FaUserPlus, FaShieldAlt, FaMobileAlt, FaHandHoldingHeart } from 'react-icons/fa';
-import { ThemeContext } from '../../../contexts/ThemeContext';
-import styles from './Faq.module.css';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import styles from './FAQ.module.css';
 
 const FAQ = () => {
   const { darkMode } = useContext(ThemeContext);

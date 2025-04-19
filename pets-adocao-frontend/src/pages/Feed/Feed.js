@@ -1,17 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styles from './Feed.module.css';
-import { ThemeContext } from '../../../contexts/ThemeContext';
-import { FaHeart, FaComment, FaShare, FaCalendarAlt, FaTag, FaFilter, FaSearch, FaPaw, FaUserCircle, FaImage, FaSmile, FaPaperPlane, FaNewspaper } from 'react-icons/fa';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { FaHeart, FaComment, FaShare, FaCalendarAlt, FaTag, FaFilter, FaSearch, FaPaw, FaUserCircle } from 'react-icons/fa';
 
 const Feed = () => {
   const { id } = useParams();
   const { darkMode } = useContext(ThemeContext);
   const [filtroAtivo, setFiltroAtivo] = useState('todos');
   const [busca, setBusca] = useState('');
-  const [novoPost, setNovoPost] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [noticiaSelecionada, setNoticiaSelecionada] = useState(null);
 
   const postsSociais = [
     {
@@ -281,7 +278,7 @@ const Feed = () => {
     }
   ];
 
-  const todosPosts = [...posts, ...postsSociais, ...noticias].sort((a, b) => {
+  const todosPosts = [...postsSociais, ...noticias].sort((a, b) => {
     const dataA = new Date(a.data.split(' ').reverse().join('-'));
     const dataB = new Date(b.data.split(' ').reverse().join('-'));
     return dataB - dataA;
@@ -306,78 +303,6 @@ const Feed = () => {
   console.log('Posts filtrados:', postsFiltrados.length);
 
   const noticiaAtual = id ? todosPosts.find(n => n.id?.toString() === id) : null;
-
-  const handleCriarPost = () => {
-    if (novoPost.trim() === '') return;
-    
-    const novoPostObj = {
-      id: `post-${Date.now()}`,
-      tipo: 'social',
-      autor: 'Usuário Atual',
-      autorImagem: '/images/user-default.jpg',
-      data: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
-      conteudo: novoPost,
-      imagem: '',
-      likes: 0,
-      comentarios: 0,
-      compartilhamentos: 0
-    };
-    
-    setPosts([novoPostObj, ...posts]);
-    setNovoPost('');
-  };
-
-  const formatarData = (dataString) => {
-    const data = new Date(dataString);
-    return data.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
-
-  if (noticiaSelecionada) {
-    return (
-      <div className={`${styles.feedContainer} ${darkMode ? styles.darkMode : ''}`}>
-        <Link to="/feed" className={styles.voltarLink}>
-          <FaNewspaper /> Voltar para o Feed
-        </Link>
-        <div className={styles.noticiaDetalhada}>
-          <div className={styles.noticiaHeader}>
-            <h1>{noticiaSelecionada.titulo}</h1>
-            <div className={styles.metaInfo}>
-              <div className={styles.postInfo}>
-                <span>{noticiaSelecionada.autor}</span>
-                <span>{formatarData(noticiaSelecionada.data)}</span>
-                <span className={styles.categoria}>{noticiaSelecionada.categoria}</span>
-              </div>
-            </div>
-          </div>
-          <div className={styles.noticiaImagem}>
-            <img src={noticiaSelecionada.imagem} alt={noticiaSelecionada.titulo} />
-          </div>
-          <div className={styles.noticiaConteudo}>
-            <p>{noticiaSelecionada.conteudo}</p>
-          </div>
-          <div className={styles.noticiaFooter}>
-            <div className={styles.interacoes}>
-              <button>
-                <FaHeart /> {noticiaSelecionada.likes}
-              </button>
-              <button>
-                <FaComment /> {noticiaSelecionada.comentarios}
-              </button>
-              <button>
-                <FaShare /> Compartilhar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className={`${styles.feedContainer} ${darkMode ? styles.darkMode : ''}`}>
@@ -415,86 +340,39 @@ const Feed = () => {
             </div>
           </div>
 
-          <div className={styles.criarPostContainer}>
-            <div className={styles.criarPostBox}>
-              <div className={styles.criarPostHeader}>
-                <img src="/images/user-default.jpg" alt="Usuário" className={styles.userAvatar} />
-                <textarea 
-                  placeholder="O que está acontecendo com seu pet?" 
-                  value={novoPost}
-                  onChange={(e) => setNovoPost(e.target.value)}
-                  className={styles.postTextarea}
-                />
-              </div>
-              <div className={styles.criarPostFooter}>
-                <div className={styles.postActions}>
-                  <button className={styles.actionBtn}>
-                    <FaImage /> Adicionar foto
-                  </button>
-                  <button className={styles.actionBtn}>
-                    <FaSmile /> Emoji
-                  </button>
-                </div>
-                <button 
-                  className={styles.postarBtn}
-                  onClick={handleCriarPost}
-                  disabled={novoPost.trim() === ''}
-                >
-                  <FaPaperPlane /> Postar
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.feedCascata}>
+          <div className={styles.feedGrid}>
             {postsFiltrados.map(post => {
               if (!post) return null;
               
               return (
                 <article key={post.id} className={styles.feedCard}>
-                  <Link to={`/feed/${post.id}`} className={styles.cardLink} onClick={(e) => {
-                    e.preventDefault();
-                    setNoticiaSelecionada(post);
-                  }}>
-                    <div className={styles.cardHeader}>
-                      <div className={styles.autorInfo}>
-                        <img src={post.autorImagem} alt={post.autor} />
-                        <div>
-                          <span className={styles.autorNome}>{post.autor}</span>
-                          <span className={styles.postData}>{post.data}</span>
-                        </div>
-                      </div>
+                  <Link to={`/feed/${post.id}`} className={styles.cardLink}>
+                    <div className={styles.cardImagem}>
+                      <img src={post.imagem} alt={post.tipo === 'noticia' ? post.titulo : 'Post'} />
                       {post.tipo === 'noticia' && (
                         <span className={styles.categoria}>{post.categoria}</span>
                       )}
                     </div>
-                    
-                    {post.tipo === 'noticia' ? (
-                      <div className={styles.cardContent}>
-                        <h2>{post.titulo}</h2>
-                        <p>{post.conteudo.split('\n\n')[0]}</p>
-                        {post.imagem && (
-                          <div className={styles.cardImagem}>
-                            <img src={post.imagem} alt={post.titulo} />
-                          </div>
-                        )}
+                    <div className={styles.cardContent}>
+                      <div className={styles.autorInfo}>
+                        <img src={post.autorImagem} alt={post.autor} />
+                        <span>{post.autor}</span>
                       </div>
-                    ) : (
-                      <div className={styles.cardContent}>
+                      {post.tipo === 'noticia' ? (
+                        <>
+                          <h2>{post.titulo}</h2>
+                          <p>{post.conteudo.split('\n\n')[0]}</p>
+                        </>
+                      ) : (
                         <p className={styles.postSocialPreview}>{post.conteudo}</p>
-                        {post.imagem && (
-                          <div className={styles.cardImagem}>
-                            <img src={post.imagem} alt="Post" />
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    
-                    <div className={styles.cardFooter}>
-                      <div className={styles.interacoes}>
-                        <button><FaHeart /> {post.likes}</button>
-                        <button><FaComment /> {post.comentarios}</button>
-                        <button><FaShare /> {post.compartilhamentos}</button>
+                      )}
+                      <div className={styles.cardFooter}>
+                        <div className={styles.interacoes}>
+                          <button><FaHeart /> {post.likes}</button>
+                          <button><FaComment /> {post.comentarios}</button>
+                          <button><FaShare /> {post.compartilhamentos}</button>
+                        </div>
+                        <span className={styles.data}>{post.data}</span>
                       </div>
                     </div>
                   </Link>
