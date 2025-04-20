@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getCurrentUser, isAuthenticated } from '../services/authService';
+import { getCurrentUser, isAuthenticated, fetchCurrentUser } from '../services/authService';
 
 const AuthContext = createContext();
 
@@ -11,9 +11,16 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Verifica se o usuário está autenticado ao carregar a página
-    const checkAuth = () => {
+    const checkAuth = async () => {
       if (isAuthenticated()) {
-        setUser(getCurrentUser());
+        try {
+          // Busca os dados atualizados do usuário do servidor
+          const userData = await fetchCurrentUser();
+          setUser(userData);
+        } catch (error) {
+          console.error('Erro ao buscar dados do usuário:', error);
+          setUser(null);
+        }
       } else {
         setUser(null);
       }
@@ -25,6 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
+    setUser,
     loading,
     isAuthenticated: () => isAuthenticated()
   };

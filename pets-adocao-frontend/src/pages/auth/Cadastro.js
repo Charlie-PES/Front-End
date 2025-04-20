@@ -2,12 +2,15 @@ import React, { useState, useContext } from 'react';
 import styles from './Cadastro.module.css';
 import { FaUserCircle } from 'react-icons/fa';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../services/authService';
 
 const Cadastro = () => {
   const { darkMode } = useContext(ThemeContext);
+  const { setUser } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
     cpf: '',
@@ -153,6 +156,8 @@ const Cadastro = () => {
     }
 
     try {
+      setLoading(true);
+      
       // Determinar o tipo de usuário
       let userType = 'usuario';
       if (formData.queroAdotar && formData.queroSerTutor) {
@@ -164,7 +169,7 @@ const Cadastro = () => {
       }
       
       // Criar usuário
-      await addUser({
+      const userData = await addUser({
         email: formData.email,
         password: formData.senha,
         displayName: formData.nome,
@@ -172,14 +177,19 @@ const Cadastro = () => {
         type: userType
       });
 
+      // Atualiza o contexto com os dados do usuário
+      setUser(userData);
+
       // Redirecionar para a página inicial
       navigate('/');
     } catch (error) {
       console.error('Erro ao criar conta:', error);
       setErrors({
         ...errors,
-        email: 'Erro ao criar conta. ' + error.message
+        email: error.response?.data?.message || 'Erro ao criar conta. Tente novamente.'
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -198,6 +208,7 @@ const Cadastro = () => {
               onChange={handleChange} 
               required 
               className={errors.nome ? styles.inputError : ''}
+              disabled={loading}
             />
             {errors.nome && <span className={styles.errorMessage}>{errors.nome}</span>}
           </div>
@@ -211,6 +222,7 @@ const Cadastro = () => {
               onChange={handleChange} 
               required 
               className={errors.cpf ? styles.inputError : ''}
+              disabled={loading}
             />
             {errors.cpf && <span className={styles.errorMessage}>{errors.cpf}</span>}
           </div>
@@ -224,6 +236,7 @@ const Cadastro = () => {
               onChange={handleChange} 
               required 
               className={errors.email ? styles.inputError : ''}
+              disabled={loading}
             />
             {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
           </div>
@@ -237,6 +250,7 @@ const Cadastro = () => {
               onChange={handleChange} 
               required 
               className={errors.senha ? styles.inputError : ''}
+              disabled={loading}
             />
             {errors.senha && <span className={styles.errorMessage}>{errors.senha}</span>}
           </div>
@@ -250,20 +264,37 @@ const Cadastro = () => {
               onChange={handleChange} 
               required 
               className={errors.confirmarSenha ? styles.inputError : ''}
+              disabled={loading}
             />
             {errors.confirmarSenha && <span className={styles.errorMessage}>{errors.confirmarSenha}</span>}
           </div>
 
-          <div className={styles.checkboxContainer}>
-            <label>
-              <input type="checkbox" name="queroAdotar" onChange={handleChange} /> Quero adotar
-            </label>
-            <label>
-              <input type="checkbox" name="queroSerTutor" onChange={handleChange} /> Quero ser tutor
-            </label>
+          <div className={styles.checkboxGroup}>
+            <div className={styles.checkboxItem}>
+              <input 
+                type="checkbox" 
+                name="queroAdotar" 
+                id="queroAdotar" 
+                onChange={handleChange}
+                disabled={loading}
+              />
+              <label htmlFor="queroAdotar">Quero adotar um pet</label>
+            </div>
+            <div className={styles.checkboxItem}>
+              <input 
+                type="checkbox" 
+                name="queroSerTutor" 
+                id="queroSerTutor" 
+                onChange={handleChange}
+                disabled={loading}
+              />
+              <label htmlFor="queroSerTutor">Quero ser tutor temporário</label>
+            </div>
           </div>
 
-          <button type="submit" className={styles.registerButton}>Registre-se</button>
+          <button type="submit" className={styles.submitButton} disabled={loading}>
+            {loading ? 'Criando conta...' : 'Criar conta'}
+          </button>
         </form>
       </div>
     </div>

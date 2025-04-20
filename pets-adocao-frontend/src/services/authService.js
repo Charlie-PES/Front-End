@@ -18,56 +18,54 @@ const getUsers = () => {
 };
 
 // Adiciona um novo usuário
-const addUser = (user) => {
-  const users = getUsers();
-  
-  // Verifica se o email já existe
-  if (users.some(u => u.email === user.email)) {
-    throw new Error('Email já cadastrado');
+const addUser = async (userData) => {
+  try {
+    const response = await api.post('/auth/register', userData);
+    const { token, user } = response.data;
+    
+    // Armazena o token e usuário no localStorage
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    return user;
+  } catch (error) {
+    console.error('Erro ao registrar usuário:', error);
+    throw error;
   }
-  
-  // Adiciona o usuário com um ID único
-  const newUser = {
-    ...user,
-    id: Date.now().toString(),
-    createdAt: new Date().toISOString()
-  };
-  
-  users.push(newUser);
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  
-  return newUser;
 };
 
 // Autentica um usuário
-const login = (email, password) => {
-  const users = getUsers();
-  const user = users.find(u => u.email === email && u.password === password);
-  
-  if (!user) {
-    throw new Error('Email ou senha inválidos');
+const login = async (email, password) => {
+  try {
+    const response = await api.post('/auth/login', { email, password });
+    const { token, user } = response.data;
+    
+    // Armazena o token e usuário no localStorage
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    return user;
+  } catch (error) {
+    console.error('Erro ao fazer login:', error);
+    throw error;
   }
-  
-  // Armazena o usuário atual
-  localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-  
-  return user;
 };
 
 // Faz logout do usuário atual
 const logout = () => {
-  localStorage.removeItem(CURRENT_USER_KEY);
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
 };
 
 // Obtém o usuário atual
 const getCurrentUser = () => {
-  const userJson = localStorage.getItem(CURRENT_USER_KEY);
+  const userJson = localStorage.getItem('user');
   return userJson ? JSON.parse(userJson) : null;
 };
 
 // Verifica se o usuário está autenticado
 const isAuthenticated = () => {
-  return !!getCurrentUser();
+  return !!localStorage.getItem('token');
 };
 
 // Cria contas pré-definidas
@@ -119,11 +117,45 @@ const createSeedAccounts = () => {
   };
 };
 
+// Função para atualizar os dados do usuário
+const updateUser = async (userData) => {
+  try {
+    const response = await api.put('/auth/me', userData);
+    const updatedUser = response.data;
+    
+    // Atualiza os dados do usuário no localStorage
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    
+    return updatedUser;
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    throw error;
+  }
+};
+
+// Função para obter os dados atualizados do usuário do servidor
+const fetchCurrentUser = async () => {
+  try {
+    const response = await api.get('/auth/me');
+    const user = response.data;
+    
+    // Atualiza os dados do usuário no localStorage
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    return user;
+  } catch (error) {
+    console.error('Erro ao buscar dados do usuário:', error);
+    throw error;
+  }
+};
+
 export {
   addUser,
   login,
   logout,
   getCurrentUser,
   isAuthenticated,
-  createSeedAccounts
+  createSeedAccounts,
+  updateUser,
+  fetchCurrentUser
 }; 

@@ -2,11 +2,14 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './EditarPerfil.module.css';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import { useAuth } from '../../../contexts/AuthContext';
 import { FaCamera, FaSave, FaArrowLeft, FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaInfoCircle } from 'react-icons/fa';
+import { updateUser, fetchCurrentUser } from '../../../services/authService';
 
 const EditarPerfil = () => {
   // Obtém o contexto de tema para suporte ao modo escuro
   const { darkMode } = useContext(ThemeContext);
+  const { user, setUser } = useAuth();
   
   // Hook para navegação entre páginas
   const navigate = useNavigate();
@@ -31,26 +34,20 @@ const EditarPerfil = () => {
   // Estado para controlar erros de validação
   const [errors, setErrors] = useState({});
   
-  // Simula o carregamento dos dados do usuário
+  // Carrega os dados do usuário
   useEffect(() => {
-    // Aqui seria feita uma chamada à API para buscar os dados do usuário
-    // Por enquanto, usamos dados mockados
-    const fetchUserData = async () => {
+    const loadUserData = async () => {
       try {
-        // Simula um delay de rede
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        // Dados mockados para demonstração
+        const currentUser = await fetchCurrentUser();
         setUserData({
-          nome: 'Teste',
-          email: 'Teste@example.com',
-          telefone: '(51) 91234-5678',
-          cidade: 'Porto Alegre - RS',
-          bio: 'Amante de animais e defensor da adoção responsável. Já adotei 3 pets e continuo ajudando outros a encontrarem um lar amoroso.',
+          nome: currentUser.displayName || '',
+          email: currentUser.email || '',
+          telefone: currentUser.telefone || '',
+          cidade: currentUser.cidade || '',
+          bio: currentUser.bio || '',
           avatar: null,
-          avatarPreview: '/images/dog2.png'
+          avatarPreview: currentUser.avatar || '/images/default-avatar.png'
         });
-        
         setIsLoading(false);
       } catch (error) {
         console.error('Erro ao carregar dados do usuário:', error);
@@ -59,7 +56,7 @@ const EditarPerfil = () => {
       }
     };
     
-    fetchUserData();
+    loadUserData();
   }, []);
   
   // Função para lidar com mudanças nos campos de entrada
@@ -127,13 +124,8 @@ const EditarPerfil = () => {
     }
     
     // Validação do telefone
-    if (!userData.telefone.trim()) {
-      newErrors.telefone = 'O telefone é obrigatório';
-    }
-    
-    // Validação da cidade
-    if (!userData.cidade.trim()) {
-      newErrors.cidade = 'A cidade é obrigatória';
+    if (userData.telefone && !/^\(\d{2}\) \d{4,5}-\d{4}$/.test(userData.telefone)) {
+      newErrors.telefone = 'Formato inválido. Use (99) 99999-9999';
     }
     
     setErrors(newErrors);
@@ -153,11 +145,23 @@ const EditarPerfil = () => {
     try {
       setIsLoading(true);
       
-      // Aqui seria feita uma chamada à API para salvar os dados
-      // Por enquanto, simulamos um delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Prepara os dados para atualização
+      const formData = new FormData();
+      formData.append('displayName', userData.nome);
+      formData.append('email', userData.email);
+      formData.append('telefone', userData.telefone);
+      formData.append('cidade', userData.cidade);
+      formData.append('bio', userData.bio);
+      if (userData.avatar) {
+        formData.append('avatar', userData.avatar);
+      }
       
-      // Simula sucesso
+      // Atualiza os dados do usuário
+      const updatedUser = await updateUser(formData);
+      
+      // Atualiza o contexto com os novos dados
+      setUser(updatedUser);
+      
       setMessage({ type: 'success', text: 'Perfil atualizado com sucesso!' });
       
       // Redireciona para a página de perfil após 1.5 segundos
@@ -167,7 +171,11 @@ const EditarPerfil = () => {
       
     } catch (error) {
       console.error('Erro ao atualizar perfil:', error);
-      setMessage({ type: 'error', text: 'Erro ao atualizar perfil. Tente novamente.' });
+      setMessage({ 
+        type: 'error', 
+        text: error.response?.data?.message || 'Erro ao atualizar perfil. Tente novamente.' 
+      });
+    } finally {
       setIsLoading(false);
     }
   };
@@ -193,7 +201,7 @@ const EditarPerfil = () => {
     <div className={`${styles.container} ${darkMode ? styles.darkMode : ''}`}>
       {/* Cabeçalho da página */}
       <div className={styles.header}>
-        <button className={styles.backButton} onClick={handleBack}>
+        <button className={styles.backButton} onClick={handleBack} disabled={isLoading}>
           <FaArrowLeft /> Voltar
         </button>
         <h1>Editar Perfil</h1>
@@ -224,7 +232,8 @@ const EditarPerfil = () => {
               type="file" 
               accept="image/*" 
               onChange={handleAvatarChange} 
-              className={styles.avatarInput} 
+              className={styles.avatarInput}
+              disabled={isLoading}
             />
           </div>
           <p className={styles.avatarHint}>Clique para alterar sua foto</p>
@@ -243,6 +252,7 @@ const EditarPerfil = () => {
             onChange={handleChange}
             className={`${styles.input} ${errors.nome ? styles.inputError : ''}`}
             placeholder="Seu nome completo"
+            disabled={isLoading}
           />
           {errors.nome && <span className={styles.errorMessage}>{errors.nome}</span>}
         </div>
@@ -258,7 +268,8 @@ const EditarPerfil = () => {
             value={userData.email}
             onChange={handleChange}
             className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
-            placeholder="seu.email@exemplo.com"
+            placeholder="Seu email"
+            disabled={isLoading}
           />
           {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
         </div>
@@ -274,7 +285,8 @@ const EditarPerfil = () => {
             value={userData.telefone}
             onChange={handleChange}
             className={`${styles.input} ${errors.telefone ? styles.inputError : ''}`}
-            placeholder="(00) 00000-0000"
+            placeholder="(99) 99999-9999"
+            disabled={isLoading}
           />
           {errors.telefone && <span className={styles.errorMessage}>{errors.telefone}</span>}
         </div>
@@ -289,15 +301,15 @@ const EditarPerfil = () => {
             name="cidade"
             value={userData.cidade}
             onChange={handleChange}
-            className={`${styles.input} ${errors.cidade ? styles.inputError : ''}`}
-            placeholder="Sua cidade e estado"
+            className={styles.input}
+            placeholder="Sua cidade"
+            disabled={isLoading}
           />
-          {errors.cidade && <span className={styles.errorMessage}>{errors.cidade}</span>}
         </div>
         
         <div className={styles.formGroup}>
           <label htmlFor="bio" className={styles.label}>
-            <FaInfoCircle className={styles.labelIcon} /> Biografia
+            <FaInfoCircle className={styles.labelIcon} /> Sobre mim
           </label>
           <textarea
             id="bio"
@@ -305,17 +317,18 @@ const EditarPerfil = () => {
             value={userData.bio}
             onChange={handleChange}
             className={styles.textarea}
-            placeholder="Conte um pouco sobre você e sua experiência com animais..."
-            rows="4"
+            placeholder="Conte um pouco sobre você..."
+            rows={4}
+            disabled={isLoading}
           />
         </div>
         
-        {/* Botões de ação */}
         <div className={styles.formActions}>
           <button 
             type="button" 
             className={styles.cancelButton} 
             onClick={handleBack}
+            disabled={isLoading}
           >
             Cancelar
           </button>
@@ -324,13 +337,8 @@ const EditarPerfil = () => {
             className={styles.saveButton}
             disabled={isLoading}
           >
-            {isLoading ? (
-              <span className={styles.loadingSpinner}></span>
-            ) : (
-              <>
-                <FaSave /> Salvar Alterações
-              </>
-            )}
+            <FaSave className={styles.buttonIcon} />
+            {isLoading ? 'Salvando...' : 'Salvar alterações'}
           </button>
         </div>
       </form>
