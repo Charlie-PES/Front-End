@@ -7,7 +7,7 @@ import { login } from '../services/authService';
 import styles from './Login.module.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,40 +15,38 @@ const Login = () => {
   const { darkMode } = useContext(ThemeContext);
   const { setUser } = useAuth();
 
-  const handleEmailLogin = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
-      const userData = await login(email, password);
+      const userData = await login(username, password);
       setUser(userData);
       navigate('/'); // Redireciona para a página inicial após o login
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      setError(error.response?.data?.message || 'Email ou senha inválidos');
+      setError(error.response?.data?.message || 'Usuário ou senha inválidos');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={`${styles.loginContainer} ${darkMode ? styles.darkMode : ''}`}>
+    <div className={`${styles.loginContainer} ${darkMode ? styles.dark : ''}`}>
       <div className={styles.loginForm}>
-        <FaUserCircle className={styles.userIcon} size={50} />
-        <h1>Login</h1>
-        {error && <p className={styles.errorMessage}>{error}</p>}
-        <form onSubmit={handleEmailLogin}>
+        <FaUserCircle className={styles.userIcon} />
+        <h2>Login</h2>
+        {error && <div className={styles.error}>{error}</div>}
+        <form onSubmit={handleLogin}>
           <div className={styles.formGroup}>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="username">Usuário</label>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="seu email"
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              disabled={loading}
             />
           </div>
           <div className={styles.formGroup}>
@@ -58,21 +56,13 @@ const Login = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="sua senha"
               required
-              disabled={loading}
             />
           </div>
-          <button type="submit" className={styles.loginButton} disabled={loading}>
+          <button type="submit" disabled={loading}>
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
-        <p className={styles.registerLink}>
-          Não tem uma conta?{' '}
-          <button onClick={() => navigate('/cadastro')} className={styles.linkButton} disabled={loading}>
-            Registre-se
-          </button>
-        </p>
       </div>
     </div>
   );

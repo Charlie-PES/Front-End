@@ -1,3 +1,5 @@
+import api from './api';
+
 // Serviço de autenticação usando localStorage
 
 // Chave para armazenar usuários no localStorage
@@ -20,7 +22,7 @@ const getUsers = () => {
 // Adiciona um novo usuário
 const addUser = async (userData) => {
   try {
-    const response = await api.post('/auth/register', userData);
+    const response = await api.post('/users/auth/register', userData);
     const { token, user } = response.data;
     
     // Armazena o token e usuário no localStorage
@@ -35,9 +37,9 @@ const addUser = async (userData) => {
 };
 
 // Autentica um usuário
-const login = async (email, password) => {
+const login = async (username, password) => {
   try {
-    const response = await api.post('/auth/login', { email, password });
+    const response = await api.post('/users/auth/login', { username, password });
     const { token, user } = response.data;
     
     // Armazena o token e usuário no localStorage
@@ -149,6 +151,17 @@ const fetchCurrentUser = async () => {
   }
 };
 
+// Obtém o perfil do usuário
+const getUserProfile = async () => {
+  try {
+    const response = await api.get('/users/users/auth/profile');
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar perfil:', error);
+    throw error;
+  }
+};
+
 export {
   addUser,
   login,
@@ -157,5 +170,6 @@ export {
   isAuthenticated,
   createSeedAccounts,
   updateUser,
-  fetchCurrentUser
+  fetchCurrentUser,
+  getUserProfile
 }; 
