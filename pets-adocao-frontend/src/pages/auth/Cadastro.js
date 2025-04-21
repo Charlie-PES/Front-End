@@ -158,27 +158,23 @@ const Cadastro = () => {
     try {
       setLoading(true);
       
-      // Determinar o tipo de usuário
-      let userType = 'usuario';
-      if (formData.queroAdotar && formData.queroSerTutor) {
-        userType = 'ambos';
-      } else if (formData.queroAdotar) {
-        userType = 'adotante';
-      } else if (formData.queroSerTutor) {
-        userType = 'tutor';
-      }
-      
-      // Criar usuário
-      const userData = await addUser({
+      // Formatar os dados para o backend
+      const userData = {
+        username: formData.nome.toLowerCase().replace(/\s+/g, ''),
         email: formData.email,
-        password: formData.senha,
-        displayName: formData.nome,
-        cpf: formData.cpf,
-        type: userType
-      });
+        cpf: formData.cpf.replace(/\D/g, ''),
+        tutor: formData.queroSerTutor,
+        adopter: formData.queroAdotar,
+        password: formData.senha
+      };
+
+      console.log('Enviando dados:', userData); // Para debug
+
+      // Criar usuário
+      const user = await addUser(userData);
 
       // Atualiza o contexto com os dados do usuário
-      setUser(userData);
+      setUser(user);
 
       // Redirecionar para a página inicial
       navigate('/');

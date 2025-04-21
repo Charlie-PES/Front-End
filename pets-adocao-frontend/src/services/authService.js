@@ -22,7 +22,19 @@ const getUsers = () => {
 // Adiciona um novo usuário
 const addUser = async (userData) => {
   try {
-    const response = await api.post('/users/auth/register', userData);
+    // Garante que todos os campos obrigatórios estejam presentes
+    const registerData = {
+      username: userData.username,
+      email: userData.email,
+      cpf: userData.cpf,
+      tutor: Boolean(userData.tutor),
+      adopter: Boolean(userData.adopter),
+      password: userData.password
+    };
+
+    console.log('Dados de registro:', registerData); // Para debug
+
+    const response = await api.post('/users/auth/register', registerData);
     const { token, user } = response.data;
     
     // Armazena o token e usuário no localStorage
@@ -31,7 +43,7 @@ const addUser = async (userData) => {
     
     return user;
   } catch (error) {
-    console.error('Erro ao registrar usuário:', error);
+    console.error('Erro ao registrar usuário:', error.response?.data || error.message);
     throw error;
   }
 };
@@ -152,9 +164,9 @@ const fetchCurrentUser = async () => {
 };
 
 // Obtém o perfil do usuário
-const getUserProfile = async () => {
+const getUserProfile = async (userId) => {
   try {
-    const response = await api.get('/users/users/auth/profile');
+    const response = await api.get(`/users/auth/profile?user_id=${userId}`);
     return response.data;
   } catch (error) {
     console.error('Erro ao buscar perfil:', error);
