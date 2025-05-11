@@ -1,0 +1,362 @@
+.requisicoesManager {
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.searchBar {
+  flex: 1;
+  position: relative;
+  max-width: 400px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.searchBar input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.filterSelect {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.requisicoesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.requisicaoCard {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.requisicaoCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.requisicaoHeader {
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.typeInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.typeIcon {
+  color: #1976d2;
+}
+
+.type {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.type.doação {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.type.voluntário {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.statusBadge.pendente {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.statusBadge.aprovado {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.statusBadge.rejeitado {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.statusIcon {
+  font-size: 1rem;
+}
+
+.requisicaoContent {
+  padding: 1.5rem;
+}
+
+.itemInfo {
+  margin-bottom: 1.5rem;
+}
+
+.itemInfo h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.quantity {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.requesterInfo {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.requesterHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.requesterIcon {
+  color: #1976d2;
+}
+
+.requesterHeader h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.requesterDetails p {
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.requisicaoDetails {
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.date {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.actionButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.approveButton {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.approveButton:hover {
+  background-color: #c8e6c9;
+}
+
+.rejectButton {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.rejectButton:hover {
+  background-color: #ffcdd2;
+}
+
+/* Dark Mode Styles */
+:global(.darkMode) .requisicaoCard {
+  background-color: #2d2d2d;
+}
+
+:global(.darkMode) .requisicaoHeader {
+  background-color: #3d3d3d;
+}
+
+:global(.darkMode) .itemInfo h3 {
+  color: #ffffff;
+}
+
+:global(.darkMode) .quantity {
+  color: #999;
+}
+
+:global(.darkMode) .requesterInfo {
+  background-color: #3d3d3d;
+}
+
+:global(.darkMode) .requesterHeader h4 {
+  color: #ffffff;
+}
+
+:global(.darkMode) .requesterDetails p {
+  color: #999;
+}
+
+:global(.darkMode) .description,
+:global(.darkMode) .date {
+  color: #999;
+}
+
+:global(.darkMode) .searchBar input {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #ffffff;
+}
+
+:global(.darkMode) .searchIcon {
+  color: #999;
+}
+
+:global(.darkMode) .filterSelect {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #ffffff;
+}
+
+:global(.darkMode) .type.doação {
+  background-color: #1a237e;
+  color: #64b5f6;
+}
+
+:global(.darkMode) .type.voluntário {
+  background-color: #1b3d1f;
+  color: #81c784;
+}
+
+:global(.darkMode) .statusBadge.pendente {
+  background-color: #3d2f1f;
+  color: #ffb74d;
+}
+
+:global(.darkMode) .statusBadge.aprovado {
+  background-color: #1b3d1f;
+  color: #81c784;
+}
+
+:global(.darkMode) .statusBadge.rejeitado {
+  background-color: #3d1f1f;
+  color: #e57373;
+}
+
+:global(.darkMode) .approveButton {
+  background-color: #1b3d1f;
+  color: #81c784;
+}
+
+:global(.darkMode) .approveButton:hover {
+  background-color: #2e7d32;
+}
+
+:global(.darkMode) .rejectButton {
+  background-color: #3d1f1f;
+  color: #e57373;
+}
+
+:global(.darkMode) .rejectButton:hover {
+  background-color: #c62828;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .searchBar {
+    max-width: none;
+  }
+
+  .filterSelect {
+    width: 100%;
+  }
+
+  .requisicaoHeader {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+} 

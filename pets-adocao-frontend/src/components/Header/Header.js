@@ -1,21 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { FaSun, FaMoon, FaUserCircle } from 'react-icons/fa';
+import { FaSun, FaMoon, FaUserCircle, FaBell } from 'react-icons/fa';
 import { logout } from '../../services/authService';
 
 const Header = () => {
   const { darkMode, toggleTheme } = useContext(ThemeContext);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const notificationsRef = useRef(null);
+
+  // Mock notifications - in a real app, these would come from your backend
+  const [notifications] = useState([
+    { id: 1, message: 'Novo match com um pet!', time: '5 min atrás' },
+    { id: 2, message: 'Sua solicitação de adoção foi aprovada', time: '1 hora atrás' },
+    { id: 3, message: 'Novo pet disponível para adoção', time: '2 horas atrás' },
+  ]);
 
   const handleLogout = () => {
     logout();
     navigate('/');
     window.location.reload();
   };
+
+  // Close notifications dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
+        setShowNotifications(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className={`${styles.header} ${darkMode ? styles.darkMode : ''}`}>
@@ -45,6 +68,38 @@ const Header = () => {
       </nav>
 
       <div className={styles.authButtons}>
+        <div className={styles.notificationContainer} ref={notificationsRef}>
+          <button
+            className={styles.notificationButton}
+            onClick={() => setShowNotifications(!showNotifications)}
+            aria-label="Notificações"
+          >
+            <FaBell size={20} />
+            {notifications.length > 0 && (
+              <span className={styles.notificationBadge}>{notifications.length}</span>
+            )}
+          </button>
+          {showNotifications && (
+            <div className={styles.notificationDropdown}>
+              <div className={styles.notificationHeader}>
+                <h3>Notificações</h3>
+              </div>
+              <div className={styles.notificationList}>
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
+                    <div key={notification.id} className={styles.notificationItem}>
+                      <p>{notification.message}</p>
+                      <span>{notification.time}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className={styles.noNotifications}>Nenhuma notificação</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
         {!user ? (
           <>
             <Link to="/login" className={styles.loginButton}>

@@ -1,0 +1,275 @@
+.chatContainer {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.chatButton {
+  background-color: #dca879;
+  border: none;
+  color: #0c0c0c;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transform-origin: center;
+}
+
+.chatButton:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.chatButton:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.chatWindow {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  width: 350px;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chatHeader {
+  padding: 1rem;
+  background-color: #dca879;
+  color: #0c0c0c;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.chatHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.chatMessages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  max-width: 80%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.message.assistant {
+  background-color: #f0f0f0;
+  color: #0c0c0c;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.message.user {
+  background-color: #dca879;
+  color: #ffffff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chatInput {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 0.5rem;
+  background-color: #ffffff;
+}
+
+.chatInput input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.chatInput input:focus {
+  border-color: #dca879;
+  box-shadow: 0 0 0 2px rgba(220, 168, 121, 0.2);
+}
+
+.sendButton {
+  padding: 0.8rem 1.2rem;
+  background-color: #dca879;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.sendButton:hover {
+  background-color: #c0926a;
+  transform: translateY(-1px);
+}
+
+.sendButton:active {
+  transform: translateY(0);
+}
+
+/* Dark mode styles */
+.darkMode.chatButton {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
+.darkMode.chatWindow {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.darkMode .chatHeader {
+  background-color: #363636;
+  color: #ffffff;
+  border-bottom-color: #404040;
+}
+
+.darkMode .message.assistant {
+  background-color: #363636;
+  color: #ffffff;
+}
+
+.darkMode .message.user {
+  background-color: #dca879;
+  color: #ffffff;
+}
+
+.darkMode .chatInput {
+  background-color: #2d2d2d;
+  border-top-color: #404040;
+}
+
+.darkMode .chatInput input {
+  background-color: #363636;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+.darkMode .chatInput input::placeholder {
+  color: #a0a0a0;
+}
+
+.darkMode .chatInput input:focus {
+  border-color: #dca879;
+  box-shadow: 0 0 0 2px rgba(220, 168, 121, 0.2);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .chatContainer {
+    bottom: 15px;
+    left: 15px;
+  }
+
+  .chatButton {
+    width: 45px;
+    height: 45px;
+  }
+
+  .chatWindow {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    border-radius: 12px 12px 0 0;
+    animation: slideUpMobile 0.3s ease forwards;
+  }
+
+  @keyframes slideUpMobile {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .chatMessages {
+    padding: 0.8rem;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+
+  .chatInput {
+    padding: 0.8rem;
+  }
+
+  .sendButton {
+    padding: 0.8rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatContainer {
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .chatButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .chatWindow {
+    bottom: 60px;
+  }
+
+  .chatHeader h3 {
+    font-size: 0.9rem;
+  }
+
+  .message {
+    font-size: 0.85rem;
+  }
+
+  .chatInput input {
+    font-size: 0.85rem;
+  }
+
+  .sendButton {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+  }
+} 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import ChatButton from './components/ChatButton/ChatButton';
 import Home from './pages/info/Home/Home';
 import Adotar from './pages/pet/Adotar/Adotar';
 import Sobre from './pages/info/Sobre/Sobre';
@@ -63,6 +64,7 @@ function App() {
                     </Routes>
                 </main>
 
+                <ChatButton />
                 <Footer />
             </div>
         </AuthProvider>

@@ -1,4 +1,5 @@
 import api from './api';
+import { mockAccounts, mockUsers } from '../mocks/authMocks';
 
 // Serviço de autenticação usando localStorage
 
@@ -19,62 +20,156 @@ const getUsers = () => {
   return JSON.parse(localStorage.getItem(USERS_KEY));
 };
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const USE_MOCKS = process.env.REACT_APP_USE_MOCKS === 'true';
+
 // Adiciona um novo usuário
 const addUser = async (userData) => {
-  try {
-    // Garante que todos os campos obrigatórios estejam presentes
-    const registerData = {
-      username: userData.username,
-      email: userData.email,
-      cpf: userData.cpf,
-      tutor: Boolean(userData.tutor),
-      adopter: Boolean(userData.adopter),
-      password: userData.password
+  if (USE_MOCKS) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Check if email already exists
+    if (mockUsers.some(u => u.email === userData.email)) {
+      throw new Error('Email already registered');
+    }
+
+    // Create new mock user
+    const newUser = {
+      id: mockUsers.length + 1,
+      ...userData,
+      createdAt: new Date().toISOString()
     };
 
-    console.log('Dados de registro:', registerData); // Para debug
+    mockUsers.push(newUser);
+    return newUser;
+  }
 
-    const response = await api.post('/users/auth/register', registerData);
-    const { token, user } = response.data;
-    
-    // Armazena o token e usuário no localStorage
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    
-    return user;
+  try {
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to register');
+    }
+
+    return await response.json();
   } catch (error) {
-    console.error('Erro ao registrar usuário:', error.response?.data || error.message);
+    console.error('Registration error:', error);
     throw error;
   }
 };
 
 // Autentica um usuário
-const login = async (username, password) => {
+const login = async (email, password) => {
+  if (USE_MOCKS) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Check mock accounts
+    const mockAccount = mockAccounts.user.email === email ? mockAccounts.user : 
+                       mockAccounts.ong.email === email ? mockAccounts.ong : null;
+
+    if (mockAccount && mockAccount.password === password) {
+      // Find corresponding user in mockUsers
+      const user = mockUsers.find(u => u.email === email);
+      if (user) {
+        // Store mock token and user in localStorage
+        localStorage.setItem('token', 'mock-token-' + user.id);
+        localStorage.setItem('user', JSON.stringify(user));
+        return user;
+      }
+    }
+
+    throw new Error('Invalid credentials');
+  }
+
   try {
-    const response = await api.post('/users/auth/login', { username, password });
-    const { token, user } = response.data;
-    
-    // Armazena o token e usuário no localStorage
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    
-    return user;
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to login');
+    }
+
+    const data = await response.json();
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    return data.user;
   } catch (error) {
-    console.error('Erro ao fazer login:', error);
+    console.error('Login error:', error);
     throw error;
   }
 };
 
 // Faz logout do usuário atual
-const logout = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
+const logout = async () => {
+  if (USE_MOCKS) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    return;
+  }
+
+  try {
+    await fetch(`${API_URL}/auth/logout`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  } catch (error) {
+    console.error('Logout error:', error);
+    throw error;
+  }
 };
 
 // Obtém o usuário atual
-const getCurrentUser = () => {
-  const userJson = localStorage.getItem('user');
-  return userJson ? JSON.parse(userJson) : null;
+const getCurrentUser = async () => {
+  if (USE_MOCKS) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      return JSON.parse(userJson);
+    }
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/auth/me`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get current user');
+    }
+
+    const user = await response.json();
+    localStorage.setItem('user', JSON.stringify(user));
+    return user;
+  } catch (error) {
+    console.error('Get current user error:', error);
+    throw error;
+  }
 };
 
 // Verifica se o usuário está autenticado

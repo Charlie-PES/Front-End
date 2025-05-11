@@ -1,0 +1,221 @@
+.petsManager {
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.searchBar {
+  flex: 1;
+  position: relative;
+  max-width: 400px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.searchBar input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addButton:hover {
+  background-color: #1565c0;
+}
+
+.petsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.petCard {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.petCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.petImage {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.petImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.statusBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+}
+
+.statusBadge[data-status="disponível"] {
+  background-color: #4caf50;
+}
+
+.statusBadge[data-status="em processo"] {
+  background-color: #ff9800;
+}
+
+.statusBadge[data-status="adotado"] {
+  background-color: #f44336;
+}
+
+.petInfo {
+  padding: 1.5rem;
+}
+
+.petInfo h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.breed {
+  color: #666;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.type {
+  color: #666;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.age {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.editButton,
+.deleteButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.editButton {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.editButton:hover {
+  background-color: #bbdefb;
+}
+
+.deleteButton {
+  background-color: #ffebee;
+  color: #f44336;
+}
+
+.deleteButton:hover {
+  background-color: #ffcdd2;
+}
+
+/* Dark Mode Styles */
+:global(.darkMode) .petCard {
+  background-color: #2d2d2d;
+}
+
+:global(.darkMode) .petInfo h3 {
+  color: #ffffff;
+}
+
+:global(.darkMode) .breed,
+:global(.darkMode) .type,
+:global(.darkMode) .age {
+  color: #999;
+}
+
+:global(.darkMode) .searchBar input {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #ffffff;
+}
+
+:global(.darkMode) .searchIcon {
+  color: #999;
+}
+
+:global(.darkMode) .actions {
+  border-top-color: #444;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchBar {
+    max-width: none;
+  }
+
+  .petsGrid {
+    grid-template-columns: 1fr;
+  }
+} 

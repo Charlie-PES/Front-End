@@ -6,45 +6,20 @@
     padding: 20px;
     background-color: #fffaf4;
     transition: background-color 0.3s ease;
-    animation: fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .darkMode {
     background-color: #1a1a1a;
-    color: #ffffff;
 }
 
 .cadastroForm {
-    background-color: #ffffff;
+    background-color: white;
     padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     width: 100%;
     max-width: 500px;
     transition: all 0.3s ease;
-    animation: slideUp 0.8s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .darkMode .cadastroForm {
@@ -56,209 +31,154 @@
     display: block;
     margin: 0 auto 1rem;
     color: #f77f00;
-    animation: scaleIn 0.6s ease 0.3s both;
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    transition: color 0.3s ease;
 }
 
 .darkMode .userIcon {
     color: #ffa726;
 }
 
-h1 {
+.cadastroForm h1 {
     text-align: center;
-    margin-bottom: 2rem;
     color: #333;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
     transition: color 0.3s ease;
-    animation: fadeIn 0.6s ease 0.4s both;
 }
 
-.darkMode h1 {
-    color: #ffffff;
+.darkMode .cadastroForm h1 {
+    color: #fff;
 }
 
 .formGroup {
     margin-bottom: 1.5rem;
-    animation: fadeIn 0.6s ease 0.5s both;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-label {
+.formGroup label {
     display: block;
     margin-bottom: 0.5rem;
     color: #555;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
 
-.darkMode label {
-    color: #b0b0b0;
+.darkMode .formGroup label {
+    color: #ccc;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.formGroup input {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
+.darkMode .formGroup input {
+    background-color: #3d3d3d;
+    border-color: #4d4d4d;
+    color: #fff;
+}
+
+.formGroup input:focus {
     outline: none;
     border-color: #f77f00;
     box-shadow: 0 0 0 2px rgba(247, 127, 0, 0.1);
 }
 
-.darkMode input[type="text"],
-.darkMode input[type="email"],
-.darkMode input[type="password"] {
-    background-color: #3d3d3d;
-    border-color: #4a4a4a;
-    color: #ffffff;
-}
-
-.darkMode input[type="text"]:focus,
-.darkMode input[type="email"]:focus,
-.darkMode input[type="password"]:focus {
+.darkMode .formGroup input:focus {
     border-color: #ffa726;
     box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.1);
 }
 
 .inputError {
-    border-color: #ff4444 !important;
-    animation: shake 0.5s ease;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+    border-color: #f44336 !important;
 }
 
 .errorMessage {
-    color: #ff4444;
+    color: #f44336;
     font-size: 0.875rem;
     margin-top: 0.25rem;
     display: block;
-    animation: fadeIn 0.3s ease;
 }
 
-.checkboxContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    animation: fadeIn 0.6s ease 0.6s both;
+.checkboxGroup {
+    margin: 1.5rem 0;
 }
 
-.checkboxContainer label {
+.checkboxItem {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+    margin-bottom: 0.75rem;
 }
 
-.checkboxContainer label:hover {
-    transform: translateX(5px);
+.checkboxItem input[type="checkbox"] {
+    margin-right: 0.5rem;
+    width: auto;
+    cursor: pointer;
 }
 
-.registerButton,
-.googleButton {
-    width: 100%;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+.checkboxItem label {
+    color: #555;
     cursor: pointer;
-    transition: all 0.3s ease;
-    animation: fadeIn 0.6s ease 0.7s both;
+    transition: color 0.3s ease;
+}
+
+.darkMode .checkboxItem label {
+    color: #ccc;
 }
 
 .registerButton {
+    width: 100%;
+    padding: 1rem;
     background-color: #f77f00;
     color: white;
-    margin-bottom: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .darkMode .registerButton {
     background-color: #ffa726;
 }
 
-.googleButton {
-    background-color: #ffffff;
-    color: #333;
-    border: 1px solid #ddd;
+.registerButton:hover {
+    background-color: #e67300;
+    transform: translateY(-1px);
 }
 
-.darkMode .googleButton {
-    background-color: #3d3d3d;
-    color: #ffffff;
-    border-color: #4a4a4a;
+.darkMode .registerButton:hover {
+    background-color: #fb8c00;
 }
 
-.registerButton:hover,
-.googleButton:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.registerButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.registerButton:active,
-.googleButton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+.darkMode .registerButton:disabled {
+    background-color: #4d4d4d;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .cadastroForm {
         padding: 1.5rem;
     }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        padding: 0.625rem;
-    }
-
-    .registerButton,
-    .googleButton {
-        padding: 0.625rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .cadastroForm {
-        padding: 1rem;
-    }
-
-    h1 {
+    .cadastroForm h1 {
         font-size: 1.5rem;
     }
 
-    .userIcon {
-        size: 40px;
+    .formGroup input {
+        padding: 0.7rem;
+    }
+
+    .registerButton {
+        padding: 0.8rem;
     }
 }

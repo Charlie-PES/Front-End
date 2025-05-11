@@ -1,0 +1,337 @@
+.mensagensManager {
+  padding: 1rem;
+  height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.searchBar {
+  position: relative;
+  max-width: 400px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.searchBar input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.content {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+.messagesList {
+  flex: 0 0 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.messageItem {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.messageItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.messageItem.unread {
+  background-color: #e3f2fd;
+}
+
+.messageItem.selected {
+  border: 2px solid #1976d2;
+}
+
+.messageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.senderInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.senderInfo h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.subject {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.date {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.preview {
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.type {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.type.adoção {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.type.doação {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.messageContent {
+  flex: 1;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.messageDetail {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.messageDetailHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.messageDetailHeader h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.messageDetailHeader p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.messageBody {
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.messageBody h4 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.messageBody p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.replySection {
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.replySection form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.replySection textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.replySection textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.sendButton {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sendButton:hover {
+  background-color: #1565c0;
+}
+
+.noMessageSelected {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  gap: 1rem;
+}
+
+.noMessageSelected p {
+  font-size: 1.125rem;
+}
+
+/* Dark Mode Styles */
+:global(.darkMode) .messageItem {
+  background-color: #2d2d2d;
+}
+
+:global(.darkMode) .messageItem.unread {
+  background-color: #1a237e;
+}
+
+:global(.darkMode) .senderInfo h4 {
+  color: #ffffff;
+}
+
+:global(.darkMode) .subject,
+:global(.darkMode) .date,
+:global(.darkMode) .preview {
+  color: #999;
+}
+
+:global(.darkMode) .type.adoção {
+  background-color: #1b3d1f;
+  color: #81c784;
+}
+
+:global(.darkMode) .type.doação {
+  background-color: #1a237e;
+  color: #64b5f6;
+}
+
+:global(.darkMode) .messageContent {
+  background-color: #2d2d2d;
+}
+
+:global(.darkMode) .messageDetailHeader {
+  border-bottom-color: #444;
+}
+
+:global(.darkMode) .messageDetailHeader h3 {
+  color: #ffffff;
+}
+
+:global(.darkMode) .messageDetailHeader p {
+  color: #999;
+}
+
+:global(.darkMode) .messageBody h4 {
+  color: #ffffff;
+}
+
+:global(.darkMode) .messageBody p {
+  color: #999;
+}
+
+:global(.darkMode) .replySection {
+  border-top-color: #444;
+}
+
+:global(.darkMode) .replySection textarea {
+  background-color: #3d3d3d;
+  border-color: #444;
+  color: #ffffff;
+}
+
+:global(.darkMode) .noMessageSelected {
+  color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .messagesList {
+    flex: none;
+    max-height: 300px;
+  }
+
+  .messageContent {
+    flex: 1;
+  }
+
+  .searchBar {
+    max-width: none;
+  }
+} 

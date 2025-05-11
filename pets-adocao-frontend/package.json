@@ -70,7 +70,7 @@
   },
   "scripts": {
     "test": "node scripts/test.js",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "set REACT_APP_USE_MOCKS=true && react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build"
   },
   "eslintConfig": {
