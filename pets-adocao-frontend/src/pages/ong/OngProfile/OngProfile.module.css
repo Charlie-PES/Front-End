@@ -232,4 +232,193 @@ h2 {
 
 .darkMode h2 {
   color: #ffffff;
+}
+
+.ongEditForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.ongEditForm input,
+.ongEditForm textarea {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #fff;
+  color: #222;
+  transition: border-color 0.2s;
+}
+
+.darkMode .ongEditForm input,
+.darkMode .ongEditForm textarea {
+  background: #2d2d2d;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.ongEditForm input:focus,
+.ongEditForm textarea:focus {
+  border-color: #f77f00;
+  outline: none;
+}
+
+.editButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.saveBtn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.saveBtn:hover {
+  background: #125ea2;
+}
+
+.cancelBtn {
+  background: #eee;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #ccc;
+}
+
+.editBtn {
+  background: #f77f00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+
+.editBtn:hover {
+  background: #e67300;
+}
+
+.ongDetails p {
+  margin: 0.2rem 0;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .ongProfile {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .ongEditForm input,
+  .ongEditForm textarea {
+    font-size: 0.95rem;
+  }
+}
+
+.petCard {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #333;
+}
+.darkMode .petCard {
+  background: #232323;
+  color: #fff;
+}
+.petsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.adocoesTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.adocoesTable th, .adocoesTable td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.adocoesTable th {
+  background: #f5f5f5;
+  color: #333;
+}
+.darkMode .adocoesTable {
+  background: #232323;
+}
+.darkMode .adocoesTable th {
+  background: #2d2d2d;
+  color: #fff;
+}
+.darkMode .adocoesTable td {
+  color: #fff;
+}
+.eventList, .mensagensList, .requisicoesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.eventList li, .mensagensList li, .requisicoesList li {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #333;
+  font-size: 1rem;
+}
+.darkMode .eventList li, .darkMode .mensagensList li, .darkMode .requisicoesList li {
+  background: #232323;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .petsGrid {
+    gap: 0.5rem;
+  }
+  .petCard {
+    font-size: 0.95rem;
+    padding: 0.7rem;
+  }
+  .adocoesTable th, .adocoesTable td {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.95rem;
+  }
+  .eventList li, .mensagensList li, .requisicoesList li {
+    font-size: 0.95rem;
+    padding: 0.6rem 0.7rem;
+  }
 } 

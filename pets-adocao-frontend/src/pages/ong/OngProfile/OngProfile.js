@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -20,10 +20,39 @@ const OngProfile = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        razaoSocial: user.razaoSocial || '',
+        cnpj: user.cnpj || '',
+        endereco: user.endereco || '',
+        telefone: user.telefone || '',
+        email: user.email || '',
+        descricao: user.descricao || '',
+        createdAt: user.createdAt || '',
+      });
+    }
+  }, [user]);
 
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  const handleEdit = () => setEditMode(true);
+  const handleCancel = () => setEditMode(false);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSave = (e) => {
+    e.preventDefault();
+    // Aqui você pode integrar com backend ou atualizar localStorage/contexto
+    // Exemplo: localStorage.setItem('user', JSON.stringify({ ...user, ...formData }));
+    setEditMode(false);
+    window.location.reload(); // Força atualização para refletir mudanças
   };
 
   const menuItems = [
@@ -67,7 +96,9 @@ const OngProfile = () => {
           <div className={styles.petsContent}>
             <h2>Gerenciamento de Pets</h2>
             <div className={styles.petsGrid}>
-              {/* Lista de pets será implementada aqui */}
+              <div className={styles.petCard}><b>Nome:</b> Thor<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> Disponível</div>
+              <div className={styles.petCard}><b>Nome:</b> Luna<br/><b>Espécie:</b> Gato<br/><b>Status:</b> Adotado</div>
+              <div className={styles.petCard}><b>Nome:</b> Mel<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> Disponível</div>
             </div>
           </div>
         );
@@ -75,36 +106,45 @@ const OngProfile = () => {
         return (
           <div className={styles.adocoesContent}>
             <h2>Processos de Adoção</h2>
-            <div className={styles.adocoesList}>
-              {/* Lista de adoções será implementada aqui */}
-            </div>
+            <table className={styles.adocoesTable}>
+              <thead><tr><th>Pet</th><th>Adotante</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Thor</td><td>Maria Silva</td><td>Pendente</td></tr>
+                <tr><td>Luna</td><td>João Souza</td><td>Finalizado</td></tr>
+                <tr><td>Mel</td><td>-</td><td>Disponível</td></tr>
+              </tbody>
+            </table>
           </div>
         );
       case 'calendario':
         return (
           <div className={styles.calendarioContent}>
             <h2>Calendário de Eventos</h2>
-            <div className={styles.calendarioGrid}>
-              {/* Calendário será implementado aqui */}
-            </div>
+            <ul className={styles.eventList}>
+              <li><b>10/06/2024</b> - Feira de Adoção no Parque Central</li>
+              <li><b>15/06/2024</b> - Campanha de Vacinação</li>
+              <li><b>20/06/2024</b> - Palestra: Cuidados com Animais Resgatados</li>
+            </ul>
           </div>
         );
       case 'mensagens':
         return (
           <div className={styles.mensagensContent}>
             <h2>Caixa de Entrada</h2>
-            <div className={styles.mensagensList}>
-              {/* Lista de mensagens será implementada aqui */}
-            </div>
+            <ul className={styles.mensagensList}>
+              <li><b>De:</b> Carlos (adotante) <br/><b>Assunto:</b> Interesse em adoção do Thor<br/><i>"Olá, gostaria de saber mais sobre o Thor..."</i></li>
+              <li><b>De:</b> Ana (voluntária) <br/><b>Assunto:</b> Ajuda no evento<br/><i>"Posso ajudar na feira de adoção?"</i></li>
+            </ul>
           </div>
         );
       case 'requisicoes':
         return (
           <div className={styles.requisicoesContent}>
             <h2>Requisições Pendentes</h2>
-            <div className={styles.requisicoesList}>
-              {/* Lista de requisições será implementada aqui */}
-            </div>
+            <ul className={styles.requisicoesList}>
+              <li><b>Tipo:</b> Doação de ração <br/><b>Solicitante:</b> PetShop BomPet <br/><b>Status:</b> Pendente</li>
+              <li><b>Tipo:</b> Voluntariado <br/><b>Solicitante:</b> Julia Lima <br/><b>Status:</b> Aprovado</li>
+            </ul>
           </div>
         );
       case 'configuracoes':
@@ -112,7 +152,9 @@ const OngProfile = () => {
           <div className={styles.configuracoesContent}>
             <h2>Configurações da ONG</h2>
             <div className={styles.configuracoesForm}>
-              {/* Formulário de configurações será implementado aqui */}
+              <label>Alterar senha:<br/><input type="password" placeholder="Nova senha" style={{marginTop:4}} /></label>
+              <label><input type="checkbox" defaultChecked /> Receber notificações por email</label>
+              <button className={styles.saveBtn} style={{marginTop:8}}>Salvar Configurações</button>
             </div>
           </div>
         );
@@ -128,14 +170,34 @@ const OngProfile = () => {
           <div className={styles.ongLogo}>
             <FaBuilding size={40} />
           </div>
-          <h2>{user?.razaoSocial || user?.displayName || 'Nome da ONG'}</h2>
-          <div className={styles.ongDetails}>
-            {user?.cnpj && <p><b>CNPJ:</b> {user.cnpj}</p>}
-            {user?.endereco && <p><b>Endereço:</b> {user.endereco}</p>}
-            {user?.telefone && <p><b>Telefone:</b> {user.telefone}</p>}
-            {user?.email && <p><b>Email:</b> {user.email}</p>}
-          </div>
-          <p className={styles.ongType}>Organização Não Governamental</p>
+          {editMode ? (
+            <form className={styles.ongEditForm} onSubmit={handleSave}>
+              <input name="razaoSocial" value={formData.razaoSocial} onChange={handleChange} placeholder="Razão Social" required />
+              <input name="cnpj" value={formData.cnpj} onChange={handleChange} placeholder="CNPJ" required />
+              <input name="endereco" value={formData.endereco} onChange={handleChange} placeholder="Endereço" />
+              <input name="telefone" value={formData.telefone} onChange={handleChange} placeholder="Telefone" />
+              <input name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
+              <textarea name="descricao" value={formData.descricao} onChange={handleChange} placeholder="Descrição da ONG" rows={3} />
+              <div className={styles.editButtons}>
+                <button type="submit" className={styles.saveBtn}>Salvar</button>
+                <button type="button" className={styles.cancelBtn} onClick={handleCancel}>Cancelar</button>
+              </div>
+            </form>
+          ) : (
+            <>
+              <h2>{user?.razaoSocial || user?.displayName || 'Nome da ONG'}</h2>
+              <div className={styles.ongDetails}>
+                {user?.cnpj && <p><b>CNPJ:</b> {user.cnpj}</p>}
+                {user?.endereco && <p><b>Endereço:</b> {user.endereco}</p>}
+                {user?.telefone && <p><b>Telefone:</b> {user.telefone}</p>}
+                {user?.email && <p><b>Email:</b> {user.email}</p>}
+                {user?.descricao && <p><b>Descrição:</b> {user.descricao}</p>}
+                {user?.createdAt && <p><b>Desde:</b> {new Date(user.createdAt).toLocaleDateString('pt-BR')}</p>}
+              </div>
+              <p className={styles.ongType}>Organização Não Governamental</p>
+              <button className={styles.editBtn} onClick={handleEdit}>Editar dados</button>
+            </>
+          )}
         </div>
 
         <nav className={styles.menu}>
