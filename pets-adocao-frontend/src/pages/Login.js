@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
-import { FaUserCircle, FaUser, FaBuilding } from 'react-icons/fa';
+import { FaUserCircle, FaUser, FaBuilding, FaHandHoldingHeart } from 'react-icons/fa';
 import { login } from '../services/authService';
 import { mockUsers } from '../mocks/authMocks';
 import styles from './Login.module.css';
@@ -44,6 +44,15 @@ const Login = () => {
     }
     navigate('/ong/perfil');
   };
+  const goToTemporaryTutorPerfil = () => {
+    // Simula login do tutor temporário
+    const temporaryUser = mockUsers.find(u => u.email === 'tutor@teste.com');
+    if (temporaryUser) {
+      localStorage.setItem('user', JSON.stringify(temporaryUser));
+      localStorage.setItem('token', 'mock-token-temporary');
+    }
+    navigate('/perfil');
+  };
 
   return (
     <div className={`${styles.loginContainer} ${darkMode ? styles.dark : ''}`}>  
@@ -62,6 +71,13 @@ const Login = () => {
           onClick={goToOngPerfil}
         >
           <FaBuilding size={24} />
+        </button>
+        <button
+          style={{ width: 40, height: 40, borderRadius: '50%', border: '2px solid #dca879', background: '#dca879', color: '#fff', cursor: 'pointer', fontSize: 18, fontWeight: 'bold', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          title="Ir para perfil de tutor temporário"
+          onClick={goToTemporaryTutorPerfil}
+        >
+          <FaHandHoldingHeart size={24} />
         </button>
       </div>
       <div className={styles.loginForm}>

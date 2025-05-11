@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Perfil.module.css';
-import { FaUserEdit, FaPlusCircle, FaPaw, FaHeart, FaHistory, FaSignOutAlt, FaCamera, FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaUserEdit, FaPlusCircle, FaPaw, FaHeart, FaHistory, FaSignOutAlt, FaCamera, FaMapMarkerAlt, FaEnvelope, FaPhone, FaUser, FaEdit, FaHandHoldingHeart } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import { logout, fetchCurrentUser } from '../../../services/authService';
@@ -141,6 +141,67 @@ const Perfil = () => {
     </div>
   );
 
+  const renderTemporaryTutorInfo = () => {
+    if (user.tipo !== 'temporary') return null;
+
+    return (
+      <div className={styles.temporaryTutorInfo}>
+        <h3><FaHandHoldingHeart /> Informações do Tutor Temporário</h3>
+        <div className={styles.infoSection}>
+          <h4>Sobre Mim</h4>
+          <p>{user.bio}</p>
+        </div>
+        <div className={styles.infoSection}>
+          <h4>Experiência</h4>
+          <p>{user.experiencia}</p>
+        </div>
+        <div className={styles.infoSection}>
+          <h4>Disponibilidade</h4>
+          <p>{user.disponibilidade}</p>
+        </div>
+        <div className={styles.infoSection}>
+          <h4>Preferências</h4>
+          <div className={styles.preferences}>
+            <div>
+              <strong>Tipos de Pets:</strong>
+              <ul>
+                {user.preferencias.tipo.map(tipo => (
+                  <li key={tipo}>{tipo === 'dog' ? 'Cachorro' : 'Gato'}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <strong>Portes:</strong>
+              <ul>
+                {user.preferencias.porte.map(porte => (
+                  <li key={porte}>
+                    {porte === 'small' ? 'Pequeno' : 
+                     porte === 'medium' ? 'Médio' : 'Grande'}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <strong>Idades:</strong>
+              <ul>
+                {user.preferencias.idade.map(idade => (
+                  <li key={idade}>
+                    {idade === 'filhote' ? 'Filhote' :
+                     idade === 'adulto' ? 'Adulto' : 'Idoso'}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <strong>Necessidades Especiais:</strong>
+              <p>{user.preferencias.necessidades ? 'Aceito pets com necessidades especiais' : 'Não aceito pets com necessidades especiais'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={`${styles.container} ${darkMode ? styles.darkMode : ''}`}>
       <div className={styles.profileHeader}>
@@ -163,6 +224,7 @@ const Perfil = () => {
       
       <div className={styles.profileContent}>
         {activeTab === 'info' ? renderUserInfo() : renderActions()}
+        {renderTemporaryTutorInfo()}
       </div>
     </div>
   );
