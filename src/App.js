@@ -28,7 +28,7 @@ import MatchPage from './pages/user/MatchPage/MatchPage';
 import AdminPage from './pages/admin/AdminPage';
 import { AuthProvider } from './contexts/AuthContext';
 import OngProfile from './pages/ong/OngProfile/OngProfile';
-import DirectMessages from './components/DirectMessages/DirectMessages';
+import DirectMessages from './pages/messages/DirectMessages';
 import './App.css';
 
 function App() {
@@ -68,11 +68,11 @@ function App() {
                     </Routes>
                 </main>
 
-                <ChatButton />
                 <Footer />
+                <ChatButton />
             </div>
         </AuthProvider>
     );
 }
 
-export default App;
+export default App; 

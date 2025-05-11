@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { FaSun, FaMoon, FaUserCircle, FaBell } from 'react-icons/fa';
+import { FaSun, FaMoon, FaUserCircle, FaBell, FaEnvelope } from 'react-icons/fa';
 import { logout } from '../../services/authService';
 
 const Header = () => {
@@ -65,44 +65,43 @@ const Header = () => {
         <Link to="/matchpage" className={styles.link}>
           Match
         </Link>
-        <Link to="/messages" className={styles.link}>
-          Mensagens
-        </Link>
       </nav>
 
-      <div className={styles.authButtons}>
-        <div className={styles.notificationContainer} ref={notificationsRef}>
-          <button
-            className={styles.notificationButton}
-            onClick={() => setShowNotifications(!showNotifications)}
-            aria-label="Notificações"
-          >
-            <FaBell size={20} />
-            {notifications.length > 0 && (
-              <span className={styles.notificationBadge}>{notifications.length}</span>
+      <div className={styles.rightSection}>
+        <Link to="/messages" style={{ marginRight: '1rem', fontWeight: 'bold', color: '#000' }}>DM</Link>
+        {user && (
+          <div className={styles.notificationContainer} ref={notificationsRef}>
+            <button
+              className={styles.notificationButton}
+              onClick={() => setShowNotifications(!showNotifications)}
+              aria-label="Notificações"
+            >
+              <FaBell size={20} />
+              {notifications.length > 0 && (
+                <span className={styles.notificationBadge}>{notifications.length}</span>
+              )}
+            </button>
+            {showNotifications && (
+              <div className={styles.notificationDropdown}>
+                <div className={styles.notificationHeader}>
+                  <h3>Notificações</h3>
+                </div>
+                <div className={styles.notificationList}>
+                  {notifications.length > 0 ? (
+                    notifications.map((notification) => (
+                      <div key={notification.id} className={styles.notificationItem}>
+                        <p>{notification.message}</p>
+                        <span>{notification.time}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <p className={styles.noNotifications}>Nenhuma notificação</p>
+                  )}
+                </div>
+              </div>
             )}
-          </button>
-          {showNotifications && (
-            <div className={styles.notificationDropdown}>
-              <div className={styles.notificationHeader}>
-                <h3>Notificações</h3>
-              </div>
-              <div className={styles.notificationList}>
-                {notifications.length > 0 ? (
-                  notifications.map((notification) => (
-                    <div key={notification.id} className={styles.notificationItem}>
-                      <p>{notification.message}</p>
-                      <span>{notification.time}</span>
-                    </div>
-                  ))
-                ) : (
-                  <p className={styles.noNotifications}>Nenhuma notificação</p>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
+          </div>
+        )}
         {!user ? (
           <>
             <Link to="/login" className={styles.loginButton}>
@@ -123,7 +122,6 @@ const Header = () => {
             </button>
           </div>
         )}
-
         <button onClick={toggleTheme} className={styles.themeToggle}>
           {darkMode ? <FaSun /> : <FaMoon />}
         </button>
@@ -132,4 +130,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header; 
