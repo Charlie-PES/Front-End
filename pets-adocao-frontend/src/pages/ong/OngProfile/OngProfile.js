@@ -128,7 +128,13 @@ const OngProfile = () => {
           <div className={styles.ongLogo}>
             <FaBuilding size={40} />
           </div>
-          <h2>{user?.displayName || 'Nome da ONG'}</h2>
+          <h2>{user?.razaoSocial || user?.displayName || 'Nome da ONG'}</h2>
+          <div className={styles.ongDetails}>
+            {user?.cnpj && <p><b>CNPJ:</b> {user.cnpj}</p>}
+            {user?.endereco && <p><b>Endereço:</b> {user.endereco}</p>}
+            {user?.telefone && <p><b>Telefone:</b> {user.telefone}</p>}
+            {user?.email && <p><b>Email:</b> {user.email}</p>}
+          </div>
           <p className={styles.ongType}>Organização Não Governamental</p>
         </div>
 

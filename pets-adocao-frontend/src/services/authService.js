@@ -81,13 +81,14 @@ const login = async (email, password) => {
       const user = mockUsers.find(u => u.email === email);
       if (user) {
         // Store mock token and user in localStorage
-        localStorage.setItem('token', 'mock-token-' + user.id);
+        const mockToken = 'mock-token-' + user.id;
+        localStorage.setItem('token', mockToken);
         localStorage.setItem('user', JSON.stringify(user));
         return user;
       }
     }
 
-    throw new Error('Invalid credentials');
+    throw new Error('Credenciais inválidas');
   }
 
   try {

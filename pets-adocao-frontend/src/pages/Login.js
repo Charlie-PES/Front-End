@@ -2,12 +2,13 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaUser, FaBuilding } from 'react-icons/fa';
 import { login } from '../services/authService';
+import { mockUsers } from '../mocks/authMocks';
 import styles from './Login.module.css';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,31 +22,60 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const userData = await login(username, password);
-      setUser(userData);
+      const response = await login(email, password);
+      setUser(response.user);
       navigate('/'); // Redireciona para a página inicial após o login
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      setError(error.response?.data?.message || 'Usuário ou senha inválidos');
+      setError(error.message || 'Usuário ou senha inválidos');
     } finally {
       setLoading(false);
     }
   };
 
+  // Botões de atalho para perfis
+  const goToPerfil = () => navigate('/perfil');
+  const goToOngPerfil = () => {
+    // Simula login da ONG
+    const ongUser = mockUsers.find(u => u.email === 'ong@teste.com');
+    if (ongUser) {
+      localStorage.setItem('user', JSON.stringify(ongUser));
+      localStorage.setItem('token', 'mock-token-ong');
+    }
+    navigate('/ong/perfil');
+  };
+
   return (
-    <div className={`${styles.loginContainer} ${darkMode ? styles.dark : ''}`}>
+    <div className={`${styles.loginContainer} ${darkMode ? styles.dark : ''}`}>  
+      {/* Botões de atalho para perfis */}
+      <div style={{ position: 'absolute', top: 64, left: 24, display: 'flex', flexDirection: 'column', gap: 12, zIndex: 100 }}>
+        <button
+          style={{ width: 40, height: 40, borderRadius: '50%', border: '2px solid #dca879', background: '#dca879', color: '#fff', cursor: 'pointer', fontSize: 18, fontWeight: 'bold', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          title="Ir para perfil do usuário"
+          onClick={goToPerfil}
+        >
+          <FaUser size={24} />
+        </button>
+        <button
+          style={{ width: 40, height: 40, borderRadius: '50%', border: '2px solid #dca879', background: '#dca879', color: '#fff', cursor: 'pointer', fontSize: 18, fontWeight: 'bold', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          title="Ir para perfil da ONG"
+          onClick={goToOngPerfil}
+        >
+          <FaBuilding size={24} />
+        </button>
+      </div>
       <div className={styles.loginForm}>
         <FaUserCircle className={styles.userIcon} />
         <h2>Login</h2>
         {error && <div className={styles.error}>{error}</div>}
         <form onSubmit={handleLogin}>
           <div className={styles.formGroup}>
-            <label htmlFor="username">Usuário</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -59,7 +89,7 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit" disabled={loading}>
+          <button type="submit" disabled={loading} className={styles.loginButton}>
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>

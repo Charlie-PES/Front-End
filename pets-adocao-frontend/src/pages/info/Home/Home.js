@@ -1,15 +1,20 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Home.module.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight, FaBone, FaCat, FaUserFriends, FaCut } from 'react-icons/fa';
+import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight, FaBone, FaCat, FaUserFriends, FaCut, FaUser, FaBuilding } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import { login } from '../../../services/authService';
+import { useAuth } from '../../../contexts/AuthContext';
+import chatStyles from '../../../components/ChatButton/ChatButton.module.css';
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('todos');
   const { darkMode } = useContext(ThemeContext);
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const pets = [
     {
@@ -260,6 +265,30 @@ const Home = () => {
     ? pets 
     : pets.filter(pet => pet.categoria === activeCategory);
 
+  // Função para login rápido mockado
+  const handleQuickLogin = async (type) => {
+    let email = '';
+    let password = '';
+    if (type === 'user') {
+      email = 'usuario@teste.com';
+      password = 'Teste@123';
+    } else if (type === 'ong') {
+      email = 'ong@teste.com';
+      password = 'Teste@123';
+    }
+    try {
+      const user = await login(email, password);
+      setUser(user);
+      if (type === 'user') {
+        navigate('/perfil');
+      } else {
+        navigate('/ong/perfil');
+      }
+    } catch (e) {
+      alert('Erro ao logar mock: ' + (e.message || e));
+    }
+  };
+
   return (
     <div className={`${styles.homeContainer} ${darkMode ? styles.darkMode : ''}`}>
       {/* Banner principal */}
@@ -437,6 +466,28 @@ const Home = () => {
           ))}
         </div>
       </section>
+
+      {/* Botões escondidos para login mockado */}
+      {process.env.REACT_APP_USE_MOCKS === 'true' && (
+        <div style={{ position: 'fixed', top: 20, left: 20, zIndex: 1000, display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <button
+            className={chatStyles.chatButton}
+            style={{ width: 60, height: 60 }}
+            title="Login rápido usuário"
+            onClick={() => handleQuickLogin('user')}
+          >
+            <FaUser size={28} />
+          </button>
+          <button
+            className={chatStyles.chatButton}
+            style={{ width: 60, height: 60 }}
+            title="Login rápido ONG"
+            onClick={() => handleQuickLogin('ong')}
+          >
+            <FaBuilding size={28} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
