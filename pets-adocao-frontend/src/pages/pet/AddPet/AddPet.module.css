@@ -1,77 +1,84 @@
 .container {
     min-height: 100vh;
     padding: 2rem;
-    background: var(--background-color);
+    background-color: var(--color-background);
     transition: background-color 0.3s ease;
 }
 
 .content {
     max-width: 1200px;
     margin: 0 auto;
-    background: var(--card-background);
-    border-radius: 15px;
+    background-color: var(--color-card-background);
+    border-radius: var(--border-radius-lg);
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
 }
 
 .title {
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: var(--text-color);
+    color: var(--color-primary);
     margin-bottom: 2rem;
     font-size: 2rem;
 }
 
 .icon {
-    color: var(--primary-color);
+    font-size: 2rem;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .imageUpload {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
 }
 
-.imagePreview {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
-    background-color: var(--input-background);
-    background-size: cover;
-    background-position: center;
+.uploadLabel {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: var(--color-background);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--border-radius-md);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
 }
 
-.imagePreview:hover {
-    opacity: 0.8;
-}
-
-.uploadIcon {
-    font-size: 3rem;
-    color: var(--text-secondary);
+.uploadLabel:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-hover);
 }
 
 .fileInput {
     display: none;
 }
 
+.imagePreview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.previewImage {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
 .formGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .formGroup {
@@ -81,47 +88,48 @@
 }
 
 .formGroup label {
-    color: var(--text-color);
     font-weight: 500;
+    color: var(--color-text);
 }
 
 .formGroup input,
 .formGroup select,
 .formGroup textarea {
     padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: var(--input-background);
-    color: var(--text-color);
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: all var(--transition-normal);
 }
 
 .formGroup input:focus,
 .formGroup select:focus,
 .formGroup textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-light);
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
 }
 
 .checkboxGroup {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    padding: 1rem;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius-md);
 }
 
-.checkboxLabel {
+.checkboxGroup label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
-    color: var(--text-color);
 }
 
-.checkboxLabel input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+.checkboxGroup input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
     cursor: pointer;
 }
 
@@ -131,55 +139,63 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
-    background: var(--primary-color);
+    background-color: var(--color-primary);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
     margin-top: 1rem;
 }
 
 .submitButton:hover {
-    background: var(--primary-dark);
+    background-color: var(--color-primary-dark);
     transform: translateY(-2px);
 }
 
 .submitButton:disabled {
-    background: var(--text-secondary);
+    background-color: var(--color-text-secondary);
     cursor: not-allowed;
     transform: none;
 }
 
-.buttonIcon {
-    font-size: 1.2rem;
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .error {
-    background: var(--error-background);
-    color: var(--error-color);
     padding: 1rem;
-    border-radius: 8px;
+    background-color: var(--color-error-light);
+    color: var(--color-error);
+    border-radius: var(--border-radius-md);
     margin-bottom: 1rem;
 }
 
 .success {
-    background: var(--success-background);
-    color: var(--success-color);
     padding: 1rem;
-    border-radius: 8px;
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+    border-radius: var(--border-radius-md);
     margin-bottom: 1rem;
 }
 
 /* Dark Mode */
 .darkMode {
-    background: var(--dark-background);
+    background-color: var(--dark-background);
 }
 
 .darkMode .content {
-    background: var(--dark-card-background);
+    background-color: var(--dark-card-background);
 }
 
 .darkMode .formGroup input,
@@ -196,11 +212,7 @@
     }
 
     .content {
-        padding: 1.5rem;
-    }
-
-    .title {
-        font-size: 1.5rem;
+        padding: 1rem;
     }
 
     .formGrid {

@@ -488,4 +488,87 @@
     font-size: 1em;
   }
 }
+
+.petsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.addPetButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--transition-normal);
+  font-size: 0.9em;
+}
+
+.addPetButton:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.addPetButton svg {
+  font-size: 1.1em;
+}
+
+.petsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.petCard {
+  background-color: var(--color-background);
+  padding: 15px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.petCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Dark mode adjustments */
+.darkMode .addPetButton {
+  background-color: var(--color-primary-dark);
+}
+
+.darkMode .addPetButton:hover {
+  background-color: var(--color-primary);
+}
+
+.darkMode .petCard {
+  background-color: var(--dark-background-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .petsHeader {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .addPetButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .petsGrid {
+    grid-template-columns: 1fr;
+  }
+}
   

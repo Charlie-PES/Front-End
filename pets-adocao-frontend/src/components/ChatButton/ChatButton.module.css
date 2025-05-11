@@ -1,39 +1,47 @@
 .chatContainer {
   position: fixed;
   bottom: 20px;
-  left: 20px;
+  right: 20px;
   z-index: 1000;
 }
 
 .chatButton {
-  background-color: #dca879;
-  border: none;
-  color: #0c0c0c;
-  cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transform-origin: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  z-index: 1000;
 }
 
 .chatButton:hover {
-  transform: translateY(-2px) scale(1.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-lg);
 }
 
 .chatButton:active {
   transform: translateY(0) scale(0.95);
 }
 
+.chatButton svg {
+  font-size: 1.2rem;
+}
+
 .chatWindow {
   position: fixed;
   bottom: 80px;
-  left: 20px;
+  right: 20px;
   width: 350px;
   height: 500px;
   background-color: #ffffff;
@@ -145,8 +153,7 @@
 
 /* Dark mode styles */
 .darkMode.chatButton {
-  background-color: #2d2d2d;
-  color: #ffffff;
+  background-color: var(--color-primary-dark);
 }
 
 .darkMode.chatWindow {
@@ -192,20 +199,16 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .chatContainer {
-    bottom: 15px;
-    left: 15px;
-  }
-
   .chatButton {
     width: 45px;
     height: 45px;
+    bottom: 15px;
+    right: 15px;
   }
 
   .chatWindow {
     position: fixed;
     bottom: 70px;
-    left: 0;
     right: 0;
     width: 100%;
     height: calc(100vh - 70px);
@@ -244,7 +247,7 @@
 @media (max-width: 480px) {
   .chatContainer {
     bottom: 10px;
-    left: 10px;
+    right: 10px;
   }
 
   .chatButton {

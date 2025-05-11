@@ -113,10 +113,10 @@ const Perfil = () => {
           <FaUserEdit className={styles.actionIcon} />
           <span>Editar Perfil</span>
         </Link>
-        {user.type === 'tutor' && (
-          <Link to="/cadastro-pet" className={styles.actionButton}>
+        {(user.ong || user.tipo === 'temporary') && (
+          <Link to="/pets/add" className={styles.actionButton}>
             <FaPlusCircle className={styles.actionIcon} />
-            <span>Cadastrar Pet</span>
+            <span>Adicionar Pet</span>
           </Link>
         )}
         {user.type === 'adotante' && (
@@ -195,6 +195,22 @@ const Perfil = () => {
             <div>
               <strong>Necessidades Especiais:</strong>
               <p>{user.preferencias.necessidades ? 'Aceito pets com necessidades especiais' : 'Não aceito pets com necessidades especiais'}</p>
+            </div>
+          </div>
+        </div>
+        <div className={styles.infoSection}>
+          <div className={styles.petsHeader}>
+            <h4>Meus Pets</h4>
+            <Link to="/pets/add" className={styles.addPetButton}>
+              <FaPlusCircle />
+              <span>Adicionar Novo Pet</span>
+            </Link>
+          </div>
+          <div className={styles.petsGrid}>
+            <div className={styles.petCard}>
+              <b>Nome:</b> Rex<br/>
+              <b>Espécie:</b> Cachorro<br/>
+              <b>Status:</b> <span style={{color:'#00796b', fontWeight:'bold'}}>Disponível</span>
             </div>
           </div>
         </div>

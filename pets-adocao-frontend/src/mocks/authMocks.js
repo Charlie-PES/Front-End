@@ -18,7 +18,8 @@ export const mockAccounts = {
     telefone: '(11) 99999-9999',
     tutor: false,
     adopter: false,
-    ong: true
+    ong: true,
+    tipo: 'ong'
   },
   temporary: {
     username: 'tutor_temporario',
@@ -63,6 +64,7 @@ export const mockUsers = [
     tutor: false,
     adopter: false,
     ong: true,
+    tipo: 'ong',
     createdAt: '2024-01-01T00:00:00.000Z'
   },
   {

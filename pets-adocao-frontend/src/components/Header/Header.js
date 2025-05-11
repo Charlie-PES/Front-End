@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { FaSun, FaMoon, FaUserCircle, FaBell } from 'react-icons/fa';
+import { FaSun, FaMoon, FaUserCircle, FaBell, FaEnvelope } from 'react-icons/fa';
 import { logout } from '../../services/authService';
 
 const Header = () => {
@@ -65,12 +65,20 @@ const Header = () => {
         <Link to="/matchpage" className={styles.link}>
           Match
         </Link>
-        <Link to="/messages" className={styles.link}>
-          Mensagens
-        </Link>
       </nav>
 
       <div className={styles.authButtons}>
+        <div className={styles.notificationContainer}>
+          <button
+            className={styles.notificationButton}
+            onClick={() => navigate('/messages')}
+            aria-label="Mensagens"
+          >
+            <FaEnvelope size={20} />
+            <span className={styles.notificationBadge}>3</span>
+          </button>
+        </div>
+
         <div className={styles.notificationContainer} ref={notificationsRef}>
           <button
             className={styles.notificationButton}

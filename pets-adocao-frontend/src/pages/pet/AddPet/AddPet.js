@@ -1,152 +1,163 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPaw, FaUpload, FaSave } from 'react-icons/fa';
+import { FaPaw, FaUpload, FaSpinner } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import { useAuth } from '../../../contexts/AuthContext';
 import styles from './AddPet.module.css';
 
 const AddPet = () => {
-    const navigate = useNavigate();
     const { darkMode } = useContext(ThemeContext);
+    const { user } = useAuth();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
-    const [imagePreview, setImagePreview] = useState(null);
-
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [petData, setPetData] = useState({
         nome: '',
-        tipo: '',
+        especie: '',
         raca: '',
         cor: '',
         idade: '',
-        sexo: '',
+        genero: '',
         porte: '',
-        energia: '',
-        temperamento: [],
+        nivelEnergia: '',
+        temperamento: '',
         comportamento: '',
-        vacinas: false,
+        vacinado: false,
         castrado: false,
-        necessidades: false,
-        specialNeeds: '',
-        environment: '',
-        compatibility: '',
-        goodWithOtherPets: false,
-        imagem: null,
-        descricao: ''
+        necessidadesEspeciais: false,
+        ambienteIdeal: '',
+        compatibilidade: '',
+        descricao: '',
+        imagens: [],
+        tutorId: user?.id,
+        tutorType: user?.ong ? 'ong' : user?.tipo === 'temporary' ? 'temporary' : null
     });
 
-    const handleChange = (e) => {
-        const { name, value, type, checked, files } = e.target;
-        
-        if (type === 'file') {
-            const file = files[0];
-            if (file) {
-                setPetData(prev => ({
-                    ...prev,
-                    imagem: file
-                }));
-                setImagePreview(URL.createObjectURL(file));
-            }
-        } else if (type === 'checkbox') {
-            setPetData(prev => ({
-                ...prev,
-                [name]: checked
-            }));
-        } else {
-            setPetData(prev => ({
-                ...prev,
-                [name]: value
-            }));
+    useEffect(() => {
+        // Verifica se o usuário tem permissão para adicionar pets
+        if (!user || (!user.ong && user.tipo !== 'temporary')) {
+            navigate('/');
+            return;
         }
-    };
+    }, [user, navigate]);
 
-    const handleTemperamentChange = (value) => {
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
         setPetData(prev => ({
             ...prev,
-            temperamento: prev.temperamento.includes(value)
-                ? prev.temperamento.filter(t => t !== value)
-                : [...prev.temperamento, value]
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        setPetData(prev => ({
+            ...prev,
+            imagens: [...prev.imagens, ...files]
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
+        setError('');
+        setSuccess('');
 
         try {
-            // Criar FormData para enviar a imagem
+            // Cria um FormData para enviar os arquivos
             const formData = new FormData();
+            
+            // Adiciona os dados do pet ao FormData
             Object.keys(petData).forEach(key => {
-                if (key === 'temperamento') {
-                    formData.append(key, JSON.stringify(petData[key]));
+                if (key === 'imagens') {
+                    petData.imagens.forEach((image, index) => {
+                        formData.append(`imagens`, image);
+                    });
                 } else {
                     formData.append(key, petData[key]);
                 }
             });
 
-            // Enviar dados para o backend
+            // Faz a requisição para o backend
             const response = await fetch('/api/pets', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    // Não incluir Content-Type aqui, pois o FormData já define o header correto
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
             });
 
             if (!response.ok) {
                 throw new Error('Erro ao cadastrar pet');
             }
 
-            setSuccess(true);
+            const data = await response.json();
+            setSuccess('Pet cadastrado com sucesso!');
+            
+            // Redireciona para a página do pet após 2 segundos
             setTimeout(() => {
-                navigate('/pets');
+                navigate(`/pets/${data.id}`);
             }, 2000);
+
         } catch (err) {
-            setError(err.message);
+            setError(err.message || 'Erro ao cadastrar pet. Tente novamente.');
         } finally {
             setLoading(false);
         }
     };
+
+    if (!user || (!user.ong && user.tipo !== 'temporary')) {
+        return null;
+    }
 
     return (
         <div className={`${styles.container} ${darkMode ? styles.darkMode : ''}`}>
             <div className={styles.content}>
                 <h1 className={styles.title}>
                     <FaPaw className={styles.icon} />
-                    Cadastrar Novo Pet
+                    Adicionar Novo Pet
                 </h1>
 
-                {error && (
-                    <div className={styles.error}>
-                        {error}
-                    </div>
-                )}
+                {error && <div className={styles.error}>{error}</div>}
+                {success && <div className={styles.success}>{success}</div>}
 
-                {success && (
-                    <div className={styles.success}>
-                        Pet cadastrado com sucesso!
-                    </div>
-                )}
-
-                <form onSubmit={handleSubmit} className={styles.form}>
+                <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.imageUpload}>
-                        <div 
-                            className={styles.imagePreview}
-                            style={{ backgroundImage: imagePreview ? `url(${imagePreview})` : 'none' }}
-                        >
-                            {!imagePreview && <FaUpload className={styles.uploadIcon} />}
-                        </div>
-                        <input
-                            type="file"
-                            name="imagem"
-                            accept="image/*"
-                            onChange={handleChange}
-                            className={styles.fileInput}
-                        />
+                        <label htmlFor="imagens" className={styles.uploadLabel}>
+                            <FaUpload />
+                            <span>Adicionar Fotos</span>
+                            <input
+                                type="file"
+                                id="imagens"
+                                name="imagens"
+                                multiple
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className={styles.fileInput}
+                            />
+                        </label>
+                        {petData.imagens.length > 0 && (
+                            <div className={styles.imagePreview}>
+                                {petData.imagens.map((image, index) => (
+                                    <img
+                                        key={index}
+                                        src={URL.createObjectURL(image)}
+                                        alt={`Preview ${index + 1}`}
+                                        className={styles.previewImage}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <div className={styles.formGrid}>
                         <div className={styles.formGroup}>
-                            <label>Nome</label>
+                            <label htmlFor="nome">Nome</label>
                             <input
                                 type="text"
+                                id="nome"
                                 name="nome"
                                 value={petData.nome}
                                 onChange={handleChange}
@@ -155,10 +166,11 @@ const AddPet = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Espécie</label>
+                            <label htmlFor="especie">Espécie</label>
                             <select
-                                name="tipo"
-                                value={petData.tipo}
+                                id="especie"
+                                name="especie"
+                                value={petData.especie}
                                 onChange={handleChange}
                                 required
                             >
@@ -169,9 +181,10 @@ const AddPet = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Raça</label>
+                            <label htmlFor="raca">Raça</label>
                             <input
                                 type="text"
+                                id="raca"
                                 name="raca"
                                 value={petData.raca}
                                 onChange={handleChange}
@@ -180,9 +193,10 @@ const AddPet = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Cor</label>
+                            <label htmlFor="cor">Cor</label>
                             <input
                                 type="text"
+                                id="cor"
                                 name="cor"
                                 value={petData.cor}
                                 onChange={handleChange}
@@ -191,23 +205,24 @@ const AddPet = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Idade (anos)</label>
+                            <label htmlFor="idade">Idade</label>
                             <input
                                 type="number"
+                                id="idade"
                                 name="idade"
                                 value={petData.idade}
                                 onChange={handleChange}
-                                min="0"
-                                max="30"
                                 required
+                                min="0"
                             />
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Sexo</label>
+                            <label htmlFor="genero">Gênero</label>
                             <select
-                                name="sexo"
-                                value={petData.sexo}
+                                id="genero"
+                                name="genero"
+                                value={petData.genero}
                                 onChange={handleChange}
                                 required
                             >
@@ -218,8 +233,9 @@ const AddPet = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Porte</label>
+                            <label htmlFor="porte">Porte</label>
                             <select
+                                id="porte"
                                 name="porte"
                                 value={petData.porte}
                                 onChange={handleChange}
@@ -233,10 +249,11 @@ const AddPet = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Nível de Energia</label>
+                            <label htmlFor="nivelEnergia">Nível de Energia</label>
                             <select
-                                name="energia"
-                                value={petData.energia}
+                                id="nivelEnergia"
+                                name="nivelEnergia"
+                                value={petData.nivelEnergia}
                                 onChange={handleChange}
                                 required
                             >
@@ -246,50 +263,79 @@ const AddPet = () => {
                                 <option value="high">Alto</option>
                             </select>
                         </div>
-                    </div>
 
-                    <div className={styles.formGroup}>
-                        <label>Temperamento</label>
-                        <div className={styles.checkboxGroup}>
-                            {['calmo', 'brincalhao', 'protetor', 'independente', 'afetuoso'].map(trait => (
-                                <label key={trait} className={styles.checkboxLabel}>
-                                    <input
-                                        type="checkbox"
-                                        checked={petData.temperamento.includes(trait)}
-                                        onChange={() => handleTemperamentChange(trait)}
-                                    />
-                                    {trait.charAt(0).toUpperCase() + trait.slice(1)}
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label>Comportamento</label>
-                        <textarea
-                            name="comportamento"
-                            value={petData.comportamento}
-                            onChange={handleChange}
-                            rows="3"
-                            required
-                        />
-                    </div>
-
-                    <div className={styles.formGrid}>
                         <div className={styles.formGroup}>
-                            <label className={styles.checkboxLabel}>
+                            <label htmlFor="temperamento">Temperamento</label>
+                            <input
+                                type="text"
+                                id="temperamento"
+                                name="temperamento"
+                                value={petData.temperamento}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="comportamento">Comportamento</label>
+                            <input
+                                type="text"
+                                id="comportamento"
+                                name="comportamento"
+                                value={petData.comportamento}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="ambienteIdeal">Ambiente Ideal</label>
+                            <input
+                                type="text"
+                                id="ambienteIdeal"
+                                name="ambienteIdeal"
+                                value={petData.ambienteIdeal}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="compatibilidade">Compatibilidade com Outros Animais</label>
+                            <input
+                                type="text"
+                                id="compatibilidade"
+                                name="compatibilidade"
+                                value={petData.compatibilidade}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="descricao">Descrição</label>
+                            <textarea
+                                id="descricao"
+                                name="descricao"
+                                value={petData.descricao}
+                                onChange={handleChange}
+                                required
+                                rows="4"
+                            />
+                        </div>
+
+                        <div className={styles.checkboxGroup}>
+                            <label>
                                 <input
                                     type="checkbox"
-                                    name="vacinas"
-                                    checked={petData.vacinas}
+                                    name="vacinado"
+                                    checked={petData.vacinado}
                                     onChange={handleChange}
                                 />
                                 Vacinado
                             </label>
-                        </div>
 
-                        <div className={styles.formGroup}>
-                            <label className={styles.checkboxLabel}>
+                            <label>
                                 <input
                                     type="checkbox"
                                     name="castrado"
@@ -298,14 +344,12 @@ const AddPet = () => {
                                 />
                                 Castrado
                             </label>
-                        </div>
 
-                        <div className={styles.formGroup}>
-                            <label className={styles.checkboxLabel}>
+                            <label>
                                 <input
                                     type="checkbox"
-                                    name="necessidades"
-                                    checked={petData.necessidades}
+                                    name="necessidadesEspeciais"
+                                    checked={petData.necessidadesEspeciais}
                                     onChange={handleChange}
                                 />
                                 Possui Necessidades Especiais
@@ -313,86 +357,18 @@ const AddPet = () => {
                         </div>
                     </div>
 
-                    {petData.necessidades && (
-                        <div className={styles.formGroup}>
-                            <label>Detalhes das Necessidades Especiais</label>
-                            <textarea
-                                name="specialNeeds"
-                                value={petData.specialNeeds}
-                                onChange={handleChange}
-                                rows="3"
-                                required
-                            />
-                        </div>
-                    )}
-
-                    <div className={styles.formGrid}>
-                        <div className={styles.formGroup}>
-                            <label>Ambiente Ideal</label>
-                            <select
-                                name="environment"
-                                value={petData.environment}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Selecione</option>
-                                <option value="apartment">Apartamento</option>
-                                <option value="house">Casa</option>
-                                <option value="both">Ambos</option>
-                            </select>
-                        </div>
-
-                        <div className={styles.formGroup}>
-                            <label>Compatibilidade com Outros Animais</label>
-                            <select
-                                name="compatibility"
-                                value={petData.compatibility}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Selecione</option>
-                                <option value="yes">Sim</option>
-                                <option value="no">Não</option>
-                                <option value="depends">Depende</option>
-                            </select>
-                        </div>
-
-                        <div className={styles.formGroup}>
-                            <label className={styles.checkboxLabel}>
-                                <input
-                                    type="checkbox"
-                                    name="goodWithOtherPets"
-                                    checked={petData.goodWithOtherPets}
-                                    onChange={handleChange}
-                                />
-                                Bom com Outros Pets
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label>Descrição</label>
-                        <textarea
-                            name="descricao"
-                            value={petData.descricao}
-                            onChange={handleChange}
-                            rows="4"
-                            required
-                        />
-                    </div>
-
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className={styles.submitButton}
                         disabled={loading}
                     >
                         {loading ? (
-                            'Salvando...'
-                        ) : (
                             <>
-                                <FaSave className={styles.buttonIcon} />
-                                Cadastrar Pet
+                                <FaSpinner className={styles.spinner} />
+                                Cadastrando...
                             </>
+                        ) : (
+                            'Cadastrar Pet'
                         )}
                     </button>
                 </form>

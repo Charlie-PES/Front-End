@@ -26,4 +26,258 @@
 
 .menuItem:hover .menuIcon {
     color: var(--primary-color);
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--color-background);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.navLinks {
+    display: flex;
+    gap: 2rem;
+}
+
+.navLink {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-normal);
+}
+
+.navLink:hover {
+    color: var(--color-primary);
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.iconsContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.iconWrapper {
+    position: relative;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-normal);
+}
+
+.iconButton:hover {
+    color: var(--color-primary);
+}
+
+.notificationBadge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--color-error);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notificationsMenu,
+.messagesMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    background-color: var(--color-card-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 1rem;
+    margin-top: 0.5rem;
+    z-index: 1000;
+}
+
+.notificationItem,
+.messageItem {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background-color var(--transition-normal);
+}
+
+.notificationItem:last-child,
+.messageItem:last-child {
+    border-bottom: none;
+}
+
+.notificationItem:hover,
+.messageItem:hover {
+    background-color: var(--color-hover);
+}
+
+.notificationItem p,
+.messageItem p {
+    margin: 0;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.notificationItem small,
+.messageItem small {
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+}
+
+.profileSection {
+    position: relative;
+}
+
+.profileButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userName {
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.profileMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: var(--color-card-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    z-index: 1000;
+}
+
+.authButtons {
+    display: flex;
+    gap: 1rem;
+}
+
+.loginButton,
+.registerButton {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+}
+
+.loginButton {
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.registerButton {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.loginButton:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.registerButton:hover {
+    background-color: var(--color-primary-dark);
+}
+
+/* Dark Mode */
+.darkMode {
+    background-color: var(--dark-background);
+}
+
+.darkMode .navLink {
+    color: var(--dark-text);
+}
+
+.darkMode .iconButton {
+    color: var(--dark-text);
+}
+
+.darkMode .notificationsMenu,
+.darkMode .messagesMenu,
+.darkMode .profileMenu {
+    background-color: var(--dark-card-background);
+}
+
+.darkMode .notificationItem,
+.darkMode .messageItem {
+    border-color: var(--dark-border-color);
+}
+
+.darkMode .notificationItem:hover,
+.darkMode .messageItem:hover,
+.darkMode .menuItem:hover {
+    background-color: var(--dark-hover);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navigation {
+        padding: 1rem;
+    }
+
+    .navLinks {
+        display: none;
+    }
+
+    .userName {
+        display: none;
+    }
+
+    .notificationsMenu,
+    .messagesMenu {
+        width: 280px;
+        right: -1rem;
+    }
 } 

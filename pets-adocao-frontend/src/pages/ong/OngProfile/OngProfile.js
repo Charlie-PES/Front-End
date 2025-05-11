@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import styles from './OngProfile.module.css';
@@ -13,7 +13,8 @@ import {
   FaCog, 
   FaBell,
   FaSignOutAlt,
-  FaBars
+  FaBars,
+  FaPlusCircle
 } from 'react-icons/fa';
 
 // Função utilitária para gerar matriz do calendário
@@ -149,7 +150,13 @@ const OngProfile = () => {
       case 'pets':
         return (
           <div className={styles.petsContent}>
-            <h2>Gerenciamento de Pets</h2>
+            <div className={styles.petsHeader}>
+              <h2>Gerenciamento de Pets</h2>
+              <Link to="/pets/add" className={styles.addPetButton}>
+                <FaPlusCircle />
+                <span>Adicionar Novo Pet</span>
+              </Link>
+            </div>
             <div className={styles.petsGrid}>
               <div className={styles.petCard}><b>Nome:</b> Thor<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> <span style={{color:'#00796b', fontWeight:'bold'}}>Disponível</span></div>
               <div className={styles.petCard}><b>Nome:</b> Luna<br/><b>Espécie:</b> Gato<br/><b>Status:</b> <span style={{color:'#e65100', fontWeight:'bold'}}>Adotado</span></div>

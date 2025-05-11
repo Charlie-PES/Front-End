@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ChatButton from './components/ChatButton/ChatButton';
+import BackButton from './components/BackButton/BackButton';
 import Home from './pages/info/Home/Home';
 import Adotar from './pages/pet/Adotar/Adotar';
 import Sobre from './pages/info/Sobre/Sobre';
@@ -37,10 +38,9 @@ import './App.css';
 function App() {
     return (
         <AuthProvider>
-            <div className="app-container">
+            <div className="App">
                 <Header />
-
-                <main className="content">
+                <main>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/home" element={<Home />} />
@@ -73,8 +73,8 @@ function App() {
                         <Route path="/pets/add" element={<AddPet />} />
                     </Routes>
                 </main>
-
                 <ChatButton />
+                <BackButton />
                 <Footer />
             </div>
         </AuthProvider>

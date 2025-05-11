@@ -1035,4 +1035,58 @@ button:hover, .saveBtn:hover, .cancelBtn:hover, .editBtn:hover {
     padding: 0.2rem;
     font-size: 0.95rem;
   }
+}
+
+.petsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.addPetButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--transition-normal);
+}
+
+.addPetButton:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.addPetButton svg {
+  font-size: 1.2em;
+}
+
+/* Dark mode adjustments */
+.darkMode .addPetButton {
+  background-color: var(--color-primary-dark);
+}
+
+.darkMode .addPetButton:hover {
+  background-color: var(--color-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .petsHeader {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .addPetButton {
+    width: 100%;
+    justify-content: center;
+  }
 } 
