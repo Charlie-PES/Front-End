@@ -12,7 +12,8 @@ import {
   FaChartLine, 
   FaCog, 
   FaBell,
-  FaSignOutAlt
+  FaSignOutAlt,
+  FaBars
 } from 'react-icons/fa';
 
 const OngProfile = () => {
@@ -22,6 +23,8 @@ const OngProfile = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({});
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [feedback, setFeedback] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -49,10 +52,10 @@ const OngProfile = () => {
   };
   const handleSave = (e) => {
     e.preventDefault();
-    // Aqui você pode integrar com backend ou atualizar localStorage/contexto
-    // Exemplo: localStorage.setItem('user', JSON.stringify({ ...user, ...formData }));
     setEditMode(false);
-    window.location.reload(); // Força atualização para refletir mudanças
+    setFeedback('Dados salvos com sucesso!');
+    setTimeout(() => setFeedback(''), 2000);
+    // window.location.reload(); // Removido para feedback dinâmico
   };
 
   const menuItems = [
@@ -96,9 +99,9 @@ const OngProfile = () => {
           <div className={styles.petsContent}>
             <h2>Gerenciamento de Pets</h2>
             <div className={styles.petsGrid}>
-              <div className={styles.petCard}><b>Nome:</b> Thor<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> Disponível</div>
-              <div className={styles.petCard}><b>Nome:</b> Luna<br/><b>Espécie:</b> Gato<br/><b>Status:</b> Adotado</div>
-              <div className={styles.petCard}><b>Nome:</b> Mel<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> Disponível</div>
+              <div className={styles.petCard}><b>Nome:</b> Thor<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> <span style={{color:'#00796b', fontWeight:'bold'}}>Disponível</span></div>
+              <div className={styles.petCard}><b>Nome:</b> Luna<br/><b>Espécie:</b> Gato<br/><b>Status:</b> <span style={{color:'#e65100', fontWeight:'bold'}}>Adotado</span></div>
+              <div className={styles.petCard}><b>Nome:</b> Mel<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> <span style={{color:'#00796b', fontWeight:'bold'}}>Disponível</span></div>
             </div>
           </div>
         );
@@ -109,9 +112,9 @@ const OngProfile = () => {
             <table className={styles.adocoesTable}>
               <thead><tr><th>Pet</th><th>Adotante</th><th>Status</th></tr></thead>
               <tbody>
-                <tr><td>Thor</td><td>Maria Silva</td><td>Pendente</td></tr>
-                <tr><td>Luna</td><td>João Souza</td><td>Finalizado</td></tr>
-                <tr><td>Mel</td><td>-</td><td>Disponível</td></tr>
+                <tr><td>Thor</td><td>Maria Silva</td><td><span style={{color:'#f57c00', fontWeight:'bold'}}>Pendente</span></td></tr>
+                <tr><td>Luna</td><td>João Souza</td><td><span style={{color:'#388e3c', fontWeight:'bold'}}>Finalizado</span></td></tr>
+                <tr><td>Mel</td><td>-</td><td><span style={{color:'#00796b', fontWeight:'bold'}}>Disponível</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -142,8 +145,8 @@ const OngProfile = () => {
           <div className={styles.requisicoesContent}>
             <h2>Requisições Pendentes</h2>
             <ul className={styles.requisicoesList}>
-              <li><b>Tipo:</b> Doação de ração <br/><b>Solicitante:</b> PetShop BomPet <br/><b>Status:</b> Pendente</li>
-              <li><b>Tipo:</b> Voluntariado <br/><b>Solicitante:</b> Julia Lima <br/><b>Status:</b> Aprovado</li>
+              <li><b>Tipo:</b> Doação de ração <br/><b>Solicitante:</b> PetShop BomPet <br/><b>Status:</b> <span style={{color:'#f57c00', fontWeight:'bold'}}>Pendente</span></li>
+              <li><b>Tipo:</b> Voluntariado <br/><b>Solicitante:</b> Julia Lima <br/><b>Status:</b> <span style={{color:'#2e7d32', fontWeight:'bold'}}>Aprovado</span></li>
             </ul>
           </div>
         );
@@ -165,7 +168,11 @@ const OngProfile = () => {
 
   return (
     <div className={`${styles.ongProfile} ${darkMode ? styles.darkMode : ''}`}>
-      <aside className={styles.sidebar}>
+      {/* Botão de menu mobile */}
+      <button className={styles.menuToggle} onClick={() => setSidebarOpen(!sidebarOpen)}>
+        <FaBars size={22} />
+      </button>
+      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.open : ''}`}>
         <div className={styles.ongInfo}>
           <div className={styles.ongLogo}>
             <FaBuilding size={40} />
@@ -198,27 +205,25 @@ const OngProfile = () => {
               <button className={styles.editBtn} onClick={handleEdit}>Editar dados</button>
             </>
           )}
+          {feedback && <div className={styles.feedbackMsg}>{feedback}</div>}
         </div>
-
         <nav className={styles.menu}>
           {menuItems.map((item) => (
             <button
               key={item.id}
               className={`${styles.menuItem} ${activeSection === item.id ? styles.active : ''}`}
-              onClick={() => setActiveSection(item.id)}
+              onClick={() => { setActiveSection(item.id); setSidebarOpen(false); }}
             >
               {item.icon}
               <span>{item.label}</span>
             </button>
           ))}
         </nav>
-
         <button className={styles.logoutButton} onClick={handleLogout}>
           <FaSignOutAlt />
           <span>Sair</span>
         </button>
       </aside>
-
       <main className={styles.content}>
         {renderContent()}
       </main>

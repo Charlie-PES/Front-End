@@ -6,5 +6,8 @@
     "eslint": "^8.56.0",
     "eslint-config-react-app": "^7.0.1",
     "react-scripts": "^5.0.1"
+  },
+  "dependencies": {
+    "react-transition-group": "^4.4.5"
   }
 }
