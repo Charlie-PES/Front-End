@@ -29,6 +29,9 @@ import AdminPage from './pages/admin/AdminPage';
 import { AuthProvider } from './contexts/AuthContext';
 import OngProfile from './pages/ong/OngProfile/OngProfile';
 import DirectMessages from './components/DirectMessages/DirectMessages';
+import AccountType from './pages/auth/AccountType/AccountType';
+import RegisterTemporary from './pages/auth/RegisterTemporary/RegisterTemporary';
+import AddPet from './pages/pet/AddPet/AddPet';
 import './App.css';
 
 function App() {
@@ -65,6 +68,9 @@ function App() {
                         <Route path="/admin" element={<AdminPage />} />
                         <Route path="/ong/perfil" element={<OngProfile />} />
                         <Route path="/messages" element={<DirectMessages />} />
+                        <Route path="/account-type" element={<AccountType />} />
+                        <Route path="/register/temporary" element={<RegisterTemporary />} />
+                        <Route path="/pets/add" element={<AddPet />} />
                     </Routes>
                 </main>
 
