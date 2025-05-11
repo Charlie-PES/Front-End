@@ -75,15 +75,23 @@ const Header = () => {
         <Link to="/feed" className={styles.link}>
           <FaNewspaper className={styles.navIcon} /> Feed
         </Link>
-        <Link to="/matchpage" className={styles.link}>
-          <FaHeart className={styles.navIcon} /> Match
-        </Link>
         <Link to="/doacoes" className={styles.link}>
           <FaHandHoldingHeart className={styles.navIcon} /> Doações
         </Link>
       </nav>
 
       <div className={styles.authButtons}>
+        <div className={styles.notificationContainer}>
+          <button
+            className={styles.notificationButton}
+            onClick={() => navigate('/matchpage')}
+            aria-label="Match"
+          >
+            <FaHeart size={20} />
+            <span className={styles.notificationBadge}>2</span>
+          </button>
+        </div>
+
         <div className={styles.notificationContainer}>
           <button
             className={styles.notificationButton}

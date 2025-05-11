@@ -938,3 +938,99 @@
     transform: translateX(0);
   }
 }
+
+.actions {
+  text-align: center;
+  margin: 4rem 0;
+  padding: 0 2rem;
+}
+
+.actions h2 {
+  font-size: 2rem;
+  color: var(--color-text);
+  margin-bottom: 2rem;
+}
+
+.actionButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.actionButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.actionButton:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--color-primary);
+  color: white;
+}
+
+.actionIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+  transition: all 0.3s ease;
+}
+
+.actionButton:hover .actionIcon {
+  color: white;
+  transform: scale(1.1);
+}
+
+.actionButton span {
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Dark mode styles */
+.darkMode .actionButton {
+  background: #2d2d2d;
+  color: #ffffff;
+}
+
+.darkMode .actionIcon {
+  color: var(--color-primary-light);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .actions {
+    padding: 0 1rem;
+    margin: 2rem 0;
+  }
+
+  .actions h2 {
+    font-size: 1.5rem;
+  }
+
+  .actionButtons {
+    grid-template-columns: 1fr;
+  }
+
+  .actionButton {
+    padding: 1.5rem;
+  }
+
+  .actionIcon {
+    font-size: 2rem;
+  }
+
+  .actionButton span {
+    font-size: 1rem;
+  }
+}
