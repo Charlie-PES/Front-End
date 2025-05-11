@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { FaSun, FaMoon, FaUserCircle, FaBell, FaEnvelope } from 'react-icons/fa';
+import { FaSun, FaMoon, FaUserCircle, FaBell, FaEnvelope, FaHandHoldingHeart } from 'react-icons/fa';
 import { logout } from '../../services/authService';
 
 const Header = () => {
@@ -64,6 +64,9 @@ const Header = () => {
         </Link>
         <Link to="/matchpage" className={styles.link}>
           Match
+        </Link>
+        <Link to="/doacoes" className={styles.link}>
+          <FaHandHoldingHeart /> Doações
         </Link>
       </nav>
 

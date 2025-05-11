@@ -1,0 +1,480 @@
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 200px);
+    animation: fadeIn 0.5s ease-in-out;
+    --primary-color: #D4A373;
+    --primary-color-light: #E6CCB2;
+    --primary-color-dark: #BC6C25;
+    --secondary-color: #FEFAE0;
+    --accent-color: #606C38;
+    --background-color: #FAEDCD;
+    --card-background: #FFFFFF;
+    --text-color: #432818;
+    --border-color: #D4A373;
+    --hover-color: #BC6C25;
+    --shadow-color: rgba(188, 108, 37, 0.1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px var(--shadow-color);
+}
+
+.header p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
+.searchSection {
+    margin-bottom: 2rem;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.searchBar {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.searchBar input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.searchBar input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    background-color: var(--card-background);
+}
+
+.searchBar input:focus + .searchIcon {
+    opacity: 1;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+}
+
+.filterButton {
+    padding: 0.7rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.filterButton:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.filterButton.active {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.ongsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.ongCard {
+    background-color: var(--card-background);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    animation: cardAppear 0.5s ease-out forwards;
+    animation-delay: calc(var(--card-index) * 0.1s);
+}
+
+.ongCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.ongCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-color-light));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.ongCard:hover::before {
+    opacity: 1;
+}
+
+.ongHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.ongLogo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.ongCard:hover .ongLogo {
+    transform: scale(1.1);
+}
+
+.ongHeader h2 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.ongDescription {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.necessidades {
+    margin-bottom: 1.5rem;
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.necessidades:hover {
+    transform: translateX(5px);
+}
+
+.necessidades h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.necessidadeGrupo {
+    margin-bottom: 1rem;
+}
+
+.necessidadeGrupo h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.necessidadeGrupo ul {
+    list-style: none;
+    padding-left: 1rem;
+}
+
+.necessidadeGrupo li {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.necessidadeGrupo li:hover {
+    transform: translateX(5px);
+}
+
+.necessidadeGrupo li::before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+.pontosColeta {
+    margin-bottom: 1.5rem;
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.pontosColeta:hover {
+    transform: translateX(5px);
+}
+
+.pontosColeta h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.pontoColeta {
+    background-color: var(--card-background);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.pontoColeta:hover {
+    transform: translateX(5px);
+    border-color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.pontoColeta p {
+    color: var(--text-color);
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+.pontoColeta span {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.pix {
+    background-color: var(--secondary-color);
+    padding: 1.2rem;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.pix:hover {
+    transform: translateX(5px);
+}
+
+.pix h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.pix p {
+    color: var(--text-color);
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+}
+
+.pixKey {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--card-background);
+    padding: 1rem;
+    border-radius: 8px;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.pixKey:hover {
+    border-color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.copyButton {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.copyButton:hover {
+    background-color: var(--primary-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.copyButton:active {
+    transform: translateY(0);
+}
+
+/* Dark Mode */
+.darkMode {
+    --background-color: #1A1A1A;
+    --card-background: #2D2D2D;
+    --text-color: #E6CCB2;
+    --border-color: #BC6C25;
+    --primary-color: #D4A373;
+    --primary-color-light: #E6CCB2;
+    --primary-color-dark: #BC6C25;
+    --secondary-color: #432818;
+    --accent-color: #606C38;
+    --hover-color: #E6CCB2;
+    --shadow-color: rgba(188, 108, 37, 0.2);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .ongsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .filterButton {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .ongCard {
+        margin-bottom: 1rem;
+    }
+
+    .ongHeader {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .ongLogo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .pixKey {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .copyButton {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Animações para os cards */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 

@@ -33,6 +33,7 @@ import DirectMessages from './components/DirectMessages/DirectMessages';
 import AccountType from './pages/auth/AccountType/AccountType';
 import RegisterTemporary from './pages/auth/RegisterTemporary/RegisterTemporary';
 import AddPet from './pages/pet/AddPet/AddPet';
+import Doacoes from './pages/info/Doacoes/Doacoes';
 import './App.css';
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
                         <Route path="/account-type" element={<AccountType />} />
                         <Route path="/register/temporary" element={<RegisterTemporary />} />
                         <Route path="/pets/add" element={<AddPet />} />
+                        <Route path="/doacoes" element={<Doacoes />} />
                     </Routes>
                 </main>
                 <ChatButton />
