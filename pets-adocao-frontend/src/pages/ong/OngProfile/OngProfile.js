@@ -16,6 +16,28 @@ import {
   FaBars
 } from 'react-icons/fa';
 
+// Função utilitária para gerar matriz do calendário
+function getCalendarMatrix(year, month) {
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const matrix = [];
+  let week = [];
+  let dayOfWeek = firstDay.getDay();
+  for (let i = 0; i < dayOfWeek; i++) week.push(null);
+  for (let day = 1; day <= lastDay.getDate(); day++) {
+    week.push(new Date(year, month, day));
+    if (week.length === 7) {
+      matrix.push(week);
+      week = [];
+    }
+  }
+  if (week.length) {
+    while (week.length < 7) week.push(null);
+    matrix.push(week);
+  }
+  return matrix;
+}
+
 const OngProfile = () => {
   const { darkMode } = useContext(ThemeContext);
   const { user, logout } = useAuth();
@@ -28,6 +50,7 @@ const OngProfile = () => {
   const [formData, setFormData] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [calendarDate, setCalendarDate] = useState(new Date());
 
   useEffect(() => {
     if (user) {
@@ -83,6 +106,20 @@ const OngProfile = () => {
     { id: 'configuracoes', icon: <FaCog />, label: 'Configurações' },
   ];
 
+  // Exemplo de eventos
+  const eventos = [
+    { data: '2024-06-10', titulo: 'Feira de Adoção' },
+    { data: '2024-06-15', titulo: 'Campanha de Vacinação' },
+    { data: '2024-06-20', titulo: 'Palestra' }
+  ];
+  const hasEvent = (date) => {
+    if (!date) return false;
+    return eventos.some(ev => {
+      const d = new Date(ev.data);
+      return d.getDate() === date.getDate() && d.getMonth() === date.getMonth() && d.getFullYear() === date.getFullYear();
+    });
+  };
+
   const renderContent = (section) => {
     switch (section) {
       case 'dashboard':
@@ -134,17 +171,40 @@ const OngProfile = () => {
             </table>
           </div>
         );
-      case 'calendario':
+      case 'calendario': {
+        const year = calendarDate.getFullYear();
+        const month = calendarDate.getMonth();
+        const today = new Date();
+        const calendarMatrix = getCalendarMatrix(year, month);
         return (
           <div className={styles.calendarioContent}>
             <h2>Calendário de Eventos</h2>
-            <ul className={styles.eventList}>
-              <li><b>10/06/2024</b> - Feira de Adoção no Parque Central</li>
-              <li><b>15/06/2024</b> - Campanha de Vacinação</li>
-              <li><b>20/06/2024</b> - Palestra: Cuidados com Animais Resgatados</li>
-            </ul>
+            <div className={styles.calendarioControls}>
+              <button onClick={() => setCalendarDate(new Date(year, month - 1, 1))}>&lt;</button>
+              <span>{calendarDate.toLocaleString('pt-BR', { month: 'long', year: 'numeric' })}</span>
+              <button onClick={() => setCalendarDate(new Date(year, month + 1, 1))}>&gt;</button>
+            </div>
+            <div className={styles.calendarioGrid}>
+              {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map((d) => (
+                <div key={d} className={styles.calendarioHeaderCell}>{d}</div>
+              ))}
+              {calendarMatrix.flat().map((date, idx) => (
+                <div
+                  key={idx}
+                  className={[
+                    styles.calendarioCell,
+                    date && date.toDateString() === today.toDateString() ? styles.calendarioToday : '',
+                    hasEvent(date) ? styles.calendarioEvent : ''
+                  ].join(' ')}
+                >
+                  {date && date.getDate()}
+                  {hasEvent(date) && <span className={styles.eventDot} title="Evento"></span>}
+                </div>
+              ))}
+            </div>
           </div>
         );
+      }
       case 'mensagens':
         return (
           <div className={styles.mensagensContent}>
