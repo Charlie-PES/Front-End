@@ -21,6 +21,9 @@ const OngProfile = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [prevSection, setPrevSection] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showActive, setShowActive] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -55,7 +58,19 @@ const OngProfile = () => {
     setEditMode(false);
     setFeedback('Dados salvos com sucesso!');
     setTimeout(() => setFeedback(''), 2000);
-    // window.location.reload(); // Removido para feedback dinâmico
+  };
+
+  const handleSectionChange = (section) => {
+    if (section === activeSection || isAnimating) return;
+    setPrevSection(activeSection);
+    setIsAnimating(true);
+    setShowActive(false);
+    setTimeout(() => {
+      setActiveSection(section);
+      setPrevSection(null);
+      setIsAnimating(false);
+      setShowActive(true);
+    }, 500);
   };
 
   const menuItems = [
@@ -68,8 +83,8 @@ const OngProfile = () => {
     { id: 'configuracoes', icon: <FaCog />, label: 'Configurações' },
   ];
 
-  const renderContent = () => {
-    switch (activeSection) {
+  const renderContent = (section) => {
+    switch (section) {
       case 'dashboard':
         return (
           <div className={styles.dashboardContent}>
@@ -168,7 +183,6 @@ const OngProfile = () => {
 
   return (
     <div className={`${styles.ongProfile} ${darkMode ? styles.darkMode : ''}`}>
-      {/* Botão de menu mobile */}
       <button className={styles.menuToggle} onClick={() => setSidebarOpen(!sidebarOpen)}>
         <FaBars size={22} />
       </button>
@@ -199,7 +213,7 @@ const OngProfile = () => {
                 {user?.telefone && <p><b>Telefone:</b> {user.telefone}</p>}
                 {user?.email && <p><b>Email:</b> {user.email}</p>}
                 {user?.descricao && <p><b>Descrição:</b> {user.descricao}</p>}
-                {user?.createdAt && <p><b>Desde:</b> {new Date(user.createdAt).toLocaleDateString('pt-BR')}</p>}
+                {user?.createdAt && <p><b>Desde:</b> {new Date(user?.createdAt).toLocaleDateString('pt-BR')}</p>}
               </div>
               <p className={styles.ongType}>Organização Não Governamental</p>
               <button className={styles.editBtn} onClick={handleEdit}>Editar dados</button>
@@ -212,7 +226,7 @@ const OngProfile = () => {
             <button
               key={item.id}
               className={`${styles.menuItem} ${activeSection === item.id ? styles.active : ''}`}
-              onClick={() => { setActiveSection(item.id); setSidebarOpen(false); }}
+              onClick={() => { handleSectionChange(item.id); setSidebarOpen(false); }}
             >
               {item.icon}
               <span>{item.label}</span>
@@ -225,7 +239,16 @@ const OngProfile = () => {
         </button>
       </aside>
       <main className={styles.content}>
-        {renderContent()}
+        {prevSection && (
+          <div className={`${styles.sectionContent} ${styles.fadeOut}`}>
+            {renderContent(prevSection)}
+          </div>
+        )}
+        {showActive && (
+          <div className={`${styles.sectionContent} ${styles.active}`}>
+            {renderContent(activeSection)}
+          </div>
+        )}
       </main>
     </div>
   );
