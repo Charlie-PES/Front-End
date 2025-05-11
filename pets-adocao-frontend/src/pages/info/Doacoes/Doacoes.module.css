@@ -154,6 +154,123 @@
     box-shadow: 0 4px 8px var(--shadow-color);
 }
 
+.icon {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+    font-size: 1.2em;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.header h1 .icon {
+    font-size: 1.5em;
+    margin-right: 0.8rem;
+}
+
+.header p .icon {
+    font-size: 1.1em;
+    margin-right: 0.5rem;
+    opacity: 0.8;
+}
+
+.filterButton .icon {
+    margin-right: 0.5rem;
+    font-size: 1em;
+}
+
+.ongHeader h2 .icon {
+    font-size: 1.3em;
+    margin-right: 0.6rem;
+}
+
+.necessidades h3 .icon,
+.pontosColeta h3 .icon,
+.pix h3 .icon {
+    font-size: 1.2em;
+    margin-right: 0.6rem;
+}
+
+.necessidadeGrupo h4 .icon {
+    font-size: 1.1em;
+    margin-right: 0.5rem;
+}
+
+/* Hover effects for icons */
+.ongCard:hover .icon {
+    transform: scale(1.1);
+}
+
+.filterButton:hover .icon {
+    transform: rotate(10deg);
+}
+
+/* Dark mode adjustments */
+.darkMode .icon {
+    color: var(--primary-color-light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .ongsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .filterButton {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .ongCard {
+        margin-bottom: 1rem;
+    }
+
+    .ongHeader {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .ongLogo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .pixKey {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .copyButton {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .icon {
+        font-size: 1.1em;
+    }
+
+    .header h1 .icon {
+        font-size: 1.3em;
+    }
+
+    .ongHeader h2 .icon {
+        font-size: 1.2em;
+    }
+}
+
 .ongsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -415,56 +532,6 @@
     --accent-color: #606C38;
     --hover-color: #E6CCB2;
     --shadow-color: rgba(188, 108, 37, 0.2);
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem;
-    }
-
-    .header h1 {
-        font-size: 2rem;
-    }
-
-    .ongsGrid {
-        grid-template-columns: 1fr;
-    }
-
-    .filters {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0;
-    }
-
-    .filterButton {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
-
-    .ongCard {
-        margin-bottom: 1rem;
-    }
-
-    .ongHeader {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .ongLogo {
-        width: 100px;
-        height: 100px;
-    }
-
-    .pixKey {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .copyButton {
-        width: 100%;
-        justify-content: center;
-    }
 }
 
 /* Animações para os cards */

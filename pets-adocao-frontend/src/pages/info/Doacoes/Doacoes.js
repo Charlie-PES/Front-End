@@ -1,5 +1,20 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { FaHandHoldingHeart, FaMapMarkerAlt, FaQrcode, FaSearch, FaFilter, FaCopy, FaCheck } from 'react-icons/fa';
+import { 
+    FaHandHoldingHeart, 
+    FaMapMarkerAlt, 
+    FaQrcode, 
+    FaSearch, 
+    FaFilter, 
+    FaCopy, 
+    FaCheck,
+    FaPaw,
+    FaDog,
+    FaCat,
+    FaHeart,
+    FaBoxOpen,
+    FaShower,
+    FaPills
+} from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import styles from './Doacoes.module.css';
 
@@ -98,7 +113,9 @@ const Doacoes = () => {
                     <FaHandHoldingHeart className={styles.icon} />
                     Doações
                 </h1>
-                <p>Ajude as ONGs a continuar cuidando dos animais</p>
+                <p>
+                    <FaPaw className={styles.icon} /> Ajude as ONGs a continuar cuidando dos animais
+                </p>
             </div>
 
             <div className={styles.searchSection}>
@@ -117,25 +134,25 @@ const Doacoes = () => {
                         className={`${styles.filterButton} ${selectedFilter === 'todos' ? styles.active : ''}`}
                         onClick={() => handleFilter('todos')}
                     >
-                        <FaFilter /> Todos
+                        <FaPaw /> Todos
                     </button>
                     <button
                         className={`${styles.filterButton} ${selectedFilter === 'alimentos' ? styles.active : ''}`}
                         onClick={() => handleFilter('alimentos')}
                     >
-                        <FaFilter /> Alimentos
+                        <FaBoxOpen /> Alimentos
                     </button>
                     <button
                         className={`${styles.filterButton} ${selectedFilter === 'higiene' ? styles.active : ''}`}
                         onClick={() => handleFilter('higiene')}
                     >
-                        <FaFilter /> Higiene
+                        <FaShower /> Higiene
                     </button>
                     <button
                         className={`${styles.filterButton} ${selectedFilter === 'medicamentos' ? styles.active : ''}`}
                         onClick={() => handleFilter('medicamentos')}
                     >
-                        <FaFilter /> Medicamentos
+                        <FaPills /> Medicamentos
                     </button>
                 </div>
             </div>
@@ -149,17 +166,30 @@ const Doacoes = () => {
                     >
                         <div className={styles.ongHeader}>
                             <img src={ong.logo} alt={ong.nome} className={styles.ongLogo} />
-                            <h2>{ong.nome}</h2>
+                            <h2>
+                                {ong.nome.includes('Cães') ? <FaDog className={styles.icon} /> : 
+                                 ong.nome.includes('Gatos') ? <FaCat className={styles.icon} /> : 
+                                 <FaPaw className={styles.icon} />} 
+                                {ong.nome}
+                            </h2>
                         </div>
 
                         <p className={styles.ongDescription}>{ong.descricao}</p>
 
                         <div className={styles.necessidades}>
-                            <h3>Necessidades</h3>
+                            <h3>
+                                <FaHeart className={styles.icon} />
+                                Necessidades
+                            </h3>
                             {Object.entries(ong.necessidades).map(([tipo, items]) => (
                                 items.length > 0 && (
                                     <div key={tipo} className={styles.necessidadeGrupo}>
-                                        <h4>{tipo.charAt(0).toUpperCase() + tipo.slice(1)}</h4>
+                                        <h4>
+                                            {tipo === 'alimentos' ? <FaBoxOpen className={styles.icon} /> :
+                                             tipo === 'higiene' ? <FaShower className={styles.icon} /> :
+                                             <FaPills className={styles.icon} />}
+                                            {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
+                                        </h4>
                                         <ul>
                                             {items.map((item, index) => (
                                                 <li key={index}>{item}</li>

@@ -3,7 +3,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { FaSun, FaMoon, FaUserCircle, FaBell, FaEnvelope, FaHandHoldingHeart } from 'react-icons/fa';
+import { 
+    FaSun, 
+    FaMoon, 
+    FaUserCircle, 
+    FaBell, 
+    FaEnvelope, 
+    FaHandHoldingHeart,
+    FaHome,
+    FaPaw,
+    FaInfoCircle,
+    FaMapMarkedAlt,
+    FaNewspaper,
+    FaHeart
+} from 'react-icons/fa';
 import { logout } from '../../services/authService';
 
 const Header = () => {
@@ -48,25 +61,25 @@ const Header = () => {
 
       <nav className={styles.nav}>
         <Link to="/home" className={styles.link}>
-          Home
+          <FaHome className={styles.navIcon} /> Home
         </Link>
         <Link to="/adotar" className={styles.link}>
-          Adotar
+          <FaPaw className={styles.navIcon} /> Adotar
         </Link>
         <Link to="/sobre" className={styles.link}>
-          Sobre
+          <FaInfoCircle className={styles.navIcon} /> Sobre
         </Link>
         <Link to="/mapa" className={styles.link}>
-          Mapa
+          <FaMapMarkedAlt className={styles.navIcon} /> Mapa
         </Link>
         <Link to="/feed" className={styles.link}>
-          Feed
+          <FaNewspaper className={styles.navIcon} /> Feed
         </Link>
         <Link to="/matchpage" className={styles.link}>
-          Match
+          <FaHeart className={styles.navIcon} /> Match
         </Link>
         <Link to="/doacoes" className={styles.link}>
-          <FaHandHoldingHeart /> Doações
+          <FaHandHoldingHeart className={styles.navIcon} /> Doações
         </Link>
       </nav>
 
