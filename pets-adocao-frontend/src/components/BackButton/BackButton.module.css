@@ -1,9 +1,8 @@
 .backButton {
   position: fixed;
-  bottom: 20px;
   left: 20px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: var(--color-primary);
   color: white;
@@ -24,7 +23,7 @@
 }
 
 .backButton svg {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 /* Dark mode */
@@ -39,9 +38,12 @@
 /* Responsive */
 @media (max-width: 768px) {
   .backButton {
-    width: 45px;
-    height: 45px;
-    bottom: 15px;
+    width: 55px;
+    height: 55px;
     left: 15px;
+  }
+  
+  .backButton svg {
+    font-size: 1.3rem;
   }
 } 

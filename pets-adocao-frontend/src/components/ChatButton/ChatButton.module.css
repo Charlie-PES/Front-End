@@ -1,16 +1,14 @@
 .chatContainer {
   position: fixed;
-  bottom: 20px;
   right: 20px;
   z-index: 1000;
 }
 
 .chatButton {
   position: fixed;
-  bottom: 20px;
   right: 20px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: var(--color-primary);
   color: white;
@@ -35,12 +33,11 @@
 }
 
 .chatButton svg {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .chatWindow {
   position: fixed;
-  bottom: 80px;
   right: 20px;
   width: 350px;
   height: 500px;
@@ -199,19 +196,24 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .chatButton {
-    width: 45px;
-    height: 45px;
-    bottom: 15px;
+  .chatContainer {
     right: 15px;
   }
 
+  .chatButton {
+    width: 55px;
+    height: 55px;
+    right: 15px;
+  }
+
+  .chatButton svg {
+    font-size: 1.3rem;
+  }
+
   .chatWindow {
-    position: fixed;
-    bottom: 70px;
     right: 0;
     width: 100%;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 160px);
     border-radius: 12px 12px 0 0;
     animation: slideUpMobile 0.3s ease forwards;
   }
@@ -246,17 +248,23 @@
 
 @media (max-width: 480px) {
   .chatContainer {
-    bottom: 10px;
     right: 10px;
   }
 
   .chatButton {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    right: 10px;
+  }
+
+  .chatButton svg {
+    font-size: 1.2rem;
   }
 
   .chatWindow {
-    bottom: 60px;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 140px);
   }
 
   .chatHeader h3 {

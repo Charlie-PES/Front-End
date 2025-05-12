@@ -24,6 +24,7 @@ const Header = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const notificationsRef = useRef(null);
 
   // Mock notifications - in a real app, these would come from your backend
@@ -32,6 +33,20 @@ const Header = () => {
     { id: 2, message: 'Sua solicitação de adoção foi aprovada', time: '1 hora atrás' },
     { id: 3, message: 'Novo pet disponível para adoção', time: '2 horas atrás' },
   ]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Executa uma vez no carregamento
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -54,7 +69,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`${styles.header} ${darkMode ? styles.darkMode : ''}`}>
+    <header className={`${styles.header} ${darkMode ? styles.darkMode : ''} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.logoContainer}>
         <img src="/images/logo.png" alt="Logo" className={styles.logo} />
       </div>
