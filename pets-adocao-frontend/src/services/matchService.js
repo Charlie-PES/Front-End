@@ -9,7 +9,11 @@ const MATCH_WEIGHTS = {
     temperament: 10,     // Temperamento
     specialNeeds: 10,    // Necessidades especiais
     environment: 10,     // Ambiente ideal
-    compatibility: 10    // Compatibilidade com outros animais
+    compatibility: 10,   // Compatibilidade com outros animais
+    residenceType: 15,   // Tipo de residência
+    availableTime: 15,   // Tempo disponível
+    existingPets: 10,    // Compatibilidade com pets existentes
+    lifestyle: 10        // Estilo de vida
 };
 
 // Mapeamento de níveis de energia para valores numéricos
@@ -39,12 +43,43 @@ const ENVIRONMENT_MAPPING = {
     'both': 'ambos'
 };
 
+// Novos mapeamentos
+const RESIDENCE_TYPES = {
+    'apartamento': {
+        suitableFor: ['small', 'medium'],
+        spaceScore: 0.8
+    },
+    'casa': {
+        suitableFor: ['small', 'medium', 'large'],
+        spaceScore: 1.0
+    },
+    'sítio': {
+        suitableFor: ['small', 'medium', 'large'],
+        spaceScore: 1.2
+    }
+};
+
+const TIME_AVAILABILITY = {
+    'pouco': {
+        score: 0.5,
+        suitableFor: ['low']
+    },
+    'medio': {
+        score: 0.8,
+        suitableFor: ['low', 'medium']
+    },
+    'muito': {
+        score: 1.0,
+        suitableFor: ['low', 'medium', 'high']
+    }
+};
+
 // Função para validar e normalizar os dados
 const validateAndNormalizeData = (pet, userPreferences) => {
     if (!pet || !userPreferences) return false;
     
     const requiredPetFields = ['species', 'size', 'age', 'energy', 'temperament', 'specialNeeds', 'environment', 'compatibility'];
-    const requiredUserFields = ['species', 'size', 'age', 'energy', 'temperament', 'specialNeeds', 'environment', 'compatibility'];
+    const requiredUserFields = ['species', 'size', 'age', 'energy', 'temperament', 'specialNeeds', 'environment', 'compatibility', 'residenceType', 'availableTime', 'lifestyle'];
     
     // Verifica se todos os campos obrigatórios existem
     const hasAllFields = requiredPetFields.every(field => pet[field] !== undefined) &&
@@ -71,10 +106,75 @@ const validateAndNormalizeData = (pet, userPreferences) => {
         energy: userPreferences.energy.toLowerCase(),
         temperament: Array.isArray(userPreferences.temperament) ? userPreferences.temperament.map(t => t.toLowerCase()) : [userPreferences.temperament.toLowerCase()],
         environment: userPreferences.environment.toLowerCase(),
-        compatibility: userPreferences.compatibility.toLowerCase()
+        compatibility: userPreferences.compatibility.toLowerCase(),
+        residenceType: userPreferences.residenceType.toLowerCase(),
+        availableTime: userPreferences.availableTime.toLowerCase(),
+        lifestyle: userPreferences.lifestyle.toLowerCase()
     };
 
     return { normalizedPet, normalizedPreferences };
+};
+
+// Novas funções auxiliares
+const calculateResidenceScore = (residenceType, petSize, petEnergy) => {
+    const residence = RESIDENCE_TYPES[residenceType];
+    if (!residence) return 0;
+
+    let score = residence.spaceScore;
+    
+    // Ajusta o score baseado no tamanho do pet
+    if (!residence.suitableFor.includes(petSize)) {
+        score *= 0.7;
+    }
+
+    // Ajusta o score baseado no nível de energia
+    if (petEnergy === 'high' && residenceType === 'apartamento') {
+        score *= 0.8;
+    }
+
+    return score;
+};
+
+const calculateTimeScore = (availableTime, petEnergy) => {
+    const time = TIME_AVAILABILITY[availableTime];
+    if (!time) return 0;
+
+    let score = time.score;
+    
+    // Ajusta o score baseado no nível de energia do pet
+    if (!time.suitableFor.includes(petEnergy)) {
+        score *= 0.7;
+    }
+
+    return score;
+};
+
+const calculateExistingPetsScore = (existingPets, petCompatibility) => {
+    if (!existingPets || existingPets.length === 0) return 1;
+
+    // Verifica se o pet é compatível com outros animais
+    if (petCompatibility === 'yes') {
+        return 1;
+    } else if (petCompatibility === 'selective') {
+        return 0.7;
+    } else {
+        return 0.3;
+    }
+};
+
+const calculateLifestyleScore = (lifestyle, petTemperament) => {
+    const lifestyleTemperamentMap = {
+        'active': ['energetic', 'playful'],
+        'calm': ['calm', 'quiet'],
+        'balanced': ['balanced', 'friendly']
+    };
+
+    const suitableTemperaments = lifestyleTemperamentMap[lifestyle] || [];
+    const matchingTemperaments = petTemperament.filter(t => 
+        suitableTemperaments.includes(t)
+    );
+
+    return matchingTemperaments.length / suitableTemperaments.length;
 };
 
 // Função para calcular a pontuação de compatibilidade
@@ -150,11 +250,43 @@ const calculateMatchScore = (pet, userPreferences) => {
     }
     maxPossibleScore += MATCH_WEIGHTS.compatibility;
 
-    // Calcular porcentagem de match
-    const matchPercentage = (totalScore / maxPossibleScore) * 100;
+    // Novos cálculos
+    // Tipo de Residência
+    const residenceScore = calculateResidenceScore(
+        normalizedPreferences.residenceType,
+        normalizedPet.size,
+        normalizedPet.energy
+    );
+    totalScore += residenceScore * MATCH_WEIGHTS.residenceType;
+    maxPossibleScore += MATCH_WEIGHTS.residenceType;
+
+    // Tempo Disponível
+    const timeScore = calculateTimeScore(
+        normalizedPreferences.availableTime,
+        normalizedPet.energy
+    );
+    totalScore += timeScore * MATCH_WEIGHTS.availableTime;
+    maxPossibleScore += MATCH_WEIGHTS.availableTime;
+
+    // Pets Existentes
+    const existingPetsScore = calculateExistingPetsScore(
+        normalizedPreferences.existingPets,
+        normalizedPet.compatibility
+    );
+    totalScore += existingPetsScore * MATCH_WEIGHTS.existingPets;
+    maxPossibleScore += MATCH_WEIGHTS.existingPets;
+
+    // Estilo de Vida
+    const lifestyleScore = calculateLifestyleScore(
+        normalizedPreferences.lifestyle,
+        normalizedPet.temperament
+    );
+    totalScore += lifestyleScore * MATCH_WEIGHTS.lifestyle;
+    maxPossibleScore += MATCH_WEIGHTS.lifestyle;
+
     return {
         score: totalScore,
-        percentage: Math.round(matchPercentage),
+        percentage: Math.round((totalScore / maxPossibleScore) * 100),
         details: {
             species: normalizedPet.species === normalizedPreferences.species,
             size: normalizedPet.size === normalizedPreferences.size,
@@ -164,7 +296,11 @@ const calculateMatchScore = (pet, userPreferences) => {
                         normalizedPet.temperament.some(t => normalizedPreferences.temperament.includes(t)),
             specialNeeds: normalizedPet.specialNeeds === normalizedPreferences.specialNeeds,
             environment: normalizedPet.environment === normalizedPreferences.environment,
-            compatibility: normalizedPet.compatibility === normalizedPreferences.compatibility
+            compatibility: normalizedPet.compatibility === normalizedPreferences.compatibility,
+            residence: residenceScore,
+            time: timeScore,
+            existingPets: existingPetsScore,
+            lifestyle: lifestyleScore
         }
     };
 };

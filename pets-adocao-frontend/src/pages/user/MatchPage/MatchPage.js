@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPaw, FaDog, FaCat, FaHome, FaClock, FaHeart, FaSave, FaSearch } from 'react-icons/fa';
+import { FaPaw, FaDog, FaCat, FaHome, FaClock, FaHeart, FaSave, FaSearch, FaUsers, FaLeaf } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import styles from './MatchPage.module.css';
 
@@ -34,6 +34,13 @@ const MatchPage = () => {
     preferePorte: '',
     prefereSexo: '',
     comportamentoDesejado: '',
+    tamanhoResidencia: '',
+    temQuintal: false,
+    temVaranda: false,
+    trabalhaEmCasa: false,
+    estiloDeVida: '',
+    outrosPets: [],
+    restricoes: []
   });
   
   // Estados para controle de UI
@@ -60,6 +67,31 @@ const MatchPage = () => {
     if (formErrors[name]) {
       setFormErrors(prev => ({ ...prev, [name]: '' }));
     }
+  };
+  
+  /**
+   * Atualiza o estado das preferências quando um checkbox é alterado
+   * @param {Object} e - Evento de mudança do checkbox
+   */
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setPreferencias((prev) => ({ ...prev, [name]: checked }));
+  };
+  
+  /**
+   * Atualiza o estado das preferências quando um campo de múltipla seleção é alterado
+   * @param {Object} e - Evento de mudança do input
+   */
+  const handleMultiSelectChange = (e) => {
+    const { name, value, checked } = e.target;
+    setPreferencias((prev) => {
+      const currentValues = prev[name] || [];
+      if (checked) {
+        return { ...prev, [name]: [...currentValues, value] };
+      } else {
+        return { ...prev, [name]: currentValues.filter(v => v !== value) };
+      }
+    });
   };
   
   /**
@@ -101,6 +133,10 @@ const MatchPage = () => {
     
     if (!preferencias.comportamentoDesejado) {
       errors.comportamentoDesejado = 'Por favor, selecione o comportamento desejado';
+    }
+    
+    if (!preferencias.estiloDeVida) {
+      errors.estiloDeVida = 'Por favor, selecione seu estilo de vida';
     }
     
     setFormErrors(errors);
@@ -256,9 +292,9 @@ const MatchPage = () => {
               className={formErrors.tipoResidencia ? styles.inputError : ''}
             >
               <option value="">Selecione o tipo de residência</option>
-              <option value="casa">Casa com quintal</option>
               <option value="apartamento">Apartamento</option>
-              <option value="outro">Outro</option>
+              <option value="casa">Casa</option>
+              <option value="sítio">Sítio</option>
             </select>
             {formErrors.tipoResidencia && <span className={styles.errorText}>{formErrors.tipoResidencia}</span>}
           </div>
@@ -362,7 +398,108 @@ const MatchPage = () => {
             {formErrors.comportamentoDesejado && <span className={styles.errorText}>{formErrors.comportamentoDesejado}</span>}
           </div>
           
-          <div className={styles.buttons}>
+          <div className={styles.formGroup}>
+            <label htmlFor="tamanhoResidencia">Tamanho da Residência (m²)</label>
+            <input
+              id="tamanhoResidencia"
+              type="number"
+              name="tamanhoResidencia"
+              placeholder="Digite o tamanho em metros quadrados"
+              value={preferencias.tamanhoResidencia}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className={styles.checkboxGroup}>
+            <label>
+              <input
+                type="checkbox"
+                name="temQuintal"
+                checked={preferencias.temQuintal}
+                onChange={handleCheckboxChange}
+              />
+              Possui quintal
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="temVaranda"
+                checked={preferencias.temVaranda}
+                onChange={handleCheckboxChange}
+              />
+              Possui varanda
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="trabalhaEmCasa"
+                checked={preferencias.trabalhaEmCasa}
+                onChange={handleCheckboxChange}
+              />
+              Trabalha em casa
+            </label>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="estiloDeVida">
+              <FaLeaf className={styles.inputIcon} />
+              Estilo de Vida
+            </label>
+            <select
+              id="estiloDeVida"
+              name="estiloDeVida"
+              value={preferencias.estiloDeVida}
+              onChange={handleChange}
+              className={formErrors.estiloDeVida ? styles.inputError : ''}
+            >
+              <option value="">Selecione seu estilo de vida</option>
+              <option value="active">Ativo</option>
+              <option value="calm">Calmo</option>
+              <option value="balanced">Equilibrado</option>
+            </select>
+            {formErrors.estiloDeVida && <span className={styles.errorText}>{formErrors.estiloDeVida}</span>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>
+              <FaUsers className={styles.inputIcon} />
+              Outros Pets (se houver)
+            </label>
+            <div className={styles.multiSelect}>
+              {['Cachorro', 'Gato', 'Pássaro', 'Outro'].map(pet => (
+                <label key={pet}>
+                  <input
+                    type="checkbox"
+                    name="outrosPets"
+                    value={pet.toLowerCase()}
+                    checked={preferencias.outrosPets.includes(pet.toLowerCase())}
+                    onChange={handleMultiSelectChange}
+                  />
+                  {pet}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>Restrições</label>
+            <div className={styles.multiSelect}>
+              {['Alergia', 'Tempo limitado', 'Orçamento limitado', 'Sem restrições'].map(restricao => (
+                <label key={restricao}>
+                  <input
+                    type="checkbox"
+                    name="restricoes"
+                    value={restricao.toLowerCase()}
+                    checked={preferencias.restricoes.includes(restricao.toLowerCase())}
+                    onChange={handleMultiSelectChange}
+                  />
+                  {restricao}
+                </label>
+              ))}
+            </div>
+          </div>
+          
+          <div className={styles.buttonGroup}>
             <button 
               type="button" 
               onClick={handleSalvar} 
@@ -382,7 +519,7 @@ const MatchPage = () => {
             <button 
               type="button" 
               onClick={handleProcurarPet} 
-              className={`${styles.matchButton} ${isLoading ? styles.loading : ''}`}
+              className={`${styles.searchButton} ${isLoading ? styles.loading : ''}`}
               disabled={isLoading}
             >
               {isLoading ? (
@@ -390,7 +527,7 @@ const MatchPage = () => {
               ) : (
                 <>
                   <FaSearch className={styles.buttonIcon} />
-                  Encontrar Pet Ideal
+                  Encontrar Pets
                 </>
               )}
             </button>

@@ -49,39 +49,26 @@
 .matchContainer {
   min-height: 100vh;
   padding: 2rem;
-  background-color: var(--light-bg);
-  color: var(--light-text);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  background-color: var(--color-background);
+  transition: all 0.3s ease;
 }
 
 /* Modo escuro */
 .darkMode {
-  background-color: var(--dark-bg);
-  color: var(--dark-text);
+  background-color: var(--color-background-dark);
+  color: var(--color-text-light);
 }
 
 /* Conteúdo do match */
 .matchContent {
-  width: 100%;
   max-width: 800px;
-  background-color: var(--light-card-bg);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  margin: 0 auto;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.5s ease;
 }
 
-.darkMode .matchContent {
-  background-color: var(--dark-card-bg);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.matchContent.visible {
+.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -89,182 +76,135 @@
 /* Título e subtítulo */
 .title {
   font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--light-accent);
+  color: var(--color-primary);
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: color 0.3s ease;
-}
-
-.darkMode .title {
-  color: var(--dark-accent);
+  gap: 1rem;
 }
 
 .titleIcon {
-  margin-right: 0.75rem;
   font-size: 2rem;
 }
 
 .subtitle {
   font-size: 1.2rem;
-  line-height: 1.6;
-  color: var(--light-text);
-  opacity: 0.8;
-  text-align: center;
+  color: var(--color-text-secondary);
   margin-bottom: 2rem;
-  transition: color 0.3s ease;
-}
-
-.darkMode .subtitle {
-  color: var(--dark-text);
 }
 
 /* Formulário */
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  background-color: var(--color-card);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
   font-weight: 500;
-  color: var(--light-text);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.3s ease;
-}
-
-.darkMode .formGroup label {
-  color: var(--dark-text);
+  color: var(--color-text);
 }
 
 .inputIcon {
-  color: var(--light-accent);
-  font-size: 1.1rem;
-  transition: color 0.3s ease;
+  margin-right: 0.5rem;
+  color: var(--color-primary);
 }
 
-.darkMode .inputIcon {
-  color: var(--dark-accent);
-}
-
-.formGroup input,
-.formGroup select {
-  padding: 0.75rem 1rem;
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  border: 1px solid var(--light-input-border);
-  background-color: var(--light-input-bg);
-  color: var(--light-text);
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.darkMode .formGroup input,
-.darkMode .formGroup select {
-  background-color: var(--dark-input-bg);
-  border: 1px solid var(--dark-input-border);
-  color: var(--dark-text);
-}
-
-.formGroup input:focus,
-.formGroup select:focus {
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
   outline: none;
-  border-color: var(--light-input-focus);
-  box-shadow: 0 0 0 2px rgba(211, 84, 0, 0.2);
 }
 
-.darkMode .formGroup input:focus,
-.darkMode .formGroup select:focus {
-  border-color: var(--dark-input-focus);
-  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
-}
-
-.formGroup input::placeholder {
-  color: var(--light-text);
-  opacity: 0.5;
-  transition: color 0.3s ease, opacity 0.3s ease;
-}
-
-.darkMode .formGroup input::placeholder {
-  color: var(--dark-text);
-}
-
-/* Erros de formulário */
 .inputError {
-  border-color: var(--light-error) !important;
-}
-
-.darkMode .inputError {
-  border-color: var(--dark-error) !important;
+  border-color: var(--color-error) !important;
 }
 
 .errorText {
-  color: var(--light-error);
-  font-size: 0.9rem;
+  color: var(--color-error);
+  font-size: 0.875rem;
   margin-top: 0.25rem;
-  transition: color 0.3s ease;
 }
 
-.darkMode .errorText {
-  color: var(--dark-error);
-}
-
-/* Mensagens de erro e sucesso */
-.errorMessage,
-.successMessage {
-  padding: 1rem;
-  border-radius: 8px;
+.checkboxGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
   margin-bottom: 1.5rem;
-  font-weight: 500;
-  animation: fadeIn 0.3s ease-out;
 }
 
-.errorMessage {
-  background-color: rgba(231, 76, 60, 0.1);
-  color: var(--light-error);
-  border: 1px solid rgba(231, 76, 60, 0.3);
+.checkboxGroup label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }
 
-.darkMode .errorMessage {
-  background-color: rgba(231, 76, 60, 0.2);
-  color: var(--dark-error);
-  border: 1px solid rgba(231, 76, 60, 0.4);
+.checkboxGroup input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
 }
 
-.successMessage {
-  background-color: rgba(46, 204, 113, 0.1);
-  color: var(--light-success);
-  border: 1px solid rgba(46, 204, 113, 0.3);
+.multiSelect {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
 
-.darkMode .successMessage {
-  background-color: rgba(46, 204, 113, 0.2);
-  color: var(--dark-success);
-  border: 1px solid rgba(46, 204, 113, 0.4);
+.multiSelect label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-/* Botões */
-.buttons {
+.multiSelect label:hover {
+  background-color: var(--color-background-secondary);
+}
+
+.multiSelect input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+}
+
+.buttonGroup {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .saveButton,
-.matchButton {
+.searchButton {
   flex: 1;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  padding: 1rem;
   border: none;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -272,86 +212,46 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .saveButton {
-  background-color: var(--light-secondary);
-  color: var(--light-text);
-  border: 1px solid var(--light-card-border);
+  background-color: var(--color-primary-light);
+  color: var(--color-text);
 }
 
-.darkMode .saveButton {
-  background-color: var(--dark-secondary);
-  color: var(--dark-text);
-  border: 1px solid var(--dark-card-border);
-}
-
-.matchButton {
-  background-color: var(--light-button-bg);
-  color: var(--light-button-text);
-}
-
-.darkMode .matchButton {
-  background-color: var(--dark-button-bg);
-  color: var(--dark-button-text);
+.searchButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
 }
 
 .saveButton:hover,
-.matchButton:hover {
+.searchButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.saveButton:hover {
-  background-color: var(--light-card-hover);
+.saveButton:disabled,
+.searchButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.darkMode .saveButton:hover {
-  background-color: var(--dark-card-hover);
-}
-
-.matchButton:hover {
-  background-color: var(--light-button-hover);
-}
-
-.darkMode .matchButton:hover {
-  background-color: var(--dark-button-hover);
-}
-
-.buttonIcon {
-  font-size: 1.1rem;
-}
-
-/* Estado de carregamento */
 .loading {
   position: relative;
-  color: transparent !important;
+  pointer-events: none;
 }
 
-.spinner {
+.loading::after {
+  content: '';
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
   border-radius: 50%;
-  border-top-color: white;
   animation: spin 1s linear infinite;
-}
-
-.darkMode .spinner {
-  border: 3px solid rgba(18, 18, 18, 0.3);
-  border-top-color: #121212;
-}
-
-/* Animações */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @keyframes spin {
@@ -360,55 +260,66 @@
   }
 }
 
-/* Media queries para responsividade */
-@media (max-width: 768px) {
-  .matchContainer {
-    padding: 1.5rem;
-  }
-  
-  .matchContent {
-    padding: 1.5rem;
-  }
-  
-  .title {
-    font-size: 2rem;
-  }
-  
-  .subtitle {
-    font-size: 1rem;
-  }
-  
-  .buttons {
-    flex-direction: column;
-  }
-  
-  .saveButton,
-  .matchButton {
-    width: 100%;
-  }
+.errorMessage {
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 480px) {
+.successMessage {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
   .matchContainer {
     padding: 1rem;
   }
-  
-  .matchContent {
-    padding: 1.25rem;
+
+  .form {
+    padding: 1.5rem;
   }
-  
+
   .title {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
-  
-  .titleIcon {
-    font-size: 1.5rem;
+
+  .buttonGroup {
+    flex-direction: column;
   }
-  
-  .formGroup input,
-  .formGroup select {
-    padding: 0.6rem 0.8rem;
-    font-size: 0.95rem;
+
+  .checkboxGroup,
+  .multiSelect {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
   
