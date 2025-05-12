@@ -30,9 +30,11 @@
   --transition-fast: 0.2s;
   --transition-normal: 0.3s;
   --transition-slow: 0.5s;
+  --transition-slower: 0.8s;
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-smooth: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* Dark Mode */
@@ -60,7 +62,7 @@
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: Arial, sans-serif;
-  animation: fadeIn var(--transition-slow) var(--ease-out);
+  animation: fadeIn var(--transition-slower) var(--ease-smooth);
   opacity: 0;
   animation-fill-mode: forwards;
 }
@@ -72,14 +74,14 @@
   color: var(--color-text-light);
   border-radius: var(--border-radius-lg);
   margin-bottom: var(--spacing-xxl);
-  animation: slideUp var(--transition-normal) var(--ease-out) 0.2s both;
+  animation: fadeInUp var(--transition-slower) var(--ease-smooth) 0.2s both;
 }
 
 .heroSection h1 {
   font-size: var(--font-size-h1);
   margin-bottom: var(--spacing-md);
   font-weight: var(--font-weight-bold);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 0.4s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 0.4s both;
 }
 
 .heroSection p {
@@ -87,7 +89,7 @@
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
-  animation: fadeIn var(--transition-normal) var(--ease-out) 0.6s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 0.6s both;
 }
 
 .missionSection {
@@ -95,7 +97,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-xxl);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 0.8s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 0.8s both;
 }
 
 .missionCard {
@@ -103,10 +105,10 @@
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal) var(--ease-in-out);
+  transition: all var(--transition-normal) var(--ease-smooth);
   text-align: center;
   opacity: 0;
-  animation: fadeIn var(--transition-normal) var(--ease-out) 1s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 1s both;
 }
 
 .missionCard:hover {
@@ -168,10 +170,10 @@
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal) var(--ease-in-out);
+  transition: all var(--transition-normal) var(--ease-smooth);
   text-align: center;
   opacity: 0;
-  animation: fadeIn var(--transition-normal) var(--ease-out) 1.6s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 1.6s both;
 }
 
 .valueCard:hover {
@@ -230,9 +232,9 @@
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal) var(--ease-in-out);
+  transition: all var(--transition-normal) var(--ease-smooth);
   opacity: 0;
-  animation: fadeIn var(--transition-normal) var(--ease-out) 2.2s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.2s both;
 }
 
 .teamCard:hover {
@@ -283,13 +285,13 @@
   color: var(--color-text-light);
   border-radius: var(--border-radius-lg);
   margin-bottom: var(--spacing-xxl);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 2.4s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.4s both;
 }
 
 .ctaSection h2 {
   font-size: var(--font-size-h2);
   margin-bottom: var(--spacing-md);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 2.6s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.6s both;
 }
 
 .ctaSection p {
@@ -297,7 +299,7 @@
   max-width: 800px;
   margin: 0 auto var(--spacing-xl);
   line-height: 1.6;
-  animation: fadeIn var(--transition-normal) var(--ease-out) 2.8s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.8s both;
 }
 
 .ctaButton {
@@ -309,11 +311,11 @@
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: all var(--transition-normal) var(--ease-in-out);
+  transition: all var(--transition-normal) var(--ease-smooth);
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-sm);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 3s both;
+  animation: fadeIn var(--transition-slower) var(--ease-smooth) 3s both;
 }
 
 .ctaButton:hover {
@@ -334,10 +336,10 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
