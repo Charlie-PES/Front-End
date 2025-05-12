@@ -25,6 +25,14 @@
   --color-error: #f44336;        /* Erro */
   --color-warning: #ff9800;      /* Alerta */
   --color-info: #2196F3;         /* Informação */
+
+  /* Transições */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
 }
 
 /* Dark Mode */
@@ -52,7 +60,9 @@
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: Arial, sans-serif;
-  animation: fadeIn var(--transition-normal) var(--ease-in-out);
+  animation: fadeIn var(--transition-slow) var(--ease-out);
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
 
 .heroSection {
@@ -62,12 +72,14 @@
   color: var(--color-text-light);
   border-radius: var(--border-radius-lg);
   margin-bottom: var(--spacing-xxl);
+  animation: slideUp var(--transition-normal) var(--ease-out) 0.2s both;
 }
 
 .heroSection h1 {
   font-size: var(--font-size-h1);
   margin-bottom: var(--spacing-md);
   font-weight: var(--font-weight-bold);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 0.4s both;
 }
 
 .heroSection p {
@@ -75,6 +87,7 @@
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
+  animation: fadeIn var(--transition-normal) var(--ease-out) 0.6s both;
 }
 
 .missionSection {
@@ -82,6 +95,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-xxl);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 0.8s both;
 }
 
 .missionCard {
@@ -89,8 +103,10 @@
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  transition: all var(--transition-normal) var(--ease-in-out);
   text-align: center;
+  opacity: 0;
+  animation: fadeIn var(--transition-normal) var(--ease-out) 1s both;
 }
 
 .missionCard:hover {
@@ -103,17 +119,24 @@
   font-size: 2.5rem;
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
+  transition: transform var(--transition-normal) var(--ease-in-out);
+}
+
+.missionCard:hover .missionIcon {
+  transform: scale(1.1);
 }
 
 .missionCard h2 {
   font-size: var(--font-size-h3);
   color: var(--color-text);
   margin-bottom: var(--spacing-md);
+  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .missionCard p {
   color: var(--color-text-secondary);
   line-height: 1.6;
+  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .valuesSection {
@@ -121,6 +144,7 @@
   padding: var(--spacing-xxl) var(--spacing-lg);
   margin-bottom: var(--spacing-xxl);
   border-radius: var(--border-radius-lg);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 1.2s both;
 }
 
 .valuesSection h2 {
@@ -128,6 +152,7 @@
   font-size: var(--font-size-h2);
   color: var(--color-text);
   margin-bottom: var(--spacing-xl);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 1.4s both;
 }
 
 .valuesGrid {
@@ -143,8 +168,10 @@
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  transition: all var(--transition-normal) var(--ease-in-out);
   text-align: center;
+  opacity: 0;
+  animation: fadeIn var(--transition-normal) var(--ease-out) 1.6s both;
 }
 
 .valueCard:hover {
@@ -157,21 +184,29 @@
   font-size: 2rem;
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
+  transition: transform var(--transition-normal) var(--ease-in-out);
+}
+
+.valueCard:hover .valueIcon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .valueCard h3 {
   font-size: var(--font-size-h4);
   color: var(--color-text);
   margin-bottom: var(--spacing-sm);
+  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .valueCard p {
   color: var(--color-text-secondary);
   line-height: 1.6;
+  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .teamSection {
   margin-bottom: var(--spacing-xxl);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 1.8s both;
 }
 
 .teamSection h2 {
@@ -179,6 +214,7 @@
   font-size: var(--font-size-h2);
   color: var(--color-text);
   margin-bottom: var(--spacing-xl);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 2s both;
 }
 
 .teamGrid {
@@ -194,7 +230,9 @@
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  transition: all var(--transition-normal) var(--ease-in-out);
+  opacity: 0;
+  animation: fadeIn var(--transition-normal) var(--ease-out) 2.2s both;
 }
 
 .teamCard:hover {
@@ -206,6 +244,11 @@
   width: 100%;
   height: 300px;
   object-fit: cover;
+  transition: transform var(--transition-normal) var(--ease-in-out);
+}
+
+.teamCard:hover .teamImage {
+  transform: scale(1.05);
 }
 
 .teamInfo {
@@ -217,17 +260,20 @@
   font-size: var(--font-size-h4);
   color: var(--color-text);
   margin-bottom: var(--spacing-xs);
+  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .teamInfo p {
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-sm);
+  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .teamRole {
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--spacing-md);
+  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .ctaSection {
@@ -237,11 +283,13 @@
   color: var(--color-text-light);
   border-radius: var(--border-radius-lg);
   margin-bottom: var(--spacing-xxl);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 2.4s both;
 }
 
 .ctaSection h2 {
   font-size: var(--font-size-h2);
   margin-bottom: var(--spacing-md);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 2.6s both;
 }
 
 .ctaSection p {
@@ -249,6 +297,7 @@
   max-width: 800px;
   margin: 0 auto var(--spacing-xl);
   line-height: 1.6;
+  animation: fadeIn var(--transition-normal) var(--ease-out) 2.8s both;
 }
 
 .ctaButton {
@@ -260,10 +309,11 @@
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all var(--transition-normal) var(--ease-in-out);
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-sm);
+  animation: fadeIn var(--transition-normal) var(--ease-out) 3s both;
 }
 
 .ctaButton:hover {
@@ -271,7 +321,20 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.ctaButton:active {
+  transform: translateY(0);
+}
+
 @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
   from {
     opacity: 0;
     transform: translateY(20px);
