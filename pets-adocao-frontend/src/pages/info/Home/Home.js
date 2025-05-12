@@ -4,7 +4,7 @@ import styles from './Home.module.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight, FaBone, FaCat, FaUserFriends, FaCut, FaUser, FaBuilding, FaPaw, FaMapMarkerAlt, FaHandHoldingHeart } from 'react-icons/fa';
+import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight, FaBone, FaCat, FaUserFriends, FaCut, FaUser, FaBuilding, FaPaw, FaMapMarkerAlt, FaHandHoldingHeart, FaHeartbeat, FaHome } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import { login } from '../../../services/authService';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -511,23 +511,8 @@ const Home = () => {
         </div>
       </section>
 
-      <section className={styles.features}>
-        <h2>Por que adotar?</h2>
-        <div className={styles.featureGrid}>
-          <div className={styles.feature}>
-            <h3>Amor Incondicional</h3>
-            <p>Pets adotados são conhecidos por serem extremamente gratos e leais aos seus novos tutores.</p>
-          </div>
-          <div className={styles.feature}>
-            <h3>Vida Mais Saudável</h3>
-            <p>Ter um pet pode reduzir o estresse e melhorar sua saúde física e mental.</p>
-          </div>
-          <div className={styles.feature}>
-            <h3>Segunda Chance</h3>
-            <p>Você estará dando uma nova oportunidade para um animal que precisa de um lar.</p>
-          </div>
-        </div>
-      </section>
+      <WhyAdopt />
+      <WhyDonate />
 
       <section className={styles.cta}>
         <h2>Pronto para começar sua jornada?</h2>
@@ -537,6 +522,98 @@ const Home = () => {
         </Link>
       </section>
     </div>
+  );
+};
+
+const WhyAdopt = () => {
+  return (
+    <section className={styles.whyAdoptSection}>
+      <div className={styles.sectionHeader}>
+        <h2>Por que adotar?</h2>
+        <p className={styles.sectionSubtitle}>Descubra os benefícios de dar um lar a um pet</p>
+      </div>
+
+      <div className={styles.benefitsGrid}>
+        <div className={styles.benefitCard}>
+          <div className={styles.benefitIcon}>
+            <FaHeart />
+          </div>
+          <h3>Amor Incondicional</h3>
+          <p>Pets adotados são conhecidos por serem extremamente gratos e leais aos seus novos tutores. O vínculo criado é único e especial.</p>
+        </div>
+
+        <div className={styles.benefitCard}>
+          <div className={styles.benefitIcon}>
+            <FaHeartbeat />
+          </div>
+          <h3>Vida Mais Saudável</h3>
+          <p>Ter um pet pode reduzir o estresse, melhorar sua saúde física e mental, e trazer mais alegria ao seu dia a dia.</p>
+        </div>
+
+        <div className={styles.benefitCard}>
+          <div className={styles.benefitIcon}>
+            <FaHandHoldingHeart />
+          </div>
+          <h3>Segunda Chance</h3>
+          <p>Você estará dando uma nova oportunidade para um animal que precisa de um lar, transformando vidas com amor e cuidado.</p>
+        </div>
+      </div>
+
+      <div className={styles.ctaContainer}>
+        <h3>Pronto para começar sua jornada?</h3>
+        <p>Encontre o pet perfeito para você e sua família</p>
+        <Link to="/adotar" className={styles.ctaButton}>
+          Começar Agora
+        </Link>
+      </div>
+    </section>
+  );
+};
+
+const WhyDonate = () => {
+  return (
+    <section className={styles.whyDonateSection}>
+      <div className={styles.sectionHeader}>
+        <h2>A Importância de Doar</h2>
+        <p className={styles.sectionSubtitle}>Sua contribuição faz a diferença na vida de muitos animais</p>
+      </div>
+
+      <div className={styles.donationContent}>
+        <div className={styles.donationText}>
+          <div className={styles.donationPoint}>
+            <FaHandHoldingHeart className={styles.donationIcon} />
+            <div>
+              <h3>Suporte Vital</h3>
+              <p>Sua doação ajuda a fornecer alimentos, medicamentos e cuidados veterinários essenciais para animais em situação de vulnerabilidade.</p>
+            </div>
+          </div>
+
+          <div className={styles.donationPoint}>
+            <FaHome className={styles.donationIcon} />
+            <div>
+              <h3>Lares Temporários</h3>
+              <p>Contribui para a manutenção de abrigos e lares temporários, oferecendo um ambiente seguro e acolhedor enquanto os pets aguardam adoção.</p>
+            </div>
+          </div>
+
+          <div className={styles.donationPoint}>
+            <FaHeart className={styles.donationIcon} />
+            <div>
+              <h3>Segunda Chance</h3>
+              <p>Ajuda a dar uma nova oportunidade para animais abandonados, permitindo que eles encontrem famílias amorosas e permanentes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.donationCTA}>
+          <h3>Faça Parte Desta História</h3>
+          <p>Cada doação, por menor que seja, tem um grande impacto na vida desses animais.</p>
+          <Link to="/doacoes" className={styles.donateButton}>
+            Quero Doar
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 };
 

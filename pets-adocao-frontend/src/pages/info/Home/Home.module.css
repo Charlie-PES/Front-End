@@ -1034,3 +1034,258 @@
     font-size: 1rem;
   }
 }
+
+.whyAdoptSection {
+  padding: 4rem 2rem;
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+.sectionHeader {
+  margin-bottom: 3rem;
+}
+
+.sectionHeader h2 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.benefitCard {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.benefitCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.benefitIcon {
+  width: 60px;
+  height: 60px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.benefitIcon svg {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.benefitCard h3 {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.benefitCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.ctaContainer {
+  margin-top: 4rem;
+  padding: 3rem;
+  background-color: var(--color-primary);
+  border-radius: 15px;
+  color: white;
+}
+
+.ctaContainer h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.ctaContainer p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: white;
+  color: var(--color-primary);
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Why Donate Section */
+.whyDonateSection {
+  padding: 4rem 2rem;
+  background-color: var(--background-secondary);
+}
+
+.donationContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.donationText {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.donationPoint {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.donationIcon {
+  font-size: 2rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.donationPoint h3 {
+  font-size: 1.3rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.donationPoint p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.donationCTA {
+  background-color: var(--card-background);
+  padding: 2.5rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.donationCTA h3 {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.donationCTA p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.donateButton {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.donateButton:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .benefitsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .donationContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .whyAdoptSection,
+  .whyDonateSection {
+    padding: 3rem 1rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2rem;
+  }
+
+  .benefitCard {
+    padding: 1.5rem;
+  }
+
+  .ctaContainer {
+    padding: 2rem;
+  }
+
+  .ctaContainer h3 {
+    font-size: 1.8rem;
+  }
+
+  .donationPoint {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .donationIcon {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionHeader h2 {
+    font-size: 1.8rem;
+  }
+
+  .sectionSubtitle {
+    font-size: 1rem;
+  }
+
+  .benefitCard h3 {
+    font-size: 1.3rem;
+  }
+
+  .ctaButton,
+  .donateButton {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+}
