@@ -1,323 +1,277 @@
-/* Variáveis de cores */
+/* Variáveis de cores - Usando as definidas no sistema de design */
 :root {
-  --bg-color: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-color: #333333;
-  --text-secondary: #555555;
-  --primary-color: #264653;
-  --accent-color: #f77f00;
-  --accent-light: #f4a261;
-  --border-color: #e0e0e0;
-  --shadow-color: rgba(0, 0, 0, 0.08);
-  --shadow-hover: rgba(0, 0, 0, 0.15);
-  --transition-speed: 0.3s;
-  --border-radius: 12px;
-  --card-padding: 2rem;
+  /* Cores Principais */
+  --color-primary: #dca879;      /* Marrom dourado - Cor principal */
+  --color-primary-dark: #bb8e68; /* Versão escura - Hover e estados ativos */
+  --color-primary-light: #f0d5bb;/* Versão clara - Elementos secundários */
+
+  /* Cores de Texto */
+  --color-text: #333;            /* Texto principal */
+  --color-text-secondary: #666;  /* Texto secundário */
+  --color-text-light: #fff;      /* Texto sobre fundo escuro */
+
+  /* Cores de Fundo */
+  --color-background: #fff;      /* Fundo principal */
+  --color-background-secondary: #f8f8f8; /* Fundo secundário */
+  --color-card: #fff;            /* Fundo dos cards */
+  --color-card-hover: #f8f8f8;   /* Hover dos cards */
+
+  /* Cores de Borda */
+  --color-border: #eee;          /* Bordas padrão */
+  --color-border-dark: #ddd;     /* Bordas mais escuras */
+
+  /* Cores de Estado */
+  --color-success: #4CAF50;      /* Sucesso */
+  --color-error: #f44336;        /* Erro */
+  --color-warning: #ff9800;      /* Alerta */
+  --color-info: #2196F3;         /* Informação */
 }
 
 /* Dark Mode */
 .darkMode {
-  --bg-color: #121212;
-  --bg-secondary: #1e1e1e;
-  --text-color: #f0f0f0;
-  --text-secondary: #bbbbbb;
-  --primary-color: #4a9cc5;
-  --accent-color: #ff9f43;
-  --accent-light: #ffb976;
-  --border-color: #333333;
-  --shadow-color: rgba(0, 0, 0, 0.3);
-  --shadow-hover: rgba(0, 0, 0, 0.5);
+  --color-text: #fff;            /* Texto principal invertido */
+  --color-text-secondary: #bbb;  /* Texto secundário invertido */
+  --color-text-light: #333;      /* Texto sobre fundo claro */
+
+  /* Cores de Fundo */
+  --color-background: #1a1a1a;   /* Fundo principal escuro */
+  --color-background-secondary: #2d2d2d; /* Fundo secundário escuro */
+  --color-card: #2d2d2d;         /* Fundo dos cards escuro */
+  --color-card-hover: #363636;   /* Hover dos cards escuro */
+
+  /* Cores de Borda */
+  --color-border: #404040;       /* Bordas escuras */
+  --color-border-dark: #505050;  /* Bordas mais claras */
 }
 
 .sobreContainer {
-  max-width: 1200px;
+  max-width: var(--container-max-width, 1200px);
   margin: 0 auto;
-  padding: 0;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Segoe UI', sans-serif;
-  line-height: 1.75;
+  padding: var(--spacing-lg);
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: Arial, sans-serif;
+  animation: fadeIn var(--transition-normal) var(--ease-in-out);
 }
 
-/* Hero Section */
-.hero {
-  position: relative;
-  height: 60vh;
-  min-height: 400px;
-  background-color: var(--bg-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.heroSection {
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+  padding: var(--spacing-xxl) var(--spacing-lg);
   text-align: center;
-  color: var(--text-color);
-  overflow: hidden;
+  color: var(--color-text-light);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-xxl);
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--bg-color);
-  opacity: 0.8;
+.heroSection h1 {
+  font-size: var(--font-size-h1);
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-bold);
 }
 
-.heroContent {
-  position: relative;
-  z-index: 1;
-  max-width: 800px;
-  padding: 2rem;
-}
-
-.hero h1 {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-  animation: fadeInUp 1s ease;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  color: var(--text-secondary);
-  animation: fadeInUp 1s ease 0.2s backwards;
-}
-
-/* Missão Section */
-.missao {
-  padding: 5rem 2rem;
-  background-color: var(--bg-secondary);
-}
-
-.missaoContent {
+.heroSection p {
+  font-size: var(--font-size-h4);
   max-width: 800px;
   margin: 0 auto;
-  text-align: center;
+  line-height: 1.6;
 }
 
-.missao h2 {
-  color: var(--primary-color);
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  display: inline-block;
-}
-
-.missao h2::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(to right, var(--accent-color), var(--accent-light));
-  border-radius: 2px;
-}
-
-.missao p {
-  font-size: 1.2rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* Valores Section */
-.valores {
-  padding: 5rem 2rem;
-  background-color: var(--bg-color);
-  position: relative;
-}
-
-.valores h2 {
-  text-align: center;
-  color: var(--primary-color);
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-}
-
-.valoresGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.valorCard {
-  background-color: var(--bg-secondary);
-  padding: var(--card-padding);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px var(--shadow-color);
-  transition: all var(--transition-speed) ease;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.valorCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(to right, var(--accent-color), var(--accent-light));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease;
-}
-
-.valorCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px var(--shadow-hover);
-}
-
-.valorCard:hover::before {
-  transform: scaleX(1);
-}
-
-.valorIcone {
-  font-size: 2.5rem;
-  color: var(--accent-color);
-  margin-bottom: 1rem;
-  transition: transform var(--transition-speed) ease;
-}
-
-.valorCard:hover .valorIcone {
-  transform: scale(1.1);
-}
-
-.valorCard h3 {
-  color: var(--primary-color);
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-
-.valorCard p {
-  color: var(--text-secondary);
-  font-size: 1rem;
-}
-
-/* Estatísticas Section */
-.estatisticas {
-  padding: 5rem 2rem;
-  background-color: var(--bg-secondary);
-}
-
-.estatisticasGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.statCard {
-  background-color: var(--bg-color);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px var(--shadow-color);
-  text-align: center;
-  transition: all var(--transition-speed) ease;
-}
-
-.statCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px var(--shadow-hover);
-}
-
-.statIcone {
-  font-size: 2rem;
-  color: var(--accent-color);
-  margin-bottom: 1rem;
-}
-
-.statCard h3 {
-  font-size: 2.5rem;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-}
-
-.statCard p {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-}
-
-/* Impacto Section */
-.impacto {
-  padding: 5rem 2rem;
-  background-color: var(--bg-color);
-}
-
-.impactoContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.impacto h2 {
-  color: var(--primary-color);
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.impacto > p {
-  max-width: 800px;
-  margin: 0 auto 3rem;
-  color: var(--text-secondary);
-  font-size: 1.2rem;
-}
-
-.impactoGrid {
+.missionSection {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xxl);
 }
 
-.impactoCard {
-  background-color: var(--bg-secondary);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px var(--shadow-color);
-  transition: all var(--transition-speed) ease;
+.missionCard {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  text-align: center;
 }
 
-.impactoCard:hover {
+.missionCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px var(--shadow-hover);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--color-primary-light);
 }
 
-.impactoCard h3 {
-  color: var(--primary-color);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+.missionIcon {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
 }
 
-.impactoCard ul {
-  list-style: none;
-  padding: 0;
-  text-align: left;
+.missionCard h2 {
+  font-size: var(--font-size-h3);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-md);
 }
 
-.impactoCard li {
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-  padding-left: 1.5rem;
-  position: relative;
+.missionCard p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
 }
 
-.impactoCard li::before {
-  content: '•';
-  color: var(--accent-color);
-  position: absolute;
-  left: 0;
-  font-size: 1.5rem;
+.valuesSection {
+  background-color: var(--color-background-secondary);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  margin-bottom: var(--spacing-xxl);
+  border-radius: var(--border-radius-lg);
 }
 
-/* Animações */
-@keyframes fadeInUp {
+.valuesSection h2 {
+  text-align: center;
+  font-size: var(--font-size-h2);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xl);
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.valueCard {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  text-align: center;
+}
+
+.valueCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--color-primary-light);
+}
+
+.valueIcon {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.valueCard h3 {
+  font-size: var(--font-size-h4);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-sm);
+}
+
+.valueCard p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.teamSection {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.teamSection h2 {
+  text-align: center;
+  font-size: var(--font-size-h2);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xl);
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.teamCard {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.teamCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.teamImage {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.teamInfo {
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.teamInfo h3 {
+  font-size: var(--font-size-h4);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+}
+
+.teamInfo p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.teamRole {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-md);
+}
+
+.ctaSection {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  text-align: center;
+  color: var(--color-text-light);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-xxl);
+}
+
+.ctaSection h2 {
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-md);
+}
+
+.ctaSection p {
+  font-size: var(--font-size-h4);
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl);
+  line-height: 1.6;
+}
+
+.ctaButton {
+  background-color: var(--color-text-light);
+  color: var(--color-primary);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -328,65 +282,55 @@
   }
 }
 
-/* Responsividade */
+@media (max-width: 1024px) {
+  .sobreContainer {
+    padding: var(--spacing-md);
+  }
+
+  .heroSection h1 {
+    font-size: var(--font-size-h2);
+  }
+
+  .heroSection p {
+    font-size: var(--font-size-h5);
+  }
+}
+
 @media (max-width: 768px) {
-  .hero {
-    height: 50vh;
-    min-height: 300px;
+  .missionSection,
+  .valuesGrid,
+  .teamGrid {
+    grid-template-columns: 1fr;
   }
 
-  .hero h1 {
-    font-size: 2.5rem;
+  .heroSection,
+  .valuesSection,
+  .ctaSection {
+    padding: var(--spacing-xl) var(--spacing-md);
   }
 
-  .hero p {
-    font-size: 1.1rem;
-  }
-
-  .missao, .valores, .estatisticas, .impacto {
-    padding: 3rem 1.5rem;
-  }
-
-  .missao h2, .valores h2, .estatisticas h2, .impacto h2 {
-    font-size: 2rem;
-  }
-
-  .valorCard, .statCard, .impactoCard {
-    padding: 1.5rem;
-  }
-
-  .statCard h3 {
-    font-size: 2rem;
+  .missionCard,
+  .valueCard,
+  .teamCard {
+    padding: var(--spacing-lg);
   }
 }
 
 @media (max-width: 480px) {
-  .hero {
-    height: 40vh;
-    min-height: 250px;
+  .sobreContainer {
+    padding: var(--spacing-sm);
   }
 
-  .hero h1 {
-    font-size: 2rem;
+  .heroSection h1 {
+    font-size: var(--font-size-h3);
   }
 
-  .missao, .valores, .estatisticas, .impacto {
-    padding: 2rem 1rem;
+  .heroSection p {
+    font-size: var(--font-size-body);
   }
 
-  .missao h2, .valores h2, .estatisticas h2, .impacto h2 {
-    font-size: 1.8rem;
-  }
-
-  .valorIcone {
-    font-size: 2rem;
-  }
-
-  .statCard h3 {
-    font-size: 1.8rem;
-  }
-
-  .impactoCard h3 {
-    font-size: 1.5rem;
+  .ctaButton {
+    width: 100%;
+    justify-content: center;
   }
 }

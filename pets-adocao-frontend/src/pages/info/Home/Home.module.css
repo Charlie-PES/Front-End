@@ -1,15 +1,31 @@
-/* Variáveis de cores */
+/* Variáveis de cores - Usando as definidas no sistema de design */
 :root {
-  --color-primary: #dca879;
-  --color-primary-dark: #bb8e68;
-  --color-primary-light: #f0d5bb;
-  --color-text: #333;
-  --color-text-secondary: #666;
-  --color-background: #fff;
-  --color-background-secondary: #f8f8f8;
-  --color-card: #fff;
-  --color-card-hover: #f8f8f8;
-  --color-border: #eee;
+  /* Cores Principais */
+  --color-primary: #dca879;      /* Marrom dourado - Cor principal */
+  --color-primary-dark: #bb8e68; /* Versão escura - Hover e estados ativos */
+  --color-primary-light: #f0d5bb;/* Versão clara - Elementos secundários */
+
+  /* Cores de Texto */
+  --color-text: #333;            /* Texto principal */
+  --color-text-secondary: #666;  /* Texto secundário */
+  --color-text-light: #fff;      /* Texto sobre fundo escuro */
+
+  /* Cores de Fundo */
+  --color-background: #fff;      /* Fundo principal */
+  --color-background-secondary: #f8f8f8; /* Fundo secundário */
+  --color-card: #fff;            /* Fundo dos cards */
+  --color-card-hover: #f8f8f8;   /* Hover dos cards */
+
+  /* Cores de Borda */
+  --color-border: #eee;          /* Bordas padrão */
+  --color-border-dark: #ddd;     /* Bordas mais escuras */
+
+  /* Cores de Estado */
+  --color-success: #4CAF50;      /* Sucesso */
+  --color-error: #f44336;        /* Erro */
+  --color-warning: #ff9800;      /* Alerta */
+  --color-info: #2196F3;         /* Informação */
+
   --shadow-color: rgba(0, 0, 0, 0.1);
   --shadow-color-hover: rgba(0, 0, 0, 0.15);
   --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
@@ -504,7 +520,7 @@
 }
 
 .testimonialCard {
-  background: #fff;
+  background-color: var(--color-card);
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -1288,4 +1304,122 @@
     padding: 0.8rem 2rem;
     font-size: 1rem;
   }
+}
+
+.heroSection {
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  text-align: center;
+  color: var(--color-text-light);
+}
+
+.ctaButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.ctaButton:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.featureCard {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--color-primary-light);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.statsSection {
+  background-color: var(--color-primary-light);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  text-align: center;
+}
+
+.statCard {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--color-primary-light);
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.testimonialCard {
+  background-color: var(--color-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.testimonialCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--color-primary-light);
+}
+
+.ctaSection {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  text-align: center;
+  color: var(--color-text-light);
+}
+
+.ctaButtonSecondary {
+  background-color: transparent;
+  color: var(--color-text-light);
+  border: 2px solid var(--color-text-light);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.ctaButtonSecondary:hover {
+  background-color: var(--color-text-light);
+  color: var(--color-primary);
+  transform: translateY(-2px);
 }
