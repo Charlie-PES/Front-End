@@ -21,10 +21,6 @@ Inicie o ambiente de desenvolvimento: npm start
 
 A aplicação será iniciada em:📍 http://localhost:3000
 
-
-## 📄 Licença
-Este projeto está sob a licença MIT.
-
 ## Visão Geral
 
 O frontend foi desenvolvido com React e inclui as seguintes funcionalidades:
@@ -52,3 +48,6 @@ pets-adocao-frontend/
 │   └── index.js             # Ponto de entrada
 └── package.json             # Dependências e scripts
 ```
+
+## 📄 Licença
+Este projeto está sob a licença MIT.
