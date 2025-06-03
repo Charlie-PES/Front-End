@@ -21,17 +21,6 @@ Inicie o ambiente de desenvolvimento: npm start
 
 A aplicação será iniciada em:📍 http://localhost:3000
 
-## Visão Geral
-
-O frontend foi desenvolvido com React e inclui as seguintes funcionalidades:
-
-- Feed de notícias e posts sociais
-- Página de detalhes de pets para adoção
-- Formulário de cadastro de pets
-- Página de contato
-- Suporte a tema claro/escuro
-- Design responsivo para dispositivos móveis
-
 ## Estrutura do Projeto
 
 ```
