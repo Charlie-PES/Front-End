@@ -14,7 +14,7 @@ npm install react-scripts@5.0.1 eslint@8.56.0 eslint-config-react-app babel-esli
 
 npm install react-leaflet@4 leaflet
 
-npm install firebase ESSSE VAI SAIR
+npm install firebase
 
 ## 🚀 Rodando o projeto
 Inicie o ambiente de desenvolvimento: npm start
