@@ -10,12 +10,6 @@ npm v9 ou superior
 
 npm install
 
-npm install react-scripts@5.0.1 eslint@8.56.0 eslint-config-react-app babel-eslint @babel/preset-react @babel/preset-env --save-dev
-
-npm install react-leaflet@4 leaflet
-
-npm install firebase ESSSE VAI SAIR
-
 ## 🚀 Rodando o projeto
 Inicie o ambiente de desenvolvimento: npm start
 
