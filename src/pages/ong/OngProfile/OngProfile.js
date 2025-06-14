@@ -16,6 +16,8 @@ import {
   FaBars,
   FaPlusCircle
 } from 'react-icons/fa';
+import api from '../../../services/api';
+import PetsManager from './components/PetsManager';
 
 // Função utilitária para gerar matriz do calendário
 function getCalendarMatrix(year, month) {
@@ -52,19 +54,46 @@ const OngProfile = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [calendarDate, setCalendarDate] = useState(new Date());
+  const [ongData, setOngData] = useState(null);
+  const [ongPets, setOngPets] = useState([]);
 
   useEffect(() => {
-    if (user) {
-      setFormData({
-        razaoSocial: user.razaoSocial || '',
-        cnpj: user.cnpj || '',
-        endereco: user.endereco || '',
-        telefone: user.telefone || '',
-        email: user.email || '',
-        descricao: user.descricao || '',
-        createdAt: user.createdAt || '',
-      });
-    }
+    const fetchOng = async () => {
+      if (user && user._id) {
+        try {
+          const resp = await api.get(`/owners/owners/${user._id}`);
+          setOngData(resp.data);
+          setFormData({
+            razaoSocial: resp.data.razaoSocial || '',
+            cnpj: resp.data.cnpj || '',
+            endereco: resp.data.address?.[0]?.street || resp.data.endereco || '',
+            telefone: resp.data.phone || resp.data.telefone || '',
+            email: resp.data.email || '',
+            descricao: resp.data.description || resp.data.descricao || '',
+            createdAt: resp.data.createdAt || '',
+          });
+
+          // Buscar pets da ONG
+          if (resp.data.pets && resp.data.pets.length > 0) {
+            const fetchedPets = [];
+            for (const petId of resp.data.pets) {
+              try {
+                const petResp = await api.get(`/pets/${petId}`);
+                fetchedPets.push(petResp.data);
+              } catch (petErr) {
+                console.error(`Erro ao buscar pet ${petId}:`, petErr);
+              }
+            }
+            setOngPets(fetchedPets);
+          }
+
+        } catch (err) {
+          setOngData(null);
+          console.error('Erro ao buscar dados da ONG:', err);
+        }
+      }
+    };
+    fetchOng();
   }, [user]);
 
   const handleLogout = () => {
@@ -121,6 +150,9 @@ const OngProfile = () => {
     });
   };
 
+  // Calcular pets disponíveis
+  const petsDisponiveisCount = ongPets.filter(pet => pet.is_available).length;
+
   const renderContent = (section) => {
     switch (section) {
       case 'dashboard':
@@ -130,19 +162,19 @@ const OngProfile = () => {
             <div className={styles.statsGrid}>
               <div className={styles.statCard}>
                 <h3>Pets Disponíveis</h3>
-                <p className={styles.statNumber}>24</p>
+                <p className={styles.statNumber}>{petsDisponiveisCount}</p>
               </div>
               <div className={styles.statCard}>
                 <h3>Adoções Pendentes</h3>
-                <p className={styles.statNumber}>8</p>
+                <p className={styles.statNumber}>0</p>{/* Necessita de integração com backend */}
               </div>
               <div className={styles.statCard}>
                 <h3>Mensagens Não Lidas</h3>
-                <p className={styles.statNumber}>12</p>
+                <p className={styles.statNumber}>0</p>{/* Necessita de integração com backend */}
               </div>
               <div className={styles.statCard}>
                 <h3>Eventos do Mês</h3>
-                <p className={styles.statNumber}>5</p>
+                <p className={styles.statNumber}>0</p>{/* Necessita de integração com backend */}
               </div>
             </div>
           </div>
@@ -157,11 +189,7 @@ const OngProfile = () => {
                 <span>Adicionar Novo Pet</span>
               </Link>
             </div>
-            <div className={styles.petsGrid}>
-              <div className={styles.petCard}><b>Nome:</b> Thor<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> <span style={{color:'#00796b', fontWeight:'bold'}}>Disponível</span></div>
-              <div className={styles.petCard}><b>Nome:</b> Luna<br/><b>Espécie:</b> Gato<br/><b>Status:</b> <span style={{color:'#e65100', fontWeight:'bold'}}>Adotado</span></div>
-              <div className={styles.petCard}><b>Nome:</b> Mel<br/><b>Espécie:</b> Cachorro<br/><b>Status:</b> <span style={{color:'#00796b', fontWeight:'bold'}}>Disponível</span></div>
-            </div>
+            <PetsManager pets={ongPets} />
           </div>
         );
       case 'adocoes':
@@ -256,7 +284,11 @@ const OngProfile = () => {
       <aside className={`${styles.sidebar} ${sidebarOpen ? styles.open : ''}`}>
         <div className={styles.ongInfo}>
           <div className={styles.ongLogo}>
-            <FaBuilding size={40} />
+            {ongData?.picture && ongData.picture !== 'string' ? (
+              <img src={ongData.picture} alt="Foto da ONG" className={styles.ongProfilePicture} />
+            ) : (
+              <FaBuilding size={40} />
+            )}
           </div>
           {editMode ? (
             <form className={styles.ongEditForm} onSubmit={handleSave}>
@@ -273,14 +305,14 @@ const OngProfile = () => {
             </form>
           ) : (
             <>
-              <h2>{user?.razaoSocial || user?.displayName || 'Nome da ONG'}</h2>
+              <h2>{ongData?.name || ongData?.razaoSocial || ongData?.displayName || 'Nome da ONG'}</h2>
               <div className={styles.ongDetails}>
-                {user?.cnpj && <p><b>CNPJ:</b> {user.cnpj}</p>}
-                {user?.endereco && <p><b>Endereço:</b> {user.endereco}</p>}
-                {user?.telefone && <p><b>Telefone:</b> {user.telefone}</p>}
-                {user?.email && <p><b>Email:</b> {user.email}</p>}
-                {user?.descricao && <p><b>Descrição:</b> {user.descricao}</p>}
-                {user?.createdAt && <p><b>Desde:</b> {new Date(user?.createdAt).toLocaleDateString('pt-BR')}</p>}
+                {ongData?.cnpj && <p><b>CNPJ:</b> {ongData.cnpj}</p>}
+                {ongData?.endereco && <p><b>Endereço:</b> {ongData.endereco}</p>}
+                {(ongData?.phone || ongData?.telefone) && <p><b>Telefone:</b> {ongData.phone || ongData.telefone}</p>}
+                {ongData?.email && <p><b>Email:</b> {ongData.email}</p>}
+                {ongData?.descricao && <p><b>Descrição:</b> {ongData.descricao}</p>}
+                {ongData?.createdAt && <p><b>Desde:</b> {new Date(ongData?.createdAt).toLocaleDateString('pt-BR')}</p>}
               </div>
               <p className={styles.ongType}>Organização Não Governamental</p>
               <button className={styles.editBtn} onClick={handleEdit}>Editar dados</button>

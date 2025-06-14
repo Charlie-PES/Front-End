@@ -19,7 +19,7 @@ const register = async (userData) => {
 // Autentica um usuário
 const login = async (email, password) => {
   try {
-    const response = await api.post('/owners/login', { email, password });
+    const response = await api.post('/owners/owners/login', { email, password });
     const { message, owner } = response.data;
     
     // Salva o token e os dados do usuário no localStorage
@@ -73,7 +73,7 @@ const fetchCurrentUser = async () => {
     const currentUser = getCurrentUser();
     if (!currentUser) return null;
     
-    const response = await api.get(`/owners/${currentUser._id}`);
+    const response = await api.get(`/owners/owners/${currentUser._id}`);
     const user = response.data;
     
     // Atualiza os dados do usuário no localStorage

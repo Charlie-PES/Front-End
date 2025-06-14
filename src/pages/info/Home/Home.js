@@ -342,24 +342,33 @@ const Home = () => {
           <div className={styles.sliderContainer}>
             <Slider {...sliderSettings}>
               {filteredPets.map((pet) => {
-                // Tratar campos 'string' como 'Não informado'
+                // Nome
                 const nome = pet.name && pet.name !== 'string' ? pet.name : 'Não informado';
-                const descricao = pet.traits?.description && pet.traits.description !== 'string' ? pet.traits.description : 'Não informado';
-                const tamanho = pet.traits?.size && pet.traits.size !== 'string' ? pet.traits.size : 'Não informado';
-                const idade = calcularIdade(pet.birthday_date);
+                // Descrição
+                const descricao = pet.traits?.description && pet.traits.description !== 'string' ? pet.traits.description : '';
+                // Tamanho
+                const tamanho = pet.traits?.size && pet.traits.size !== 'string' ? pet.traits.size : '';
+                // Idade
+                let idade = '';
+                if (pet.birthday_date && pet.birthday_date !== 'string') {
+                  idade = calcularIdade(pet.birthday_date);
+                }
+                // Imagem
                 let imagem = '/images/default-pet.png';
                 if (pet.picture && pet.picture !== 'string') imagem = pet.picture;
+                // Link para detalhes
+                const petId = pet._id || pet.id || '';
                 return (
-                  <div key={pet.id || nome + Math.random()} className={styles.petCard}>
+                  <div key={petId || nome + Math.random()} className={styles.petCard}>
                     <img src={imagem} alt={nome} />
                     <div className={styles.petInfo}>
                       <h3>{nome}</h3>
-                      <p className={styles.petDesc}>{descricao}</p>
+                      {descricao && <p className={styles.petDesc}>{descricao}</p>}
                       <div className={styles.petDetails}>
-                        <span>{idade}</span>
-                        <span>{tamanho}</span>
+                        {idade && <span>{idade}</span>}
+                        {tamanho && <span>{tamanho}</span>}
                       </div>
-                      <Link to={`/pet/${pet.id || ''}`} className={styles.adotarBtn}>ME ADOTE</Link>
+                      <Link to={petId ? `/pet/${petId}` : '#'} className={styles.adotarBtn}>ME ADOTE</Link>
                     </div>
                   </div>
                 );

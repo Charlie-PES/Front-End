@@ -23,7 +23,18 @@ const Login = () => {
     try {
       const user = await login(email, password);
       setUser(user);
-      navigate('/'); // Redireciona para a página inicial após o login
+      
+      console.log('Usuário logado:', user);
+      console.log('Tipo do usuário:', user.type);
+
+      // Redireciona com base no tipo de usuário
+      if (user.type === 'org') {
+        console.log('Redirecionando para /ong/perfil');
+        navigate('/ong/perfil');
+      } else {
+        console.log('Redirecionando para /');
+        navigate('/'); // Redireciona para a página inicial para outros tipos de usuário
+      }
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       setError(error.response?.data?.detail?.[0]?.msg || 'Usuário ou senha inválidos');

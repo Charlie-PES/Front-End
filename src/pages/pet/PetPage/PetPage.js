@@ -5,6 +5,7 @@ import { FaHeart, FaPaw, FaDog, FaCat, FaHome, FaPhone, FaMapMarkerAlt, FaCalend
 import styles from './PetPage.module.css';
 import { getPet, getAvailablePets, createAdoptionRequest } from '../../../services/matchService';
 import { useAuth } from '../../../contexts/AuthContext';
+import api from '../../../services/api';
 
 /**
  * Componente PetPage
@@ -36,6 +37,7 @@ const PetPage = () => {
   const [error, setError] = useState(null);
   const [isAdotando, setIsAdotando] = useState(false);
   const [adocaoSucesso, setAdocaoSucesso] = useState(false);
+  const [responsavel, setResponsavel] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +48,18 @@ const PetPage = () => {
         // Busca os dados do pet
         const petData = await getPet(id);
         setPet(petData);
+        
+        // Busca os dados do responsável se houver owner_id
+        if (petData.owner_id) {
+          try {
+            const resp = await api.get(`/owners/owners/${petData.owner_id}`);
+            setResponsavel(resp.data);
+          } catch (err) {
+            setResponsavel(null);
+          }
+        } else {
+          setResponsavel(null);
+        }
         
         // Busca outros pets para sugestão
         const outrosData = await getAvailablePets();
@@ -84,6 +98,42 @@ const PetPage = () => {
     }
   };
 
+  // Função utilitária para calcular idade
+  function calcularIdade(dataNascimento) {
+    if (!dataNascimento || dataNascimento === 'string') return '';
+    const nascimento = new Date(dataNascimento);
+    const hoje = new Date();
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const m = hoje.getMonth() - nascimento.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+      idade--;
+    }
+    return idade + (idade === 1 ? ' ano' : ' anos');
+  }
+
+  // Preparar dados do pet de forma resiliente
+  const nome = pet?.name && pet.name !== 'string' ? pet.name : 'Não informado';
+  const especie = pet?.traits?.species && pet.traits.species !== 'string' ? pet.traits.species : '';
+  const raca = pet?.traits?.breed && pet.traits.breed !== 'string' ? pet.traits.breed : '';
+  const tamanho = pet?.traits?.size && pet.traits.size !== 'string' ? pet.traits.size : '';
+  const cor = pet?.traits?.color && pet.traits.color !== 'string' ? pet.traits.color : '';
+  const pelagem = pet?.traits?.fur_type && pet.traits.fur_type !== 'string' ? pet.traits.fur_type : '';
+  const temperamento = pet?.traits?.temperament && pet.traits.temperament !== 'string' ? pet.traits.temperament : '';
+  const treinado = pet?.traits?.trained ? 'Sim' : 'Não';
+  const necessidades = pet?.traits?.special_needs ? 'Sim' : 'Não';
+  const descricao = pet?.traits?.description && pet.traits.description !== 'string' ? pet.traits.description : '';
+  const idade = calcularIdade(pet?.birthday_date);
+  let imagem = '/images/default-pet.png';
+  if (pet?.picture && pet.picture !== 'string') imagem = pet.picture;
+  // Vacinas
+  const vacinas = pet?.additional_data?.vacinas || [];
+
+  // Responsável
+  const tipoResponsavel = responsavel?.type === 'org' ? 'ONG' : 'Tutor Temporário';
+  const nomeResponsavel = responsavel?.name || '';
+  const telefone = responsavel?.phone || '';
+  const cidade = responsavel?.address?.[0]?.city || '';
+
   if (isLoading) {
     return (
       <div className={`${styles.container} ${darkMode ? styles.darkMode : ''}`}>
@@ -101,7 +151,7 @@ const PetPage = () => {
         <div className={styles.errorContainer}>
           <h2>Pet não encontrado 😿</h2>
           <p>{error}</p>
-          <Link to="/pets" className={styles.voltarLink}>
+          <Link to="/adotar" className={styles.voltarLink}>
             <FaArrowLeft /> Voltar para lista de pets
           </Link>
         </div>
@@ -117,9 +167,9 @@ const PetPage = () => {
             <FaHeart />
           </div>
           <h2>Adoção iniciada com sucesso!</h2>
-          <p>Parabéns! Seu processo de adoção do {pet.name} foi iniciado.</p>
+          <p>Parabéns! Seu processo de adoção do {nome} foi iniciado.</p>
           <p>Entraremos em contato em breve para agendar uma visita.</p>
-          <Link to="/pets" className={styles.voltarLink}>
+          <Link to="/adotar" className={styles.voltarLink}>
             <FaArrowLeft /> Voltar para lista de pets
           </Link>
         </div>
@@ -129,107 +179,67 @@ const PetPage = () => {
 
   return (
     <div className={`${styles.container} ${darkMode ? styles.darkMode : ''}`}>
-      <Link to="/pets" className={styles.voltarLink}>
+      <Link to="/adotar" className={styles.voltarLink}>
         <FaArrowLeft /> Voltar para lista de pets
       </Link>
-      
       <div className={styles.main}>
-        <div className={styles.leftColumn}>
-          <div className={styles.imageContainer}>
-            <img src={pet.picture} alt={pet.name} />
-          </div>
-          
-          <div className={styles.petInfo}>
-            <h1>{pet.name}</h1>
+        <div className={styles.imageContainer}>
+          <img src={imagem} alt={nome} />
+        </div>
+        <div className={styles.petInfo}>
+          <h1>{nome}</h1>
+          {especie && (
             <div className={styles.petType}>
-              {pet.traits.species === 'dog' ? <FaDog /> : <FaCat />}
-              <span>{pet.traits.species === 'dog' ? 'Cachorro' : 'Gato'}</span>
+              {especie === 'dog' ? <FaDog /> : <FaCat />}
+              <span>{especie === 'dog' ? 'Cachorro' : especie === 'cat' ? 'Gato' : especie}</span>
             </div>
-            
-            <div className={styles.details}>
-              <div className={styles.detail}>
-                <strong>Raça:</strong> {pet.traits.breed || 'Não especificada'}
-              </div>
-              <div className={styles.detail}>
-                <strong>Idade:</strong> {pet.traits.age} anos
-              </div>
-              <div className={styles.detail}>
-                <strong>Tamanho:</strong> {pet.traits.size}
-              </div>
-              <div className={styles.detail}>
-                <strong>Pelagem:</strong> {pet.traits.fur_type}
-              </div>
-              <div className={styles.detail}>
-                <strong>Temperamento:</strong> {pet.traits.temperament}
-              </div>
-              <div className={styles.detail}>
-                <strong>Treinado:</strong> {pet.traits.trained ? 'Sim' : 'Não'}
-              </div>
-              <div className={styles.detail}>
-                <strong>Necessidades Especiais:</strong> {pet.traits.special_needs ? 'Sim' : 'Não'}
-              </div>
-            </div>
-
+          )}
+          <ul className="caracteristicas">
+            {raca && <li><strong>Raça:</strong> {raca}</li>}
+            {idade && <li><strong>Idade:</strong> {idade}</li>}
+            {tamanho && <li><strong>Tamanho:</strong> {tamanho}</li>}
+            {cor && <li><strong>Cor:</strong> {cor}</li>}
+            {pelagem && <li><strong>Pelagem:</strong> {pelagem}</li>}
+            {temperamento && <li><strong>Temperamento:</strong> {temperamento}</li>}
+            <li><strong>Treinado:</strong> {treinado}</li>
+            <li><strong>Necessidades Especiais:</strong> {necessidades}</li>
+            {vacinas.length > 0 && (
+              <li><strong>Vacinas:</strong> {vacinas.join(', ')}</li>
+            )}
+          </ul>
+          {descricao && (
             <div className={styles.description}>
-              <h3>Sobre {pet.name}</h3>
-              <p>{pet.traits.description}</p>
+              <p>{descricao}</p>
             </div>
-
+          )}
+          {responsavel && (
             <div className={styles.ownerInfo}>
-              <h3>Informações do Responsável</h3>
+              <div className="sectionTitle">Informações do Responsável</div>
               <div className={styles.ownerDetails}>
                 <div className={styles.ownerDetail}>
-                  <FaHome /> {pet.owner_id?.type === 'org' ? 'ONG' : 'Tutor Temporário'}
+                  <FaHome /> {tipoResponsavel} {nomeResponsavel && `- ${nomeResponsavel}`}
                 </div>
-                <div className={styles.ownerDetail}>
-                  <FaPhone /> {pet.owner_id?.phone}
-                </div>
-                <div className={styles.ownerDetail}>
-                  <FaMapMarkerAlt /> {pet.owner_id?.address?.[0]?.city || 'Localização não disponível'}
-                </div>
+                {telefone && <div className={styles.ownerDetail}><FaPhone /> {telefone}</div>}
+                {cidade && <div className={styles.ownerDetail}><FaMapMarkerAlt /> {cidade}</div>}
               </div>
             </div>
-
-            <button 
-              className={styles.adotarButton}
-              onClick={handleAdotar}
-              disabled={isAdotando}
-            >
-              {isAdotando ? (
-                <>
-                  <FaSpinner className={styles.spinner} />
-                  Processando...
-                </>
-              ) : (
-                <>
-                  <FaHeart /> Adotar {pet.name}
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.rightColumn}>
-          <h3>Outros pets para adoção</h3>
-          <div className={styles.outrosPets}>
-            {outrosPets.map((outroPet) => (
-              <Link 
-                key={outroPet._id} 
-                to={`/pet/${outroPet._id}`}
-                className={styles.outroPetCard}
-              >
-                <img src={outroPet.picture} alt={outroPet.name} />
-                <div className={styles.outroPetInfo}>
-                  <h4>{outroPet.name}</h4>
-                  <p>{outroPet.traits.breed || 'Raça não especificada'}</p>
-                  <div className={styles.outroPetDetails}>
-                    <span>{outroPet.traits.size}</span>
-                    <span>{outroPet.traits.temperament}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          )}
+          <button 
+            className={styles.adotarButton}
+            onClick={handleAdotar}
+            disabled={isAdotando}
+          >
+            {isAdotando ? (
+              <>
+                <FaSpinner className={styles.spinner} />
+                Processando...
+              </>
+            ) : (
+              <>
+                <FaHeart /> Adotar {nome}
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>

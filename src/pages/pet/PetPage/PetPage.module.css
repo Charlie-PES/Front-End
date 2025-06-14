@@ -57,11 +57,15 @@
 
 /* Container principal */
 .container {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  min-height: 100vh;
-  padding: 20px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  max-width: 900px;
+  margin: 40px auto 0 auto;
+  background: var(--color-background);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px var(--shadow-color);
+  padding: 32px 24px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Link de voltar */
@@ -82,10 +86,11 @@
 
 /* Layout principal */
 .main {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 30px;
-  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  width: 100%;
+  justify-content: center;
 }
 
 /* Coluna esquerda */
@@ -97,21 +102,20 @@
 
 /* Container da imagem */
 .imageContainer {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px var(--shadow-color);
+  flex: 1;
+  min-width: 320px;
+  max-width: 380px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.petImage {
+.imageContainer img {
   width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.imageContainer:hover .petImage {
-  transform: scale(1.05);
+  max-width: 350px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 2px 12px var(--shadow-color);
 }
 
 .petBadge {
@@ -501,32 +505,30 @@
 }
 
 /* Media queries para responsividade */
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .main {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
   }
-  
-  .leftColumn {
-    max-width: 500px;
-    margin: 0 auto;
+  .imageContainer {
+    max-width: 100%;
+  }
+  .petInfo {
+    max-width: 100%;
+    padding: 20px 10px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .container {
-    padding: 15px;
+    padding: 10px 2px 30px 2px;
   }
-  
-  .infoGrid, .responsavelInfo {
-    grid-template-columns: 1fr;
+  .petInfo {
+    padding: 12px 4px;
   }
-  
-  .outrosGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .outroImagemContainer {
-    height: 180px;
+  .imageContainer img {
+    max-width: 98vw;
   }
 }
 
@@ -550,4 +552,108 @@
   .outroImagemContainer {
     height: 160px;
   }
+}
+
+.petInfo {
+  flex: 2;
+  min-width: 260px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--color-card);
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  align-items: flex-start;
+}
+
+.petInfo h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary-dark);
+  text-align: left;
+}
+
+.petInfo .caracteristicas {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.petInfo .caracteristicas li {
+  font-size: 1.08rem;
+  color: var(--color-text);
+  display: flex;
+  gap: 6px;
+}
+
+.petInfo .caracteristicas strong {
+  min-width: 140px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.petInfo .sectionTitle {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  color: var(--color-primary-dark);
+}
+
+.description {
+  margin-bottom: 10px;
+  color: var(--color-text-secondary);
+  font-size: 1.08rem;
+}
+
+.ownerInfo {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.ownerInfo h3 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: var(--color-primary-dark);
+}
+
+.ownerDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--color-text-secondary);
+}
+
+.ownerDetail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+}
+
+.adotarButton {
+  margin-top: 22px;
+  padding: 14px 0;
+  width: 100%;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  letter-spacing: 0.5px;
+}
+
+.adotarButton:hover {
+  background: var(--color-primary-dark);
 }

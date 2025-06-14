@@ -161,7 +161,7 @@ const Header = () => {
           </>
         ) : (
           <div className={styles.userSection}>
-            <Link to="/perfil" className={styles.profileButton}>
+            <Link to={user.type === 'org' ? '/ong/perfil' : '/perfil'} className={styles.profileButton}>
               <FaUserCircle size={24} />
               <span>{user.displayName || user.email}</span>
             </Link>
