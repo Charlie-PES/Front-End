@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch, FaPaw, FaHeart, FaShare, FaMapMarkerAlt, FaDog, FaCat, FaTimes } from 'react-icons/fa';
 import styles from './Adotar.module.css';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import { getAvailablePets } from '../../../services/matchService';
 
 const Adotar = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -16,144 +17,25 @@ const Adotar = () => {
   const [busca, setBusca] = useState('');
   const [selectedPet, setSelectedPet] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [pets, setPets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const pets = [
-    { 
-      id: 1, 
-      nome: 'Carlinhos', 
-      imagem: '/images/dog1.png', 
-      sexo: 'Fêmea', 
-      porte: 'Pequeno', 
-      comportamento: 'Calmo', 
-      especial: 'Não',
-      tipo: 'cachorro',
-      idade: '2 anos',
-      localizacao: 'São Paulo, SP',
-      descricao: 'Carlinhos é uma fêmea muito dócil e carinhosa. Adora brincar com crianças e se dá bem com outros animais.',
-      vacinado: true,
-      castrado: true
-    },
-    { 
-      id: 2, 
-      nome: 'Bolinha', 
-      imagem: '/images/dog2.png', 
-      sexo: 'Macho', 
-      porte: 'Médio', 
-      comportamento: 'Protetor', 
-      especial: 'Não',
-      tipo: 'cachorro',
-      idade: '3 anos',
-      localizacao: 'Rio de Janeiro, RJ',
-      descricao: 'Bolinha é um macho muito protetor e leal. Ideal para famílias que buscam um guardião.',
-      vacinado: true,
-      castrado: true
-    },
-    { 
-      id: 3, 
-      nome: 'Apolo', 
-      imagem: '/images/dog3.png', 
-      sexo: 'Fêmea', 
-      porte: 'Grande', 
-      comportamento: 'Brincalhão', 
-      especial: 'Sim',
-      tipo: 'cachorro',
-      idade: '1 ano',
-      localizacao: 'Belo Horizonte, MG',
-      descricao: 'Apolo é uma fêmea muito brincalhona e energética. Precisa de uma família que possa dar bastante atenção e exercício.',
-      vacinado: true,
-      castrado: false
-    },
-    { 
-      id: 4, 
-      nome: 'Gaia', 
-      imagem: '/images/dog4.png', 
-      sexo: 'Fêmea', 
-      porte: 'Médio', 
-      comportamento: 'Brincalhão', 
-      especial: 'Não',
-      tipo: 'cachorro',
-      idade: '4 anos',
-      localizacao: 'Curitiba, PR',
-      descricao: 'Gaia é uma fêmea muito brincalhona e sociável. Adora passear e conhecer pessoas novas.',
-      vacinado: true,
-      castrado: true
-    },
-    { 
-      id: 5, 
-      nome: 'Spike', 
-      imagem: '/images/dog5.png', 
-      sexo: 'Macho', 
-      porte: 'Grande', 
-      comportamento: 'Calmo', 
-      especial: 'Sim',
-      tipo: 'cachorro',
-      idade: '5 anos',
-      localizacao: 'Porto Alegre, RS',
-      descricao: 'Spike é um macho muito calmo e tranquilo. Ideal para famílias que buscam um companheiro mais quieto.',
-      vacinado: true,
-      castrado: true
-    },
-    { 
-      id: 6, 
-      nome: 'Duduzão', 
-      imagem: '/images/dog6.png', 
-      sexo: 'Fêmea', 
-      porte: 'Pequeno', 
-      comportamento: 'Protetor', 
-      especial: 'Não',
-      tipo: 'cachorro',
-      idade: '2 anos',
-      localizacao: 'Salvador, BA',
-      descricao: 'Duduzão é uma fêmea muito protetora e leal. Adora ficar perto da família e alertar sobre visitas.',
-      vacinado: true,
-      castrado: true
-    },
-    { 
-      id: 7, 
-      nome: 'Jaime', 
-      imagem: '/images/dog7.png', 
-      sexo: 'Macho', 
-      porte: 'Pequeno', 
-      comportamento: 'Calmo', 
-      especial: 'Sim',
-      tipo: 'cachorro',
-      idade: '3 anos',
-      localizacao: 'Recife, PE',
-      descricao: 'Jaime é um macho muito calmo e tranquilo. Ideal para apartamentos e famílias que buscam um companheiro mais quieto.',
-      vacinado: true,
-      castrado: true
-    },
-    { 
-      id: 8, 
-      nome: 'Mister bigodes', 
-      imagem: '/images/cat1.png', 
-      sexo: 'Macho', 
-      porte: 'Pequeno', 
-      comportamento: 'Calmo', 
-      especial: 'Sim',
-      tipo: 'gato',
-      idade: '2 anos',
-      localizacao: 'Brasília, DF',
-      descricao: 'Mister bigodes é um macho muito calmo e independente. Adora ficar deitado no sol e receber carinhos.',
-      vacinado: true,
-      castrado: true
-    },
-    { 
-      id: 9, 
-      nome: 'Alho', 
-      imagem: '/images/cat2.png', 
-      sexo: 'Macho', 
-      porte: 'Pequeno', 
-      comportamento: 'Calmo', 
-      especial: 'Sim',
-      tipo: 'gato',
-      idade: '1 ano',
-      localizacao: 'Fortaleza, CE',
-      descricao: 'Alho é um macho muito brincalhão e curioso. Adora explorar a casa e brincar com bolinhas.',
-      vacinado: true,
-      castrado: false
-    }
-  ];
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const data = await getAvailablePets();
+        setPets(data);
+      } catch (error) {
+        console.error('Erro ao buscar pets:', error);
+        setError('Erro ao carregar os pets. Por favor, tente novamente mais tarde.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPets();
+  }, []);
 
   const toggleSexo = (valor) => {
     setFiltros((prev) => ({
@@ -184,14 +66,14 @@ const Adotar = () => {
   };
 
   const petsFiltrados = pets.filter((pet) => {
-    const sexoMatch = filtros.sexo.length === 0 || filtros.sexo.includes(pet.sexo);
-    const porteMatch = !filtros.tamanho || pet.porte === filtros.tamanho;
-    const comportamentoMatch = !filtros.comportamento || pet.comportamento === filtros.comportamento;
-    const especialMatch = !filtros.especial || pet.especial === filtros.especial;
-    const tipoMatch = filtros.tipo === 'todos' || pet.tipo === filtros.tipo;
+    const sexoMatch = filtros.sexo.length === 0 || filtros.sexo.includes(pet.traits.gender);
+    const porteMatch = !filtros.tamanho || pet.traits.size === filtros.tamanho;
+    const comportamentoMatch = !filtros.comportamento || pet.traits.temperament === filtros.comportamento;
+    const especialMatch = !filtros.especial || (pet.traits.special_needs === (filtros.especial === 'Sim'));
+    const tipoMatch = filtros.tipo === 'todos' || pet.traits.species === filtros.tipo;
     const buscaMatch = !busca || 
-      pet.nome.toLowerCase().includes(busca.toLowerCase()) || 
-      pet.descricao.toLowerCase().includes(busca.toLowerCase());
+      pet.name.toLowerCase().includes(busca.toLowerCase()) || 
+      pet.traits.description?.toLowerCase().includes(busca.toLowerCase());
     
     return sexoMatch && porteMatch && comportamentoMatch && especialMatch && tipoMatch && buscaMatch;
   });
@@ -208,6 +90,14 @@ const Adotar = () => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
+  if (loading) {
+    return <div className={styles.loading}>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.error}>{error}</div>;
+  }
 
   return (
     <div className={`${styles.adotarContainer} ${darkMode ? styles.darkMode : ''}`}>
@@ -248,90 +138,59 @@ const Adotar = () => {
             <label htmlFor="tipo">Tipo</label>
             <div className={styles.tipoButtons}>
               <button 
-                className={`${styles.tipoBtn} ${filtros.tipo === 'todos' ? styles.active : ''}`}
+                className={`${styles.tipoButton} ${filtros.tipo === 'todos' ? styles.active : ''}`}
                 onClick={() => handleFiltroChange({ target: { name: 'tipo', value: 'todos' } })}
-                aria-pressed={filtros.tipo === 'todos'}
               >
-                <FaPaw /> Todos
+                Todos
               </button>
               <button 
-                className={`${styles.tipoBtn} ${filtros.tipo === 'gato' ? styles.active : ''}`}
-                onClick={() => handleFiltroChange({ target: { name: 'tipo', value: 'gato' } })}
-                aria-pressed={filtros.tipo === 'gato'}
-              >
-                <FaCat /> Gatos
-              </button>
-              <button 
-                className={`${styles.tipoBtn} ${filtros.tipo === 'cachorro' ? styles.active : ''}`}
-                onClick={() => handleFiltroChange({ target: { name: 'tipo', value: 'cachorro' } })}
-                aria-pressed={filtros.tipo === 'cachorro'}
+                className={`${styles.tipoButton} ${filtros.tipo === 'dog' ? styles.active : ''}`}
+                onClick={() => handleFiltroChange({ target: { name: 'tipo', value: 'dog' } })}
               >
                 <FaDog /> Cachorros
+              </button>
+              <button 
+                className={`${styles.tipoButton} ${filtros.tipo === 'cat' ? styles.active : ''}`}
+                onClick={() => handleFiltroChange({ target: { name: 'tipo', value: 'cat' } })}
+              >
+                <FaCat /> Gatos
               </button>
             </div>
           </div>
 
           <div className={styles.filterGroup}>
-            <label htmlFor="tamanho">Porte</label>
-            <select
-              id="tamanho"
-              name="tamanho"
+            <label htmlFor="tamanho">Tamanho</label>
+            <select 
+              name="tamanho" 
               value={filtros.tamanho}
               onChange={handleFiltroChange}
             >
               <option value="">Todos</option>
-              <option value="Pequeno">Pequeno</option>
-              <option value="Médio">Médio</option>
-              <option value="Grande">Grande</option>
+              <option value="small">Pequeno</option>
+              <option value="medium">Médio</option>
+              <option value="large">Grande</option>
             </select>
           </div>
 
           <div className={styles.filterGroup}>
-            <label htmlFor="comportamento">Comportamento</label>
-            <select
-              id="comportamento"
-              name="comportamento"
+            <label>Comportamento</label>
+            <select 
+              name="comportamento" 
               value={filtros.comportamento}
               onChange={handleFiltroChange}
             >
               <option value="">Todos</option>
-              <option value="Calmo">Calmo</option>
-              <option value="Brincalhão">Brincalhão</option>
-              <option value="Protetor">Protetor</option>
+              <option value="calm">Calmo</option>
+              <option value="energetic">Energético</option>
+              <option value="aggressive">Agressivo</option>
+              <option value="friendly">Amigável</option>
             </select>
           </div>
 
           <div className={styles.filterGroup}>
-            <label>Sexo</label>
-            <div className={styles.checkboxGroup}>
-              <label className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  className={styles.checkboxInput}
-                  checked={filtros.sexo.includes('Macho')}
-                  onChange={() => toggleSexo('Macho')}
-                />
-                <span className={styles.checkboxCustom}></span>
-                Macho
-              </label>
-              <label className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  className={styles.checkboxInput}
-                  checked={filtros.sexo.includes('Fêmea')}
-                  onChange={() => toggleSexo('Fêmea')}
-                />
-                <span className={styles.checkboxCustom}></span>
-                Fêmea
-              </label>
-            </div>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label htmlFor="especial">Necessidades Especiais</label>
-            <select
-              id="especial"
-              name="especial"
+            <label>Necessidades Especiais</label>
+            <select 
+              name="especial" 
               value={filtros.especial}
               onChange={handleFiltroChange}
             >
@@ -342,142 +201,78 @@ const Adotar = () => {
           </div>
 
           <button 
-            className={styles.resetBtn}
+            className={styles.resetButton}
             onClick={resetarFiltros}
           >
             Limpar Filtros
           </button>
         </aside>
 
-        <div className={styles.petsGrid}>
-          {petsFiltrados.length > 0 ? (
-            petsFiltrados.map((pet) => (
-              <div 
-                key={pet.id} 
-                className={styles.petCard}
-                onClick={() => handlePetClick(pet)}
-                role="button"
-                tabIndex={0}
-                onKeyPress={(e) => e.key === 'Enter' && handlePetClick(pet)}
-              >
-                <div className={styles.petImageContainer}>
-                  <img src={pet.imagem} alt={pet.nome} />
-                  <span className={styles.petTypeBadge}>
-                    {pet.tipo === 'cachorro' ? <FaDog /> : <FaCat />}
-                  </span>
+        <main className={styles.petsGrid}>
+          {petsFiltrados.map((pet) => (
+            <div 
+              key={pet._id} 
+              className={styles.petCard}
+              onClick={() => handlePetClick(pet)}
+            >
+              <img src={pet.picture} alt={pet.name} />
+              <div className={styles.petInfo}>
+                <h3>{pet.name}</h3>
+                <p className={styles.breed}>{pet.traits.breed || 'Raça não especificada'}</p>
+                <div className={styles.details}>
+                  <span>{pet.traits.size}</span>
+                  <span>{pet.traits.temperament}</span>
                 </div>
-                <div className={styles.petInfo}>
-                  <h3>{pet.nome}</h3>
-                  <div className={styles.petDetails}>
-                    <span>{pet.porte}</span>
-                    <span>{pet.idade}</span>
-                    <span>{pet.comportamento}</span>
-                  </div>
-                  <div className={styles.petLocation}>
-                    <FaMapMarkerAlt />
-                    {pet.localizacao}
-                  </div>
-                </div>
-                <div className={styles.petActions}>
-                  <button 
-                    className={styles.favoriteBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Implementar favoritar
-                    }}
-                    aria-label="Favoritar pet"
-                  >
-                    <FaHeart />
-                  </button>
-                  <button 
-                    className={styles.shareBtn}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Implementar compartilhar
-                    }}
-                    aria-label="Compartilhar pet"
-                  >
-                    <FaShare />
-                  </button>
-                </div>
+                <p className={styles.location}>
+                  <FaMapMarkerAlt /> {pet.owner_id?.address?.[0]?.city || 'Localização não disponível'}
+                </p>
               </div>
-            ))
-          ) : (
-            <div className={styles.noResults}>
-              <FaPaw className={styles.noResultsIcon} />
-              <p>Nenhum pet encontrado com os filtros selecionados.</p>
             </div>
-          )}
-        </div>
+          ))}
+        </main>
       </div>
 
       {selectedPet && (
-        <div className={styles.petModal} onClick={closePetDetails}>
-          <div 
-            className={styles.petModalContent}
-            onClick={(e) => e.stopPropagation()}
+        <div className={styles.petDetails}>
+          <button 
+            className={styles.closeButton}
+            onClick={closePetDetails}
+            aria-label="Fechar detalhes"
           >
-            <button 
-              className={styles.closeModalBtn}
-              onClick={closePetDetails}
-              aria-label="Fechar detalhes do pet"
-            >
-              <FaTimes />
-            </button>
-            <div className={styles.petModalImage}>
-              <img src={selectedPet.imagem} alt={selectedPet.nome} />
-            </div>
-            <div className={styles.petModalInfo}>
-              <h2>{selectedPet.nome}</h2>
-              <div className={styles.petModalDetails}>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Tipo</span>
-                  <span className={styles.detailValue}>
-                    {selectedPet.tipo === 'cachorro' ? 'Cachorro' : 'Gato'}
-                  </span>
+            <FaTimes />
+          </button>
+          <div className={styles.petDetailsContent}>
+            <img src={selectedPet.picture} alt={selectedPet.name} />
+            <div className={styles.petDetailsInfo}>
+              <h2>{selectedPet.name}</h2>
+              <p className={styles.description}>{selectedPet.traits.description}</p>
+              <div className={styles.details}>
+                <div className={styles.detail}>
+                  <strong>Raça:</strong> {selectedPet.traits.breed || 'Não especificada'}
                 </div>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Idade</span>
-                  <span className={styles.detailValue}>{selectedPet.idade}</span>
+                <div className={styles.detail}>
+                  <strong>Tamanho:</strong> {selectedPet.traits.size}
                 </div>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Porte</span>
-                  <span className={styles.detailValue}>{selectedPet.porte}</span>
+                <div className={styles.detail}>
+                  <strong>Temperamento:</strong> {selectedPet.traits.temperament}
                 </div>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Sexo</span>
-                  <span className={styles.detailValue}>{selectedPet.sexo}</span>
+                <div className={styles.detail}>
+                  <strong>Pelagem:</strong> {selectedPet.traits.fur_type}
                 </div>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Comportamento</span>
-                  <span className={styles.detailValue}>{selectedPet.comportamento}</span>
-                </div>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Localização</span>
-                  <span className={styles.detailValue}>{selectedPet.localizacao}</span>
-                </div>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Vacinado</span>
-                  <span className={styles.detailValue}>{selectedPet.vacinado ? 'Sim' : 'Não'}</span>
-                </div>
-                <div className={styles.petModalDetail}>
-                  <span className={styles.detailLabel}>Castrado</span>
-                  <span className={styles.detailValue}>{selectedPet.castrado ? 'Sim' : 'Não'}</span>
+                <div className={styles.detail}>
+                  <strong>Treinado:</strong> {selectedPet.traits.trained ? 'Sim' : 'Não'}
                 </div>
               </div>
-              <div className={styles.petModalDescription}>
-                <h3>Sobre {selectedPet.nome}</h3>
-                <p>{selectedPet.descricao}</p>
-              </div>
-              <div className={styles.petModalActions}>
-                <button 
-                  className={styles.adotarBtn}
-                  onClick={() => {
-                    // Implementar processo de adoção
-                  }}
-                >
-                  <FaHeart /> Adotar {selectedPet.nome}
+              <div className={styles.actions}>
+                <button className={styles.actionButton}>
+                  <FaHeart /> Favoritar
                 </button>
+                <button className={styles.actionButton}>
+                  <FaShare /> Compartilhar
+                </button>
+                <Link to={`/pet/${selectedPet._id}`} className={styles.actionButton}>
+                  Ver Mais Detalhes
+                </Link>
               </div>
             </div>
           </div>

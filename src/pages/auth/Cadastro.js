@@ -4,7 +4,7 @@ import { FaUserCircle, FaBuilding } from 'react-icons/fa';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { addUser } from '../../services/authService';
+import { register } from '../../services/authService';
 
 const Cadastro = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -241,24 +241,21 @@ const Cadastro = () => {
         tutor: formData.queroSerTutor,
         adopter: formData.queroAdotar,
         ong: formData.queroSerOng,
-        password: formData.senha
+        password: formData.senha,
+        displayName: formData.nome
       };
 
       console.log('Enviando dados:', userData); // Para debug
 
       // Criar usuário
-      const user = await addUser(userData);
-
-      // Atualiza o contexto com os dados do usuário
+      const user = await register(userData);
       setUser(user);
-
-      // Redirecionar para a página inicial
       navigate('/');
-    } catch (error) {
-      console.error('Erro ao criar conta:', error);
+    } catch (err) {
+      console.error('Erro ao criar conta:', err);
       setErrors({
         ...errors,
-        email: error.response?.data?.message || 'Erro ao criar conta. Tente novamente.'
+        submit: err.response?.data?.detail?.[0]?.msg || 'Erro ao criar conta. Por favor, tente novamente.'
       });
     } finally {
       setLoading(false);

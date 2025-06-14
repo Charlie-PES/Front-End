@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createSeedAccounts } from '../../services/authService';
+import { register } from '../../services/authService';
 import styles from './AdminPage.module.css';
 
 const AdminPage = () => {
@@ -12,8 +12,54 @@ const AdminPage = () => {
     setError(null);
     
     try {
-      const createdAccounts = createSeedAccounts();
-      setAccounts(createdAccounts);
+      // Criar conta de adotante
+      const adotante = await register({
+        username: 'adotante',
+        email: 'adotante@teste.com',
+        password: 'Teste@123',
+        displayName: 'Adotante Teste',
+        adopter: true
+      });
+
+      // Criar conta de ONG
+      const ong = await register({
+        username: 'ong',
+        email: 'ong@teste.com',
+        password: 'Teste@123',
+        displayName: 'ONG Teste',
+        ong: true,
+        cnpj: '12345678901234',
+        razaoSocial: 'ONG Teste',
+        endereco: 'Rua Teste, 123',
+        telefone: '11999999999'
+      });
+
+      // Criar conta de tutor
+      const tutor = await register({
+        username: 'tutor',
+        email: 'tutor@teste.com',
+        password: 'Teste@123',
+        displayName: 'Tutor Teste',
+        tutor: true
+      });
+
+      setAccounts({
+        adotante: {
+          email: adotante.email,
+          password: 'Teste@123',
+          displayName: adotante.displayName
+        },
+        ong: {
+          email: ong.email,
+          password: 'Teste@123',
+          displayName: ong.displayName
+        },
+        tutor: {
+          email: tutor.email,
+          password: 'Teste@123',
+          displayName: tutor.displayName
+        }
+      });
     } catch (err) {
       setError('Erro ao criar contas: ' + err.message);
     } finally {

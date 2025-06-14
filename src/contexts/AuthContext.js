@@ -12,19 +12,25 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Verifica se o usuário está autenticado ao carregar a página
     const checkAuth = async () => {
-      if (isAuthenticated()) {
-        try {
-          // Busca os dados atualizados do usuário do servidor
-          const userData = await fetchCurrentUser();
-          setUser(userData);
-        } catch (error) {
-          console.error('Erro ao buscar dados do usuário:', error);
+      try {
+        if (isAuthenticated()) {
+          const currentUser = getCurrentUser();
+          if (currentUser?._id) {
+            // Busca os dados atualizados do usuário do servidor
+            const userData = await fetchCurrentUser();
+            setUser(userData);
+          } else {
+            setUser(null);
+          }
+        } else {
           setUser(null);
         }
-      } else {
+      } catch (error) {
+        console.error('Erro ao buscar dados do usuário:', error);
         setUser(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     checkAuth();

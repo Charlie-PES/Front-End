@@ -354,4 +354,105 @@ export const getUserPreferences = async (userId) => {
         console.error('Erro ao buscar preferências:', error);
         throw error;
     }
+};
+
+// Serviço para gerenciar pets e adoções
+
+// Lista todos os pets disponíveis
+const getAvailablePets = async () => {
+  try {
+    const response = await api.get('/pets', {
+      params: { is_available: true }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar pets disponíveis:', error);
+    throw error;
+  }
+};
+
+// Obtém um pet específico
+const getPet = async (petId) => {
+  try {
+    const response = await api.get(`/pets/${petId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar pet:', error);
+    throw error;
+  }
+};
+
+// Cria um novo pet
+const createPet = async (petData) => {
+  try {
+    const response = await api.post('/pets', petData);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao criar pet:', error);
+    throw error;
+  }
+};
+
+// Remove um pet
+const deletePet = async (petId) => {
+  try {
+    await api.delete(`/pets/${petId}`);
+  } catch (error) {
+    console.error('Erro ao remover pet:', error);
+    throw error;
+  }
+};
+
+// Cria uma solicitação de adoção
+const createAdoptionRequest = async (petId, ownerId) => {
+  try {
+    const response = await api.post(`/adoptions/request/pet_id/${petId}/owner_id/${ownerId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao criar solicitação de adoção:', error);
+    throw error;
+  }
+};
+
+// Registra uma adoção
+const registerAdoption = async (petId, ownerId) => {
+  try {
+    const response = await api.post(`/adoptions/register/pet_id/${petId}/owner_id/${ownerId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao registrar adoção:', error);
+    throw error;
+  }
+};
+
+// Lista todas as adoções
+const getAdoptions = async () => {
+  try {
+    const response = await api.get('/adoptions');
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar adoções:', error);
+    throw error;
+  }
+};
+
+// Remove uma adoção
+const deleteAdoption = async (petId, ownerId) => {
+  try {
+    await api.delete(`/adoptions/pet_id/${petId}/owner_id/${ownerId}`);
+  } catch (error) {
+    console.error('Erro ao remover adoção:', error);
+    throw error;
+  }
+};
+
+export {
+  getAvailablePets,
+  getPet,
+  createPet,
+  deletePet,
+  createAdoptionRequest,
+  registerAdoption,
+  getAdoptions,
+  deleteAdoption
 }; 
