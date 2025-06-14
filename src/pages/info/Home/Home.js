@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Home.module.css';
 import Slider from 'react-slick';
@@ -8,6 +8,7 @@ import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight, FaBone, FaCat, FaUser
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import { login } from '../../../services/authService';
 import { useAuth } from '../../../contexts/AuthContext';
+import { getAvailablePets } from '../../../services/matchService';
 import chatStyles from '../../../components/ChatButton/ChatButton.module.css';
 
 const Home = () => {
@@ -15,49 +16,25 @@ const Home = () => {
   const { darkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const { setUser } = useAuth();
+  const [pets, setPets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const pets = [
-    {
-      id: 1,
-      nome: 'Ronaldinho',
-      desc: 'Muito fofo, inteligente e educado',
-      img: '/images/dog1.png',
-      categoria: 'cachorro',
-      idade: '2 anos',
-      porte: 'Médio',
-      localizacao: 'São Paulo, SP'
-    },
-    {
-      id: 2,
-      nome: 'Bolinha',
-      desc: 'Super simpático, leal e sabe muito',
-      img: '/images/dog2.png',
-      categoria: 'cachorro',
-      idade: '1 ano',
-      porte: 'Pequeno',
-      localizacao: 'Rio de Janeiro, RJ'
-    },
-    {
-      id: 3,
-      nome: 'Zezé',
-      desc: 'Super carente, simples, ama passeios e queijo',
-      img: '/images/dog3.png',
-      categoria: 'cachorro',
-      idade: '3 anos',
-      porte: 'Grande',
-      localizacao: 'Belo Horizonte, MG'
-    },
-    {
-      id: 4,
-      nome: 'Luna',
-      desc: 'Brincalhona e adora correr',
-      img: '/images/dog4.png',
-      categoria: 'gato',
-      idade: '1 ano',
-      porte: 'Pequeno',
-      localizacao: 'Curitiba, PR'
-    },
-  ];
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const data = await getAvailablePets();
+        setPets(data);
+      } catch (error) {
+        console.error('Erro ao buscar pets:', error);
+        setError('Erro ao carregar os pets. Por favor, tente novamente mais tarde.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPets();
+  }, []);
 
   const steps = [
     { 
@@ -263,7 +240,7 @@ const Home = () => {
 
   const filteredPets = activeCategory === 'todos' 
     ? pets 
-    : pets.filter(pet => pet.categoria === activeCategory);
+    : pets.filter(pet => pet.traits.species === activeCategory);
 
   // Função para login rápido mockado
   const handleQuickLogin = async (type) => {
@@ -288,6 +265,19 @@ const Home = () => {
       alert('Erro ao logar mock: ' + (e.message || e));
     }
   };
+
+  // Função utilitária para calcular idade
+  function calcularIdade(dataNascimento) {
+    if (!dataNascimento) return 'Não informado';
+    const nascimento = new Date(dataNascimento);
+    const hoje = new Date();
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const m = hoje.getMonth() - nascimento.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+      idade--;
+    }
+    return idade + (idade === 1 ? ' ano' : ' anos');
+  }
 
   return (
     <div className={`${styles.homeContainer} ${darkMode ? styles.darkMode : ''}`}>
@@ -344,25 +334,39 @@ const Home = () => {
       <section id="pets" className={styles.petsSection}>
         <h2>Pets para adoção</h2>
         <p className={styles.sectionDescription}>Conheça nossos amiguinhos que estão procurando um lar</p>
-        <div className={styles.sliderContainer}>
-          <Slider {...sliderSettings}>
-            {filteredPets.map((pet) => (
-              <div key={pet.id} className={styles.petCard}>
-                <img src={pet.img} alt={pet.nome} />
-                <div className={styles.petInfo}>
-                  <h3>{pet.nome}</h3>
-                  <p className={styles.petDesc}>{pet.desc}</p>
-                  <div className={styles.petDetails}>
-                    <span>{pet.idade}</span>
-                    <span>{pet.porte}</span>
-                    <span>{pet.localizacao}</span>
+        {loading ? (
+          <div className={styles.loading}>Carregando...</div>
+        ) : error ? (
+          <div className={styles.error}>{error}</div>
+        ) : (
+          <div className={styles.sliderContainer}>
+            <Slider {...sliderSettings}>
+              {filteredPets.map((pet) => {
+                // Tratar campos 'string' como 'Não informado'
+                const nome = pet.name && pet.name !== 'string' ? pet.name : 'Não informado';
+                const descricao = pet.traits?.description && pet.traits.description !== 'string' ? pet.traits.description : 'Não informado';
+                const tamanho = pet.traits?.size && pet.traits.size !== 'string' ? pet.traits.size : 'Não informado';
+                const idade = calcularIdade(pet.birthday_date);
+                let imagem = '/images/default-pet.png';
+                if (pet.picture && pet.picture !== 'string') imagem = pet.picture;
+                return (
+                  <div key={pet.id || nome + Math.random()} className={styles.petCard}>
+                    <img src={imagem} alt={nome} />
+                    <div className={styles.petInfo}>
+                      <h3>{nome}</h3>
+                      <p className={styles.petDesc}>{descricao}</p>
+                      <div className={styles.petDetails}>
+                        <span>{idade}</span>
+                        <span>{tamanho}</span>
+                      </div>
+                      <Link to={`/pet/${pet.id || ''}`} className={styles.adotarBtn}>ME ADOTE</Link>
+                    </div>
                   </div>
-                  <Link to={`/pet/${pet.id}`} className={styles.adotarBtn}>ME ADOTE</Link>
-                </div>
-              </div>
-            ))}
-          </Slider>
-        </div>
+                );
+              })}
+            </Slider>
+          </div>
+        )}
       </section>
 
       {/* Etapas */}
