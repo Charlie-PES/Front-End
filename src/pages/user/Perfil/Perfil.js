@@ -69,11 +69,11 @@ const Perfil = () => {
           <FaCamera />
         </button>
       </div>
-      <h2 className={styles.userName}>{user.displayName}</h2>
+      <h2 className={styles.userName}>{user.name} {user.surname}</h2>
       <div className={styles.userDetails}>
         <div className={styles.detailItem}>
           <FaMapMarkerAlt className={styles.detailIcon} />
-          <span>{user.cidade || 'Cidade não informada'}</span>
+          <span>{user.address && user.address.length > 0 ? `${user.address[0].city}, ${user.address[0].state}` : 'Endereço não informado'}</span>
         </div>
         <div className={styles.detailItem}>
           <FaEnvelope className={styles.detailIcon} />
@@ -81,12 +81,12 @@ const Perfil = () => {
         </div>
         <div className={styles.detailItem}>
           <FaPhone className={styles.detailIcon} />
-          <span>{user.telefone || 'Telefone não informado'}</span>
+          <span>{user.phone || 'Telefone não informado'}</span>
         </div>
       </div>
       <div className={styles.userBio}>
         <h3>Sobre mim</h3>
-        <p>{user.bio || 'Nenhuma informação adicional fornecida.'}</p>
+        <p>{user.type === 'org' && user.owner_details && user.owner_details.description ? user.owner_details.description : 'Nenhuma informação adicional fornecida.'}</p>
       </div>
       <div className={styles.userStats}>
         <div className={styles.statItem}>
@@ -96,10 +96,6 @@ const Perfil = () => {
         <div className={styles.statItem}>
           <span className={styles.statValue}>{user.petsFavoritos || 0}</span>
           <span className={styles.statLabel}>Favoritos</span>
-        </div>
-        <div className={styles.statItem}>
-          <span className={styles.statValue}>{new Date(user.createdAt).toLocaleDateString('pt-BR')}</span>
-          <span className={styles.statLabel}>Membro desde</span>
         </div>
       </div>
     </div>

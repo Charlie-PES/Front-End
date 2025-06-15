@@ -13,7 +13,8 @@ const Cadastro = () => {
   const { type } = useParams();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    first_name: '',
+    surname: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -35,7 +36,8 @@ const Cadastro = () => {
   });
 
   const [errors, setErrors] = useState({
-    name: '',
+    first_name: '',
+    surname: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -333,9 +335,29 @@ const Cadastro = () => {
     const newErrors = {};
     let hasErrors = false;
 
+    if (!formData.first_name) {
+      newErrors.first_name = 'Nome é obrigatório';
+      hasErrors = true;
+    }
+    if (!formData.surname) {
+      newErrors.surname = 'Sobrenome é obrigatório';
+      hasErrors = true;
+    }
+
     if (type === 'tutor') {
       if (!validateCPF(formData.identifier)) {
         newErrors.identifier = 'CPF inválido';
+        hasErrors = true;
+      }
+      if (!formData.address.city) {
+        newErrors.address = {
+          ...newErrors.address,
+          city: 'Cidade é obrigatória'
+        };
+        hasErrors = true;
+      }
+      if (!formData.phone) {
+        newErrors.phone = 'Telefone é obrigatório';
         hasErrors = true;
       }
     } else if (type === 'org') {
@@ -386,10 +408,10 @@ const Cadastro = () => {
         identifier: formData.identifier.replace(/\D/g, ''),
         password: formData.password,
         type: type,
-        name: formData.name,
-        address: type === 'org' ? [formData.address] : undefined,
+        name: formData.first_name,
+        surname: formData.surname,
+        address: [formData.address],
         owner_details: type === 'org' ? { description: formData.owner_details.description, additional_data: {} } : undefined,
-        surname: type === 'org' ? null : '',
         picture: '', // Adiciona o campo picture com valor vazio, pois é obrigatório pelo backend
       };
 
@@ -445,15 +467,27 @@ const Cadastro = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGrid}>
             <div className={styles.formGroup}>
-              <label>Nome {type === 'org' ? 'da Organização' : 'Completo'}</label>
+              <label>Primeiro nome</label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="first_name"
+                value={formData.first_name}
                 onChange={handleChange}
                 required
               />
-              {errors.name && <span className={styles.error}>{errors.name}</span>}
+              {errors.first_name && <span className={styles.error}>{errors.first_name}</span>}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>Sobrenome</label>
+              <input
+                type="text"
+                name="surname"
+                value={formData.surname}
+                onChange={handleChange}
+                required
+              />
+              {errors.surname && <span className={styles.error}>{errors.surname}</span>}
             </div>
 
             <div className={styles.formGroup}>
@@ -481,139 +515,139 @@ const Cadastro = () => {
                 {errors.identifier && <span className={styles.error}>{errors.identifier}</span>}
               </div>
             ) : (
-              <>
+              <div className={styles.formGroup}>
+                <label>CNPJ</label>
+                <input
+                  type="text"
+                  name="identifier"
+                  value={formData.identifier}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.identifier && <span className={styles.error}>{errors.identifier}</span>}
+              </div>
+            )}
+
+            {/* Telefone (agora para ambos os tipos) */}
+            <div className={styles.formGroup}>
+              <label>Telefone</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                inputMode="numeric"
+              />
+              {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+            </div>
+
+            {/* Informações de Endereço (agora para ambos os tipos) */}
+            <div className={styles.formGroup} style={{ gridColumn: '1 / 3', marginBottom: '1.5rem' }}>
+              <h3 style={{ marginBottom: '10px', color: 'var(--text-color-dark)' }}>Informações de Endereço</h3>
+            
+              <div className={styles.formGrid}>
+                {/* Campos de Endereço - Ordem de Macro para Micro */}
                 <div className={styles.formGroup}>
-                  <label>CNPJ</label>
+                  <label>Estado</label>
+                  <select
+                    name="address.state"
+                    value={formData.address.state}
+                    onChange={handleChange}
+                    required
+                    readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
+                    disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
+                  >
+                    <option value="">Selecione o Estado</option>
+                    {states.map((state) => (
+                      <option key={state.uf} value={state.uf}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.address && errors.address.state && <span className={styles.error}>{errors.address.state}</span>}
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>CEP</label>
                   <input
                     type="text"
-                    name="identifier"
-                    value={formData.identifier}
+                    name="address.zip_code"
+                    value={formData.address.zip_code}
                     onChange={handleChange}
+                    onBlur={(e) => fetchAddressByCep(e.target.value)}
+                    maxLength="9"
                     required
                   />
-                  {errors.identifier && <span className={styles.error}>{errors.identifier}</span>}
+                  {errors.address && errors.address.zip_code && <span className={styles.error}>{errors.address.zip_code}</span>}
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>Telefone</label>
+                  <label>Cidade</label>
                   <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
+                    type="text"
+                    name="address.city"
+                    value={formData.address.city}
                     onChange={handleChange}
                     required
-                    inputMode="numeric"
+                    readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
+                    disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
                   />
-                  {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+                  {errors.address && errors.address.city && <span className={styles.error}>{errors.address.city}</span>}
                 </div>
 
-                <div className={styles.formGroup} style={{ gridColumn: '1 / 3', marginBottom: '1.5rem' }}>
-                  <h3 style={{ marginBottom: '10px', color: 'var(--text-color-dark)' }}>Informações de Endereço</h3>
-                
-                  <div className={styles.formGrid}>
-                    {/* Campos de Endereço - Ordem de Macro para Micro */}
-                    <div className={styles.formGroup}>
-                      <label>Estado</label>
-                      <select
-                        name="address.state"
-                        value={formData.address.state}
-                        onChange={handleChange}
-                        required
-                        readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
-                        disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
-                      >
-                        <option value="">Selecione o Estado</option>
-                        {states.map((state) => (
-                          <option key={state.uf} value={state.uf}>
-                            {state.name}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.address && errors.address.state && <span className={styles.error}>{errors.address.state}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label>CEP</label>
-                      <input
-                        type="text"
-                        name="address.zip_code"
-                        value={formData.address.zip_code}
-                        onChange={handleChange}
-                        onBlur={(e) => fetchAddressByCep(e.target.value)}
-                        maxLength="9"
-                        required
-                      />
-                      {errors.address && errors.address.zip_code && <span className={styles.error}>{errors.address.zip_code}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label>Cidade</label>
-                      <input
-                        type="text"
-                        name="address.city"
-                        value={formData.address.city}
-                        onChange={handleChange}
-                        required
-                        readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
-                        disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
-                      />
-                      {errors.address && errors.address.city && <span className={styles.error}>{errors.address.city}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label>Bairro</label>
-                      <input
-                        type="text"
-                        name="address.neighborhood"
-                        value={formData.address.neighborhood}
-                        onChange={handleChange}
-                        required
-                        readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
-                        disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
-                      />
-                      {errors.address && errors.address.neighborhood && <span className={styles.error}>{errors.address.neighborhood}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label>Rua</label>
-                      <input
-                        type="text"
-                        name="address.street"
-                        value={formData.address.street}
-                        onChange={handleChange}
-                        required
-                        readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
-                        disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
-                      />
-                      {errors.address && errors.address.street && <span className={styles.error}>{errors.address.street}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label>Número</label>
-                      <input
-                        type="text"
-                        name="address.number"
-                        value={formData.address.number}
-                        onChange={handleChange}
-                        required
-                      />
-                      {errors.address && errors.address.number && <span className={styles.error}>{errors.address.number}</span>}
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label>Complemento (Opcional)</label>
-                      <input
-                        type="text"
-                        name="address.complement"
-                        value={formData.address.complement}
-                        onChange={handleChange}
-                      />
-                      {errors.address && errors.address.complement && <span className={styles.error}>{errors.address.complement}</span>}
-                    </div>
-                  </div>
+                <div className={styles.formGroup}>
+                  <label>Bairro</label>
+                  <input
+                    type="text"
+                    name="address.neighborhood"
+                    value={formData.address.neighborhood}
+                    onChange={handleChange}
+                    required
+                    readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
+                    disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
+                  />
+                  {errors.address && errors.address.neighborhood && <span className={styles.error}>{errors.address.neighborhood}</span>}
                 </div>
-              </>
-            )}
+
+                <div className={styles.formGroup}>
+                  <label>Rua</label>
+                  <input
+                    type="text"
+                    name="address.street"
+                    value={formData.address.street}
+                    onChange={handleChange}
+                    required
+                    readOnly={!!formData.address.zip_code.replace(/\D/g, '').length}
+                    disabled={!!formData.address.zip_code.replace(/\D/g, '').length}
+                  />
+                  {errors.address && errors.address.street && <span className={styles.error}>{errors.address.street}</span>}
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Número</label>
+                  <input
+                    type="text"
+                    name="address.number"
+                    value={formData.address.number}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.address && errors.address.number && <span className={styles.error}>{errors.address.number}</span>}
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label>Complemento (Opcional)</label>
+                  <input
+                    type="text"
+                    name="address.complement"
+                    value={formData.address.complement}
+                    onChange={handleChange}
+                  />
+                  {errors.address && errors.address.complement && <span className={styles.error}>{errors.address.complement}</span>}
+                </div>
+              </div>
+            </div>
 
             <div className={styles.formGroup}>
               <label>Senha</label>

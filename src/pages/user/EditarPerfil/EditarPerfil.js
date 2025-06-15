@@ -22,17 +22,122 @@ const EditarPerfil = () => {
   
   // Estado para armazenar os dados do usuário
   const [userData, setUserData] = useState({
-    nome: '',
+    first_name: '',
+    surname: '',
     email: '',
-    telefone: '',
-    cidade: '',
-    bio: '',
-    avatar: null,
-    avatarPreview: null
+    phone: '',
+    address: {
+      city: '',
+      state: '',
+      neighborhood: '',
+      street: '',
+      number: '',
+      zip_code: '',
+      complement: ''
+    },
+    owner_details: {
+      description: '',
+      additional_data: {}
+    },
+    picture: '',
+    type: '',
   });
   
   // Estado para controlar erros de validação
   const [errors, setErrors] = useState({});
+  
+  const states = [
+    { uf: 'AC', name: 'Acre' },
+    { uf: 'AL', name: 'Alagoas' },
+    { uf: 'AP', name: 'Amapá' },
+    { uf: 'AM', name: 'Amazonas' },
+    { uf: 'BA', name: 'Bahia' },
+    { uf: 'CE', name: 'Ceará' },
+    { uf: 'DF', name: 'Distrito Federal' },
+    { uf: 'ES', name: 'Espírito Santo' },
+    { uf: 'GO', name: 'Goiás' },
+    { uf: 'MA', name: 'Maranhão' },
+    { uf: 'MT', name: 'Mato Grosso' },
+    { uf: 'MS', name: 'Mato Grosso do Sul' },
+    { uf: 'MG', name: 'Minas Gerais' },
+    { uf: 'PA', name: 'Pará' },
+    { uf: 'PB', name: 'Paraíba' },
+    { uf: 'PR', name: 'Paraná' },
+    { uf: 'PE', name: 'Pernambuco' },
+    { uf: 'PI', name: 'Piauí' },
+    { uf: 'RJ', name: 'Rio de Janeiro' },
+    { uf: 'RN', name: 'Rio Grande do Norte' },
+    { uf: 'RS', name: 'Rio Grande do Sul' },
+    { uf: 'RO', name: 'Rondônia' },
+    { uf: 'RR', name: 'Roraima' },
+    { uf: 'SC', name: 'Santa Catarina' },
+    { uf: 'SP', name: 'São Paulo' },
+    { uf: 'SE', name: 'Sergipe' },
+    { uf: 'TO', name: 'Tocantins' },
+  ];
+  
+  // Função para buscar endereço por CEP
+  const fetchAddressByCep = async (cep) => {
+    const cleanedCep = cep.replace(/\D/g, '');
+    if (cleanedCep.length === 8) {
+      try {
+        const response = await fetch(`https://viacep.com.br/ws/${cleanedCep}/json/`);
+        const data = await response.json();
+
+        if (!data.erro) {
+          setUserData(prevData => ({
+            ...prevData,
+            address: {
+              ...prevData.address,
+              street: data.logradouro,
+              neighborhood: data.bairro,
+              city: data.localidade,
+              state: data.uf,
+              zip_code: data.cep.replace(/\D/g, '')
+            }
+          }));
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            address: {
+              ...prevErrors.address,
+              street: '',
+              neighborhood: '',
+              city: '',
+              state: '',
+              zip_code: ''
+            }
+          }));
+        } else {
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            address: {
+              ...prevErrors.address,
+              zip_code: 'CEP não encontrado.'
+            }
+          }));
+        }
+      } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+        setErrors(prevErrors => ({
+          ...prevErrors,
+          address: {
+            ...prevErrors.address,
+            zip_code: 'Erro ao buscar CEP. Tente novamente.'
+          }
+        }));
+      }
+    }
+  };
+
+  // Função para formatar o CEP enquanto digita
+  const formatZipCode = (value) => {
+    if (!value) return '';
+    const cleanedValue = value.replace(/\D/g, '');
+    if (cleanedValue.length > 5) {
+      return `${cleanedValue.slice(0, 5)}-${cleanedValue.slice(5, 8)}`;
+    }
+    return cleanedValue;
+  };
   
   // Carrega os dados do usuário
   useEffect(() => {
@@ -40,13 +145,14 @@ const EditarPerfil = () => {
       try {
         const currentUser = await fetchCurrentUser();
         setUserData({
-          nome: currentUser.displayName || '',
+          first_name: currentUser.name || '',
+          surname: currentUser.surname || '',
           email: currentUser.email || '',
-          telefone: currentUser.telefone || '',
-          cidade: currentUser.cidade || '',
-          bio: currentUser.bio || '',
-          avatar: null,
-          avatarPreview: currentUser.avatar || '/images/default-avatar.png'
+          phone: currentUser.phone || '',
+          address: currentUser.address && currentUser.address.length > 0 ? currentUser.address[0] : { city: '', state: '', neighborhood: '', street: '', number: '', zip_code: '', complement: '' },
+          owner_details: currentUser.type === 'org' && currentUser.owner_details ? currentUser.owner_details : { description: '', additional_data: {} },
+          picture: currentUser.picture || '',
+          type: currentUser.type || '',
         });
         setIsLoading(false);
       } catch (error) {
@@ -57,18 +163,30 @@ const EditarPerfil = () => {
     };
     
     loadUserData();
-  }, []);
+  }, [user]);
   
   // Função para lidar com mudanças nos campos de entrada
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    // Atualiza o estado com o novo valor
-    setUserData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
+
+    // Lidar com campos aninhados (ex: address.city, owner_details.description)
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      setUserData(prev => ({
+        ...prev,
+        [parent]: {
+          ...prev[parent],
+          [child]: value
+        }
+      }));
+    } else {
+      // Lidar com campos de nível superior
+      setUserData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+
     // Limpa o erro do campo quando o usuário começa a digitar
     if (errors[name]) {
       setErrors(prev => ({
@@ -111,9 +229,14 @@ const EditarPerfil = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    // Validação do nome
-    if (!userData.nome.trim()) {
-      newErrors.nome = 'O nome é obrigatório';
+    // Validação do primeiro nome
+    if (!userData.first_name.trim()) {
+      newErrors.first_name = 'O primeiro nome é obrigatório';
+    }
+
+    // Validação do sobrenome
+    if (!userData.surname.trim()) {
+      newErrors.surname = 'O sobrenome é obrigatório';
     }
     
     // Validação do email
@@ -124,10 +247,30 @@ const EditarPerfil = () => {
     }
     
     // Validação do telefone
-    if (userData.telefone && !/^\(\d{2}\) \d{4,5}-\d{4}$/.test(userData.telefone)) {
-      newErrors.telefone = 'Formato inválido. Use (99) 99999-9999';
+    if (!userData.phone.trim()) {
+      newErrors.phone = 'O telefone é obrigatório';
     }
     
+    // Validação dos campos de endereço
+    if (!userData.address.state.trim()) {
+      newErrors.address = { ...newErrors.address, state: 'O estado é obrigatório' };
+    }
+    if (!userData.address.city.trim()) {
+      newErrors.address = { ...newErrors.address, city: 'A cidade é obrigatória' };
+    }
+    if (!userData.address.zip_code.trim()) {
+      newErrors.address = { ...newErrors.address, zip_code: 'O CEP é obrigatório' };
+    }
+    if (!userData.address.neighborhood.trim()) {
+      newErrors.address = { ...newErrors.address, neighborhood: 'O bairro é obrigatório' };
+    }
+    if (!userData.address.street.trim()) {
+      newErrors.address = { ...newErrors.address, street: 'A rua é obrigatória' };
+    }
+    if (!userData.address.number.trim()) {
+      newErrors.address = { ...newErrors.address, number: 'O número é obrigatório' };
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -146,18 +289,20 @@ const EditarPerfil = () => {
       setIsLoading(true);
       
       // Prepara os dados para atualização
-      const formData = new FormData();
-      formData.append('displayName', userData.nome);
-      formData.append('email', userData.email);
-      formData.append('telefone', userData.telefone);
-      formData.append('cidade', userData.cidade);
-      formData.append('bio', userData.bio);
-      if (userData.avatar) {
-        formData.append('avatar', userData.avatar);
-      }
-      
+      const dataToSend = {
+        _id: user._id,
+        name: userData.first_name,
+        surname: userData.surname,
+        email: userData.email,
+        phone: userData.phone.replace(/\D/g, ''),
+        address: [userData.address],
+        picture: userData.picture,
+        type: userData.type,
+        owner_details: userData.type === 'org' ? { description: userData.owner_details.description, additional_data: {} } : undefined,
+      };
+
       // Atualiza os dados do usuário
-      const updatedUser = await updateUser(formData);
+      const updatedUser = await updateUser(dataToSend);
       
       // Atualiza o contexto com os novos dados
       setUser(updatedUser);
@@ -186,7 +331,7 @@ const EditarPerfil = () => {
   };
   
   // Renderiza um indicador de carregamento
-  if (isLoading && !userData.nome) {
+  if (isLoading && !userData.first_name) {
     return (
       <div className={`${styles.container} ${darkMode ? styles.darkMode : ''}`}>
         <div className={styles.loadingContainer}>
@@ -216,130 +361,204 @@ const EditarPerfil = () => {
       
       {/* Formulário de edição */}
       <form className={styles.form} onSubmit={handleSubmit}>
-        {/* Seção de avatar */}
-        <div className={styles.avatarSection}>
-          <div className={styles.avatarContainer}>
-            <img 
-              src={userData.avatarPreview || '/images/default-avatar.png'} 
-              alt="Avatar" 
-              className={styles.avatar} 
-            />
-            <label className={styles.avatarChangeButton} htmlFor="avatar-input">
-              <FaCamera />
-            </label>
-            <input 
-              id="avatar-input" 
-              type="file" 
-              accept="image/*" 
-              onChange={handleAvatarChange} 
-              className={styles.avatarInput}
-              disabled={isLoading}
-            />
-          </div>
-          <p className={styles.avatarHint}>Clique para alterar sua foto</p>
-        </div>
+        {/* Seção de avatar removida, pois não é mais relevante para o fluxo de edição */}
         
         {/* Campos de informação */}
-        <div className={styles.formGroup}>
-          <label htmlFor="nome" className={styles.label}>
-            <FaUser className={styles.labelIcon} /> Nome
-          </label>
-          <input
-            type="text"
-            id="nome"
-            name="nome"
-            value={userData.nome}
-            onChange={handleChange}
-            className={`${styles.input} ${errors.nome ? styles.inputError : ''}`}
-            placeholder="Seu nome completo"
-            disabled={isLoading}
-          />
-          {errors.nome && <span className={styles.errorMessage}>{errors.nome}</span>}
-        </div>
-        
-        <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>
-            <FaEnvelope className={styles.labelIcon} /> Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={userData.email}
-            onChange={handleChange}
-            className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
-            placeholder="Seu email"
-            disabled={isLoading}
-          />
-          {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
-        </div>
-        
-        <div className={styles.formGroup}>
-          <label htmlFor="telefone" className={styles.label}>
-            <FaPhone className={styles.labelIcon} /> Telefone
-          </label>
-          <input
-            type="tel"
-            id="telefone"
-            name="telefone"
-            value={userData.telefone}
-            onChange={handleChange}
-            className={`${styles.input} ${errors.telefone ? styles.inputError : ''}`}
-            placeholder="(99) 99999-9999"
-            disabled={isLoading}
-          />
-          {errors.telefone && <span className={styles.errorMessage}>{errors.telefone}</span>}
-        </div>
-        
-        <div className={styles.formGroup}>
-          <label htmlFor="cidade" className={styles.label}>
-            <FaMapMarkerAlt className={styles.labelIcon} /> Cidade
-          </label>
-          <input
-            type="text"
-            id="cidade"
-            name="cidade"
-            value={userData.cidade}
-            onChange={handleChange}
-            className={styles.input}
-            placeholder="Sua cidade"
-            disabled={isLoading}
-          />
-        </div>
-        
-        <div className={styles.formGroup}>
-          <label htmlFor="bio" className={styles.label}>
-            <FaInfoCircle className={styles.labelIcon} /> Sobre mim
-          </label>
-          <textarea
-            id="bio"
-            name="bio"
-            value={userData.bio}
-            onChange={handleChange}
-            className={styles.textarea}
-            placeholder="Conte um pouco sobre você..."
-            rows={4}
-            disabled={isLoading}
-          />
-        </div>
-        
-        <div className={styles.formActions}>
-          <button 
-            type="button" 
-            className={styles.cancelButton} 
-            onClick={handleBack}
-            disabled={isLoading}
-          >
-            Cancelar
-          </button>
-          <button 
-            type="submit" 
-            className={styles.saveButton}
-            disabled={isLoading}
-          >
-            <FaSave className={styles.buttonIcon} />
-            {isLoading ? 'Salvando...' : 'Salvar alterações'}
-          </button>
+        <div className={styles.formGrid}>
+          <div className={styles.formGroup}>
+            <label htmlFor="first_name" className={styles.label}>
+              <FaUser className={styles.labelIcon} /> Primeiro nome
+            </label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              value={userData.first_name}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+            />
+            {errors.first_name && <span className={styles.error}>{errors.first_name}</span>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="surname" className={styles.label}>
+              Sobrenome
+            </label>
+            <input
+              type="text"
+              id="surname"
+              name="surname"
+              value={userData.surname}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+            />
+            {errors.surname && <span className={styles.error}>{errors.surname}</span>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="email" className={styles.label}>
+              <FaEnvelope className={styles.labelIcon} /> Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+            />
+            {errors.email && <span className={styles.error}>{errors.email}</span>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="phone" className={styles.label}>
+              <FaPhone className={styles.labelIcon} /> Telefone
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={userData.phone}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+            />
+            {errors.phone && <span className={styles.error}>{errors.phone}</span>}
+          </div>
+
+          <div className={styles.formGroup} style={{ gridColumn: '1 / 3', marginBottom: '1.5rem' }}>
+            <h3 style={{ marginBottom: '10px', color: 'var(--text-color-dark)' }}>Informações de Endereço</h3>
+            <div className={styles.formGrid}>
+              <div className={styles.formGroup}>
+                <label htmlFor="address.state">Estado</label>
+                <select
+                  id="address.state"
+                  name="address.state"
+                  value={userData.address.state}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                >
+                  <option value="">Selecione o Estado</option>
+                  {states.map((state) => (
+                    <option key={state.uf} value={state.uf}>
+                      {state.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.address && errors.address.state && <span className={styles.error}>{errors.address.state}</span>}
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="address.zip_code">CEP</label>
+                <input
+                  type="text"
+                  id="address.zip_code"
+                  name="address.zip_code"
+                  value={formatZipCode(userData.address.zip_code)}
+                  onChange={(e) => handleChange(e)}
+                  onBlur={(e) => fetchAddressByCep(e.target.value)}
+                  maxLength="9"
+                  required
+                  disabled={isLoading}
+                />
+                {errors.address && errors.address.zip_code && <span className={styles.error}>{errors.address.zip_code}</span>}
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="address.city">Cidade</label>
+                <input
+                  type="text"
+                  id="address.city"
+                  name="address.city"
+                  value={userData.address.city}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                />
+                {errors.address && errors.address.city && <span className={styles.error}>{errors.address.city}</span>}
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="address.neighborhood">Bairro</label>
+                <input
+                  type="text"
+                  id="address.neighborhood"
+                  name="address.neighborhood"
+                  value={userData.address.neighborhood}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                />
+                {errors.address && errors.address.neighborhood && <span className={styles.error}>{errors.address.neighborhood}</span>}
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="address.street">Rua</label>
+                <input
+                  type="text"
+                  id="address.street"
+                  name="address.street"
+                  value={userData.address.street}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                />
+                {errors.address && errors.address.street && <span className={styles.error}>{errors.address.street}</span>}
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="address.number">Número</label>
+                <input
+                  type="text"
+                  id="address.number"
+                  name="address.number"
+                  value={userData.address.number}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                />
+                {errors.address && errors.address.number && <span className={styles.error}>{errors.address.number}</span>}
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="address.complement">Complemento (Opcional)</label>
+                <input
+                  type="text"
+                  id="address.complement"
+                  name="address.complement"
+                  value={userData.address.complement}
+                  onChange={handleChange}
+                  disabled={isLoading}
+                />
+                {errors.address && errors.address.complement && <span className={styles.error}>{errors.address.complement}</span>}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.formGroup} style={{ gridColumn: '1 / 3' }}>
+            <label htmlFor="owner_details.description" className={styles.label}>
+              <FaInfoCircle className={styles.labelIcon} /> Sobre mim
+            </label>
+            <textarea
+              id="owner_details.description"
+              name="owner_details.description"
+              value={userData.owner_details.description}
+              onChange={handleChange}
+              rows="5"
+              disabled={isLoading}
+            ></textarea>
+            {errors.owner_details && errors.owner_details.description && <span className={styles.error}>{errors.owner_details.description}</span>}
+          </div>
+
+          <div className={styles.formActions}>
+            <button type="submit" className={styles.saveButton} disabled={isLoading}>
+              <FaSave /> Salvar Alterações
+            </button>
+          </div>
         </div>
       </form>
     </div>
