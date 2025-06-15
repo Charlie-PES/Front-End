@@ -14,7 +14,7 @@
 }
 
 .menuItem:hover {
-    background: var(--hover-background);
+    background: var(--primary-light);
     color: var(--primary-color);
 }
 
@@ -33,8 +33,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: var(--color-background);
-    box-shadow: var(--shadow-sm);
+    background-color: var(--header-background);
+    box-shadow: 0 2px 10px var(--card-shadow);
     position: relative;
     z-index: 1000;
 }
@@ -45,7 +45,7 @@
 }
 
 .logo a {
-    color: var(--color-primary);
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -55,14 +55,14 @@
 }
 
 .navLink {
-    color: var(--color-text);
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
-    transition: color var(--transition-normal);
+    transition: color 0.3s ease;
 }
 
 .navLink:hover {
-    color: var(--color-primary);
+    color: var(--primary-color);
 }
 
 .userSection {
@@ -84,26 +84,26 @@
 .iconButton {
     background: none;
     border: none;
-    color: var(--color-text);
+    color: var(--text-color);
     font-size: 1.2rem;
     cursor: pointer;
     padding: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color var(--transition-normal);
+    transition: color 0.3s ease;
 }
 
 .iconButton:hover {
-    color: var(--color-primary);
+    color: var(--primary-color);
 }
 
 .notificationBadge {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: var(--color-error);
-    color: white;
+    background-color: var(--error-color);
+    color: var(--secondary-color);
     font-size: 0.7rem;
     padding: 0.2rem 0.4rem;
     border-radius: 50%;
@@ -120,9 +120,9 @@
     top: 100%;
     right: 0;
     width: 300px;
-    background-color: var(--color-card-background);
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-lg);
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--card-shadow);
     padding: 1rem;
     margin-top: 0.5rem;
     z-index: 1000;
@@ -131,9 +131,9 @@
 .notificationItem,
 .messageItem {
     padding: 0.75rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
-    transition: background-color var(--transition-normal);
+    transition: background-color 0.3s ease;
 }
 
 .notificationItem:last-child,
@@ -143,19 +143,19 @@
 
 .notificationItem:hover,
 .messageItem:hover {
-    background-color: var(--color-hover);
+    background-color: var(--primary-light);
 }
 
 .notificationItem p,
 .messageItem p {
     margin: 0;
     font-weight: 500;
-    color: var(--color-text);
+    color: var(--text-color);
 }
 
 .notificationItem small,
 .messageItem small {
-    color: var(--color-text-secondary);
+    color: var(--text-secondary);
     font-size: 0.8rem;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .userName {
-    color: var(--color-text);
+    color: var(--text-color);
     font-weight: 500;
 }
 
@@ -190,9 +190,9 @@
     top: 100%;
     right: 0;
     width: 200px;
-    background-color: var(--color-card-background);
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-lg);
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--card-shadow);
     padding: 0.5rem;
     margin-top: 0.5rem;
     z-index: 1000;
@@ -206,59 +206,71 @@
 .loginButton,
 .registerButton {
     padding: 0.5rem 1rem;
-    border-radius: var(--border-radius-md);
+    border-radius: 20px;
     text-decoration: none;
     font-weight: 500;
-    transition: all var(--transition-normal);
+    transition: all 0.3s ease;
 }
 
 .loginButton {
-    color: var(--color-primary);
-    border: 1px solid var(--color-primary);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
 }
 
 .registerButton {
-    background-color: var(--color-primary);
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
 }
 
 .loginButton:hover {
-    background-color: var(--color-primary);
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .registerButton:hover {
-    background-color: var(--color-primary-dark);
+    background-color: var(--primary-dark);
 }
 
 /* Dark Mode */
 .darkMode {
-    background-color: var(--dark-background);
+    background-color: var(--bg-color);
 }
 
 .darkMode .navLink {
-    color: var(--dark-text);
+    color: var(--text-color);
 }
 
 .darkMode .iconButton {
-    color: var(--dark-text);
+    color: var(--text-color);
 }
 
 .darkMode .notificationsMenu,
 .darkMode .messagesMenu,
 .darkMode .profileMenu {
-    background-color: var(--dark-card-background);
+    background-color: var(--card-background);
 }
 
 .darkMode .notificationItem,
 .darkMode .messageItem {
-    border-color: var(--dark-border-color);
+    border-color: var(--border-color);
 }
 
 .darkMode .notificationItem:hover,
 .darkMode .messageItem:hover,
 .darkMode .menuItem:hover {
-    background-color: var(--dark-hover);
+    background-color: var(--primary-dark);
+}
+
+/* Profile Menu specific dark mode */
+.darkMode .profileHeader {
+  border-bottom-color: var(--border-color);
+}
+
+.darkMode .profileInfo .name,
+.darkMode .profileInfo .role {
+  color: var(--text-color);
 }
 
 /* Responsive */

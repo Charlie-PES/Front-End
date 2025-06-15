@@ -11,40 +11,65 @@ html {
 
 /* Temas: Variáveis globais */
 :root {
-  --bg-color: #fffdf9;
-  --text-color: #333;
-  --card-bg: #ffffff;
-  --card-shadow: rgba(0, 0, 0, 0.08);
-  --primary-color: #2e7d7b;
-  --border-color: #ccc;
+  --bg-color: #fffaf4; /* Cor de fundo principal clara */
+  --text-color: #333; /* Cor do texto principal escura */
+  --text-secondary: #666; /* Cor do texto secundário */
+  --card-background: #ffffff; /* Fundo de cards/containers */
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --border-color: #ddd; /* Cor de borda padrão */
+
+  --primary-color: #c0926a; /* Cor primária - marrom/bege dos botões */
+  --primary-dark: #a67c57; /* Cor primária mais escura para hover */
+  --primary-light: #fbe5d4; /* Cor primária mais clara para ícones/fundo */
+  --primary-rgb: 192, 146, 106; /* Valores RGB para primary-color */
+  --header-background: #dca879; /* Cor de fundo do cabeçalho */
+  --input-background: #ffffff;
+
+  --error-color: #b63b3b; /* Cor de erro */
+  --error-background: #fbe6e6; /* Fundo de erro */
+  
+  --success-color: #2ecc71; /* Cor de sucesso (verde) */
+  --success-dark: #27ae60; /* Cor de sucesso mais escura para hover */
 }
 
 [data-theme='dark'] {
-  --bg-color: #121212;
+  --bg-color: #1a1a1a;
   --text-color: #f1f1f1;
-  --card-bg: #1e1e1e;
-  --card-shadow: rgba(255, 255, 255, 0.08);
-  --primary-color: #90caf9;
+  --text-secondary: #aaaaaa;
+  --card-background: #2d2d2d;
+  --card-shadow: rgba(0, 0, 0, 0.3);
   --border-color: #444;
+
+  --primary-color: #dca879;
+  --primary-dark: #c0926a;
+  --primary-light: #4d4d4d;
+  --primary-rgb: 220, 168, 121; /* Valores RGB para primary-color no dark mode */
+  --header-background: #2d2d2d;
+  --input-background: #3d3d3d;
+
+  --error-color: #ff7f7f;
+  --error-background: #4d0000;
 }
 
 html, body, #root {
   height: 100%;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
 }
 
 /* Layout base com Header + Conteúdo + Footer */
-.app-container {
+.App {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.content {
+main {
   flex: 1;
   padding: 20px;
+  padding-top: 100px; /* Ajusta para o cabeçalho fixo */
+  transition: padding-top 0.3s ease;
 }
 
 /* Links de navegação */
@@ -62,11 +87,12 @@ button {
   border-radius: 5px;
   transition: 0.2s ease-in-out;
   background-color: var(--primary-color);
-  color: #fff;
+  color: var(--text-color);
 }
 
 button:hover {
-  opacity: 0.9;
+  background-color: var(--primary-dark);
+  opacity: 1; /* Garante que a opacidade não sobreponha */
 }
 
 /* Título centralizado */
@@ -84,9 +110,36 @@ img {
 
 /* Cards padrão com sombra */
 .card {
-  background-color: var(--card-bg);
+  background-color: var(--card-background);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 6px 16px var(--card-shadow);
   transition: background-color 0.3s ease;
+}
+
+/* Classes para textos */
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-light {
+  color: var(--text-color);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
 }

@@ -31,7 +31,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import OngProfile from './pages/ong/OngProfile/OngProfile';
 import DirectMessages from './components/DirectMessages/DirectMessages';
 import AccountType from './pages/auth/AccountType/AccountType';
-import RegisterTemporary from './pages/auth/RegisterTemporary/RegisterTemporary';
 import AddPet from './pages/pet/AddPet/AddPet';
 import Doacoes from './pages/info/Doacoes/Doacoes';
 import './App.css';
@@ -47,7 +46,8 @@ function App() {
                         <Route path="/home" element={<Home />} />
                         <Route path="/adotar" element={<Adotar />} />
                         <Route path="/sobre" element={<Sobre />} />
-                        <Route path="/cadastro" element={<Cadastro />} />
+                        <Route path="/account-type" element={<AccountType />} />
+                        <Route path="/register/:type" element={<Cadastro />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/match/:id" element={<PetMatch />} />
                         <Route path="/pet/:id" element={<PetPage />} />
@@ -69,8 +69,6 @@ function App() {
                         <Route path="/admin" element={<AdminPage />} />
                         <Route path="/ong/perfil" element={<OngProfile />} />
                         <Route path="/messages" element={<DirectMessages />} />
-                        <Route path="/account-type" element={<AccountType />} />
-                        <Route path="/register/temporary" element={<RegisterTemporary />} />
                         <Route path="/pets/add" element={<AddPet />} />
                         <Route path="/doacoes" element={<Doacoes />} />
                     </Routes>

@@ -4,22 +4,22 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: var(--color-primary);
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  box-shadow: 0 4px 12px var(--card-shadow);
+  transition: all 0.3s ease;
   z-index: 1000;
 }
 
 .backButton:hover {
   transform: translateY(-2px);
-  background-color: var(--color-primary-dark);
-  box-shadow: var(--shadow-lg);
+  background-color: var(--primary-dark);
+  box-shadow: 0 6px 16px var(--card-shadow);
 }
 
 .backButton svg {
@@ -28,11 +28,11 @@
 
 /* Dark mode */
 .darkMode .backButton {
-  background-color: var(--color-primary-dark);
+  background-color: var(--dark-primary-color);
 }
 
 .darkMode .backButton:hover {
-  background-color: var(--color-primary);
+  background-color: var(--dark-primary-dark);
 }
 
 /* Responsive */

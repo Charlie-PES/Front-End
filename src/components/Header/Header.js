@@ -155,7 +155,7 @@ const Header = () => {
             <Link to="/login" className={styles.loginButton}>
               Entrar
             </Link>
-            <Link to="/cadastro" className={styles.registerButton}>
+            <Link to="/account-type" className={styles.registerButton}>
               Registrar
             </Link>
           </>

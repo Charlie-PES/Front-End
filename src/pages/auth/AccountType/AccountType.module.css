@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    background: var(--background-color);
+    background: var(--bg-color);
     transition: background-color 0.3s ease;
 }
 
@@ -14,7 +14,7 @@
     background: var(--card-background);
     border-radius: 15px;
     padding: 3rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--card-shadow);
 }
 
 .title {
@@ -51,7 +51,7 @@
 .option:hover {
     transform: translateY(-5px);
     border-color: var(--primary-color);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px var(--card-shadow);
 }
 
 .iconWrapper {
@@ -85,7 +85,7 @@
 
 .selectButton {
     background: var(--primary-color);
-    color: white;
+    color: var(--secondary-color);
     border: none;
     border-radius: 8px;
     padding: 1rem 2rem;
@@ -98,6 +98,7 @@
 
 .selectButton:hover {
     background: var(--primary-dark);
+    color: var(--secondary-color);
 }
 
 .footer {
@@ -124,21 +125,21 @@
 
 .loginButton:hover {
     background: var(--primary-color);
-    color: white;
+    color: var(--secondary-color);
 }
 
 /* Dark Mode */
 .darkMode {
-    background: var(--dark-background);
+    background: var(--bg-color);
 }
 
 .darkMode .content {
-    background: var(--dark-card-background);
+    background: var(--card-background);
 }
 
 .darkMode .option {
-    background: var(--dark-card-background);
-    border-color: var(--dark-border-color);
+    background: var(--card-background);
+    border-color: var(--border-color);
 }
 
 .darkMode .option:hover {

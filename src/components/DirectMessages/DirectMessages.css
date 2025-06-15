@@ -1,7 +1,7 @@
 .dm-container {
     display: flex;
     height: calc(100vh - 140px);
-    background-color: var(--card-bg);
+    background-color: var(--card-background);
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 8px 24px var(--card-shadow);
@@ -14,14 +14,14 @@
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    background-color: var(--card-bg);
+    background-color: var(--card-background);
     transition: all 0.3s ease;
 }
 
 .dm-header {
     padding: 24px;
     border-bottom: 1px solid var(--border-color);
-    background-color: var(--card-bg);
+    background-color: var(--card-background);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -73,7 +73,7 @@
 
 .conversation-item.active {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--secondary-color);
 }
 
 .conversation-item.active .timestamp,
@@ -106,9 +106,9 @@
     right: 2px;
     width: 14px;
     height: 14px;
-    background-color: #4CAF50;
+    background-color: var(--success-color);
     border-radius: 50%;
-    border: 2px solid var(--card-bg);
+    border: 2px solid var(--card-background);
     box-shadow: 0 0 0 2px var(--primary-color);
     animation: pulse 2s infinite;
 }
@@ -137,16 +137,16 @@
 
 .timestamp {
     font-size: 0.8rem;
-    color: var(--text-color);
-    opacity: 0.7;
+    color: var(--text-secondary);
+    opacity: 0.9;
     transition: color 0.3s ease;
 }
 
 .last-message {
     margin: 0;
     font-size: 0.95rem;
-    color: var(--text-color);
-    opacity: 0.8;
+    color: var(--text-secondary);
+    opacity: 0.9;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -154,8 +154,8 @@
 }
 
 .unread-badge {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--error-color);
+    color: var(--secondary-color);
     border-radius: 50%;
     min-width: 22px;
     height: 22px;
@@ -173,7 +173,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: var(--card-bg);
+    background-color: var(--card-background);
     position: relative;
 }
 
@@ -182,7 +182,7 @@
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    background-color: var(--card-bg);
+    background-color: var(--card-background);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -209,7 +209,7 @@
 
 .online-status {
     font-size: 0.85rem;
-    color: #4CAF50;
+    color: var(--success-color);
     margin-left: 12px;
     display: flex;
     align-items: center;
@@ -220,7 +220,7 @@
     display: inline-block;
     width: 8px;
     height: 8px;
-    background-color: #4CAF50;
+    background-color: var(--success-color);
     border-radius: 50%;
     margin-right: 6px;
     animation: pulse 2s infinite;
@@ -252,178 +252,165 @@
 
 .message-date {
     text-align: center;
-    color: var(--text-color);
-    opacity: 0.7;
-    font-size: 0.9rem;
-    margin: 16px 0;
+    margin: 20px 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .message-date::before,
 .message-date::after {
     content: '';
-    position: absolute;
-    top: 50%;
-    width: 30%;
+    flex-grow: 1;
     height: 1px;
     background-color: var(--border-color);
-}
-
-.message-date::before {
-    left: 0;
-}
-
-.message-date::after {
-    right: 0;
+    margin: 0 10px;
 }
 
 .message {
     max-width: 70%;
-    padding: 12px 18px;
-    border-radius: 18px;
+    padding: 12px 16px;
+    border-radius: 20px;
     position: relative;
-    transition: transform 0.3s ease;
+    word-wrap: break-word;
+    line-height: 1.4;
+    transition: all 0.2s ease;
 }
 
 .message:hover {
     transform: translateY(-2px);
+    box-shadow: 0 2px 8px var(--card-shadow);
 }
 
 .message p {
     margin: 0;
-    line-height: 1.5;
-    color: var(--text-color);
+    font-size: 0.95rem;
 }
 
 .message-time {
     font-size: 0.75rem;
-    opacity: 0.7;
-    margin-top: 6px;
-    display: block;
-    color: var(--text-color);
+    opacity: 0.8;
+    margin-top: 5px;
+    text-align: right;
 }
 
 .message.received {
     align-self: flex-start;
-    background-color: var(--bg-color);
+    background-color: var(--primary-light);
+    color: var(--text-color);
     border-bottom-left-radius: 4px;
-    box-shadow: 0 2px 8px var(--card-shadow);
 }
 
 .message.sent {
     align-self: flex-end;
     background-color: var(--primary-color);
-    color: white;
+    color: var(--secondary-color);
     border-bottom-right-radius: 4px;
-    box-shadow: 0 2px 8px var(--card-shadow);
 }
 
 .message.sent p,
 .message.sent .message-time {
-    color: white;
+    color: inherit;
 }
 
 .message-input-container {
-    padding: 20px 24px;
-    border-top: 1px solid var(--border-color);
     display: flex;
-    gap: 12px;
-    background-color: var(--card-bg);
+    padding: 16px 24px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--card-background);
+    align-items: center;
+    gap: 10px;
     position: sticky;
     bottom: 0;
+    z-index: 10;
 }
 
 .message-input-container input {
     flex: 1;
-    padding: 14px 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 25px;
-    background-color: var(--bg-color);
+    padding: 12px 16px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-background);
     color: var(--text-color);
     font-size: 1rem;
+    outline: none;
     transition: all 0.3s ease;
 }
 
 .message-input-container input:focus {
-    outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(46, 125, 123, 0.1);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2);
 }
 
 .message-input-container button {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 50%;
     width: 48px;
     height: 48px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary-color);
-    color: white;
-    transition: all 0.3s ease;
-    border: none;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .message-input-container button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 3px rgba(46, 125, 123, 0.2);
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
 }
 
 .message-input-container button:active {
-    transform: scale(0.95);
+    transform: translateY(0);
 }
 
 .message-input-container button svg {
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s ease;
+    font-size: 1.2rem;
 }
 
 .message-input-container button:hover svg {
-    transform: translateX(2px);
+    color: inherit;
 }
 
 .no-chat-selected {
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    color: var(--text-color);
-    opacity: 0.7;
+    align-items: center;
     text-align: center;
-    padding: 24px;
     background-color: var(--bg-color);
-    border-radius: 16px;
-    margin: 24px;
+    color: var(--text-secondary);
+    border-left: 1px solid var(--border-color);
+    padding: 40px;
 }
 
 .no-chat-selected svg {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 24px;
-    opacity: 0.5;
-    transition: transform 0.3s ease;
+    font-size: 4rem;
+    margin-bottom: 20px;
     color: var(--primary-color);
 }
 
 .no-chat-selected:hover svg {
-    transform: scale(1.1);
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
 }
 
 .no-chat-selected h3 {
-    margin: 0 0 12px 0;
     font-size: 1.8rem;
-    font-weight: 600;
+    margin-bottom: 10px;
     color: var(--text-color);
 }
 
 .no-chat-selected p {
-    margin: 0;
-    font-size: 1.1rem;
-    max-width: 400px;
+    font-size: 1rem;
     line-height: 1.5;
-    color: var(--text-color);
+    max-width: 400px;
+    color: var(--text-secondary);
 }
 
 /* Responsive Design */
@@ -492,44 +479,191 @@
 
 /* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes pulse {
     0% {
-        transform: scale(1);
-        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
     }
-    50% {
-        transform: scale(1.1);
-        opacity: 0.8;
+    70% {
+        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
     }
     100% {
-        transform: scale(1);
-        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
     }
 }
 
 @keyframes bounce {
-    0%, 100% {
-        transform: scale(1);
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
     }
-    50% {
-        transform: scale(1.1);
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
     }
 }
 
-.conversation-item {
-    animation: fadeIn 0.3s ease-out;
+/* Dark Mode */
+.darkMode .dm-container {
+    background-color: var(--dark-card-background);
+    box-shadow: 0 8px 24px var(--card-shadow);
 }
 
-.message {
-    animation: fadeIn 0.2s ease-out;
+.darkMode .dm-sidebar {
+    border-color: var(--dark-border-color);
+    background-color: var(--dark-card-background);
+}
+
+.darkMode .dm-header {
+    border-color: var(--dark-border-color);
+    background-color: var(--dark-card-background);
+}
+
+.darkMode .dm-header h2 {
+    color: var(--dark-text-color);
+}
+
+.darkMode .conversations-list::-webkit-scrollbar-thumb {
+    background-color: var(--dark-primary-color);
+}
+
+.darkMode .conversation-item {
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-color);
+}
+
+.darkMode .conversation-item:hover {
+    background-color: var(--dark-bg-color);
+}
+
+.darkMode .conversation-item.active {
+    background-color: var(--dark-primary-color);
+    color: var(--dark-secondary-color);
+}
+
+.darkMode .conversation-item.active .timestamp,
+.darkMode .conversation-item.active .last-message {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.darkMode .avatar-container img {
+    border-color: var(--dark-primary-color);
+}
+
+.darkMode .online-indicator {
+    background-color: var(--success-dark);
+    border-color: var(--dark-card-background);
+    box-shadow: 0 0 0 2px var(--dark-primary-color);
+}
+
+.darkMode .conversation-header h3 {
+    color: var(--dark-text-color);
+}
+
+.darkMode .timestamp {
+    color: var(--dark-text-secondary);
+}
+
+.darkMode .last-message {
+    color: var(--dark-text-secondary);
+}
+
+.darkMode .unread-badge {
+    background-color: var(--error-dark);
+    color: var(--dark-secondary-color);
+}
+
+.darkMode .dm-chat {
+    background-color: var(--dark-card-background);
+}
+
+.darkMode .chat-header {
+    border-color: var(--dark-border-color);
+    background-color: var(--dark-card-background);
+}
+
+.darkMode .chat-user-info img {
+    border-color: var(--dark-primary-color);
+}
+
+.darkMode .online-status {
+    color: var(--success-dark);
+}
+
+.darkMode .online-status::before {
+    background-color: var(--success-dark);
+}
+
+.darkMode .messages-container::-webkit-scrollbar-thumb {
+    background-color: var(--dark-primary-color);
+}
+
+.darkMode .message-date {
+    color: var(--dark-text-secondary);
+}
+
+.darkMode .message-date::before,
+.darkMode .message-date::after {
+    background-color: var(--dark-border-color);
+}
+
+.darkMode .message:hover {
+    box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+.darkMode .message.received {
+    background-color: var(--dark-primary-light);
+    color: var(--dark-text-color);
+}
+
+.darkMode .message.sent {
+    background-color: var(--dark-primary-color);
+    color: var(--dark-secondary-color);
+}
+
+.darkMode .message-input-container {
+    border-color: var(--dark-border-color);
+    background-color: var(--dark-card-background);
+}
+
+.darkMode .message-input-container input {
+    border-color: var(--dark-border-color);
+    background-color: var(--dark-input-background);
+    color: var(--dark-text-color);
+}
+
+.darkMode .message-input-container input:focus {
+    border-color: var(--dark-primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--dark-primary-rgb), 0.2);
+}
+
+.darkMode .message-input-container button {
+    background-color: var(--dark-primary-color);
+    color: var(--dark-secondary-color);
+}
+
+.darkMode .message-input-container button:hover {
+    background-color: var(--dark-primary-dark);
+}
+
+.darkMode .no-chat-selected {
+    background-color: var(--dark-bg-color);
+    color: var(--dark-text-secondary);
+    border-color: var(--dark-border-color);
+}
+
+.darkMode .no-chat-selected svg {
+    color: var(--dark-primary-color);
+}
+
+.darkMode .no-chat-selected h3 {
+    color: var(--dark-text-color);
+}
+
+.darkMode .no-chat-selected p {
+    color: var(--dark-text-secondary);
 } 

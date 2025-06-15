@@ -23,35 +23,35 @@ const AccountType = () => {
                 <div className={styles.options}>
                     <div 
                         className={styles.option}
-                        onClick={() => handleTypeSelect('adopter')}
+                        onClick={() => handleTypeSelect('tutor')}
                     >
                         <div className={styles.iconWrapper}>
                             <FaUser className={styles.icon} />
                         </div>
-                        <h2>Adotante</h2>
+                        <h2>Tutor</h2>
                         <p>
-                            Quero encontrar um pet para adotar e dar um lar permanente.
+                            Quero adotar um pet e dar um lar permanente.
                             Ideal para quem busca um companheiro para a vida toda.
                         </p>
                         <button className={styles.selectButton}>
-                            Quero Adotar
+                            Quero ser Tutor
                         </button>
                     </div>
 
                     <div 
                         className={styles.option}
-                        onClick={() => handleTypeSelect('temporary')}
+                        onClick={() => handleTypeSelect('org')}
                     >
                         <div className={styles.iconWrapper}>
                             <FaHandHoldingHeart className={styles.icon} />
                         </div>
-                        <h2>Tutor Temporário</h2>
+                        <h2>ONG</h2>
                         <p>
-                            Quero ajudar pets que precisam de um lar temporário.
-                            Ideal para quem pode oferecer cuidados temporários e ajudar na transição.
+                            Sou uma organização que cuida de pets e busca encontrar lares para eles.
+                            Ideal para ONGs e abrigos que trabalham com adoção de animais.
                         </p>
                         <button className={styles.selectButton}>
-                            Quero ser Tutor Temporário
+                            Quero registrar como ONG
                         </button>
                     </div>
                 </div>

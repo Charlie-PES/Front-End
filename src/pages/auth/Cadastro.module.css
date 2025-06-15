@@ -1,184 +1,148 @@
-.cadastroContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.container {
     min-height: 100vh;
-    padding: 20px;
-    background-color: #fffaf4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg-color);
     transition: background-color 0.3s ease;
 }
 
-.darkMode {
-    background-color: #1a1a1a;
-}
-
-.cadastroForm {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+.content {
     width: 100%;
-    max-width: 500px;
-    transition: all 0.3s ease;
+    max-width: 800px;
+    background: var(--card-background);
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 4px 6px var(--card-shadow);
 }
 
-.darkMode .cadastroForm {
-    background-color: #2d2d2d;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-.userIcon {
-    display: block;
-    margin: 0 auto 1rem;
-    color: #f77f00;
-    transition: color 0.3s ease;
-}
-
-.darkMode .userIcon {
-    color: #ffa726;
-}
-
-.cadastroForm h1 {
-    text-align: center;
-    color: #333;
+.title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-color);
+    font-size: 2rem;
     margin-bottom: 2rem;
-    font-size: 1.8rem;
-    transition: color 0.3s ease;
 }
 
-.darkMode .cadastroForm h1 {
-    color: #fff;
+.icon {
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .formGroup {
-    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .formGroup label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
+    color: var(--text-color);
     font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.darkMode .formGroup label {
-    color: #ccc;
 }
 
 .formGroup input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
+    background: var(--input-background);
+    color: var(--text-color);
     font-size: 1rem;
     transition: all 0.3s ease;
-}
-
-.darkMode .formGroup input {
-    background-color: #3d3d3d;
-    border-color: #4d4d4d;
-    color: #fff;
 }
 
 .formGroup input:focus {
     outline: none;
-    border-color: #f77f00;
-    box-shadow: 0 0 0 2px rgba(247, 127, 0, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(192, 146, 106, 0.2);
 }
 
-.darkMode .formGroup input:focus {
-    border-color: #ffa726;
-    box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.1);
-}
-
-.inputError {
-    border-color: #f44336 !important;
-}
-
-.errorMessage {
-    color: #f44336;
+.error {
+    color: var(--error-color);
     font-size: 0.875rem;
     margin-top: 0.25rem;
-    display: block;
 }
 
-.checkboxGroup {
-    margin: 1.5rem 0;
-}
-
-.checkboxItem {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.75rem;
-}
-
-.checkboxItem input[type="checkbox"] {
-    margin-right: 0.5rem;
-    width: auto;
-    cursor: pointer;
-}
-
-.checkboxItem label {
-    color: #555;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.darkMode .checkboxItem label {
-    color: #ccc;
-}
-
-.registerButton {
-    width: 100%;
-    padding: 1rem;
-    background-color: #f77f00;
-    color: white;
+.submitButton {
+    background: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 1rem;
 }
 
-.darkMode .registerButton {
-    background-color: #ffa726;
+.submitButton:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
 }
 
-.registerButton:hover {
-    background-color: #e67300;
-    transform: translateY(-1px);
-}
-
-.darkMode .registerButton:hover {
-    background-color: #fb8c00;
-}
-
-.registerButton:disabled {
-    background-color: #cccccc;
+.submitButton:disabled {
+    background: var(--text-secondary);
     cursor: not-allowed;
     transform: none;
 }
 
-.darkMode .registerButton:disabled {
-    background-color: #4d4d4d;
+/* Dark Mode */
+.darkMode {
+    background: var(--bg-color);
 }
 
-@media (max-width: 600px) {
-    .cadastroForm {
+.darkMode .content {
+    background: var(--card-background);
+}
+
+.darkMode .formGroup input {
+    background: var(--input-background);
+    border-color: var(--border-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .content {
+        padding: 2rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .content {
         padding: 1.5rem;
     }
 
-    .cadastroForm h1 {
+    .title {
         font-size: 1.5rem;
-    }
-
-    .formGroup input {
-        padding: 0.7rem;
-    }
-
-    .registerButton {
-        padding: 0.8rem;
     }
 }

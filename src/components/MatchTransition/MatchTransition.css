@@ -14,17 +14,17 @@
 }
 
 .match-transition {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: var(--card-background);
     border-radius: 20px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px var(--card-shadow);
     max-width: 600px;
     width: 90%;
     animation: slideUp 0.5s ease-out;
 }
 
 .darkMode .match-transition {
-    background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+    background: var(--dark-card-background);
 }
 
 .transition-content {
@@ -50,15 +50,15 @@
 .progress-circle {
     width: 100%;
     height: 100%;
-    border: 8px solid #e0e0e0;
-    border-top: 8px solid #4CAF50;
+    border: 8px solid var(--border-color);
+    border-top: 8px solid var(--primary-color);
     border-radius: 50%;
     transition: transform 0.3s ease-out;
 }
 
 .darkMode .progress-circle {
-    border-color: #444;
-    border-top-color: #4CAF50;
+    border-color: var(--dark-border-color);
+    border-top-color: var(--primary-color);
 }
 
 .progress-text {
@@ -68,35 +68,35 @@
     transform: translate(-50%, -50%);
     font-size: 2rem;
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
 }
 
 .darkMode .progress-text {
-    color: #fff;
+    color: var(--dark-text-color);
 }
 
 /* Traits Display */
 .traits-display {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--card-background);
     padding: 2rem;
     border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px var(--card-shadow);
     animation: slideUp 0.5s ease-out;
 }
 
 .darkMode .traits-display {
-    background: rgba(45, 45, 45, 0.95);
+    background: var(--dark-card-background);
 }
 
 .traits-display h3 {
     text-align: center;
     margin-bottom: 1.5rem;
-    color: #333;
+    color: var(--text-color);
     font-size: 1.5rem;
 }
 
 .darkMode .traits-display h3 {
-    color: #fff;
+    color: var(--dark-text-color);
 }
 
 .traits-grid {
@@ -109,32 +109,33 @@
     display: flex;
     align-items: center;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--card-background);
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .darkMode .trait-item {
-    background: rgba(60, 60, 60, 0.8);
+    background: var(--dark-card-background);
 }
 
 .trait-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--card-shadow);
 }
 
 .trait-icon {
     font-size: 1.5rem;
     margin-right: 1rem;
+    color: var(--primary-color);
 }
 
 .trait-label {
     font-size: 1rem;
-    color: #333;
+    color: var(--text-color);
 }
 
 .darkMode .trait-label {
-    color: #fff;
+    color: var(--dark-text-color);
 }
 
 /* Match Found */
@@ -147,25 +148,26 @@
     font-size: 4rem;
     margin-bottom: 1rem;
     animation: bounce 1s infinite;
+    color: var(--primary-color);
 }
 
 .match-found h2 {
     font-size: 2rem;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 0.5rem;
 }
 
 .darkMode .match-found h2 {
-    color: #fff;
+    color: var(--dark-text-color);
 }
 
 .match-found p {
     font-size: 1.2rem;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .darkMode .match-found p {
-    color: #ccc;
+    color: var(--dark-text-secondary);
 }
 
 /* Animations */

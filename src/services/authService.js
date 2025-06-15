@@ -8,7 +8,7 @@ const CURRENT_USER_KEY = 'pets_adocao_current_user';
 // Registra um novo usuário
 const register = async (userData) => {
   try {
-    const response = await api.post('/owners/register', userData);
+    const response = await api.post('/owners/owners/register', userData);
     return response.data;
   } catch (error) {
     console.error('Erro no registro:', error);

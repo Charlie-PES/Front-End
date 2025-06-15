@@ -1,6 +1,6 @@
 .loginContainer {
   min-height: calc(90vh - 60px);
-  background-color: #fffaf4;
+  background-color: var(--bg-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,15 +10,15 @@
 }
 
 .loginContainer.darkMode {
-  background-color: #1a1a1a;
-  color: #f5f5f5;
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
 }
 
 .loginForm {
-  background-color: #ffffff;
+  background-color: var(--card-background);
   padding: 40px 30px;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px var(--card-shadow);
   width: 100%;
   max-width: 400px;
   display: flex;
@@ -29,29 +29,29 @@
 }
 
 .darkMode .loginForm {
-  background-color: #2d2d2d;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background-color: var(--dark-card-background);
+  box-shadow: 0 8px 24px var(--card-shadow);
 }
 
 .userIcon {
-  color: #f77f00;
+  color: var(--primary-color);
   align-self: center;
   margin-bottom: 10px;
 }
 
 .darkMode .userIcon {
-  color: #ff9f40;
+  color: var(--dark-primary-color);
 }
 
 .loginForm h1 {
   text-align: center;
   font-size: 2rem;
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 10px;
 }
 
 .darkMode .loginForm h1 {
-  color: #f5f5f5;
+  color: var(--dark-text-color);
 }
 
 .formGroup {
@@ -61,47 +61,47 @@
 .formGroup label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #555;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .darkMode .formGroup label {
-  color: #ccc;
+  color: var(--dark-text-secondary);
 }
 
 .formGroup input {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   font-size: 1rem;
   transition: border-color 0.3s ease;
-  background-color: #fff;
-  color: #333;
+  background-color: var(--input-background);
+  color: var(--text-color);
 }
 
 .darkMode .formGroup input {
-  background-color: #3d3d3d;
-  border-color: #555;
-  color: #f5f5f5;
+  background-color: var(--dark-input-background);
+  border-color: var(--dark-border-color);
+  color: var(--dark-text-color);
 }
 
 .formGroup input:focus {
   outline: none;
-  border-color: #f77f00;
-  box-shadow: 0 0 5px rgba(247, 127, 0, 0.3);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.3);
 }
 
 .darkMode .formGroup input:focus {
-  border-color: #ff9f40;
-  box-shadow: 0 0 5px rgba(255, 159, 64, 0.3);
+  border-color: var(--dark-primary-color);
+  box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.3);
 }
 
 .loginButton {
   width: 100%;
   padding: 12px;
-  background-color: #f77f00;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -112,17 +112,17 @@
 }
 
 .darkMode .loginButton {
-  background-color: #ff9f40;
+  background-color: var(--dark-primary-color);
 }
 
 .loginButton:hover {
-  background-color: #e76f00;
+  background-color: var(--primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 10px var(--card-shadow);
 }
 
 .darkMode .loginButton:hover {
-  background-color: #ff8f20;
+  background-color: var(--dark-primary-dark);
 }
 
 .divider {
@@ -136,29 +136,29 @@
 .divider::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .darkMode .divider::before,
 .darkMode .divider::after {
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid var(--dark-border-color);
 }
 
 .divider span {
   padding: 0 1rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .darkMode .divider span {
-  color: #aaa;
+  color: var(--dark-text-secondary);
 }
 
 .googleButton {
   width: 100%;
   padding: 12px;
-  background-color: #fff;
-  color: #444;
-  border: 1px solid #ccc;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   font-weight: bold;
@@ -171,35 +171,35 @@
 }
 
 .darkMode .googleButton {
-  background-color: #3d3d3d;
-  color: #f5f5f5;
-  border-color: #555;
+  background-color: var(--dark-input-background);
+  color: var(--dark-text-color);
+  border-color: var(--dark-border-color);
 }
 
 .googleButton:hover {
-  background-color: #f0f0f0;
+  background-color: var(--bg-color);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px var(--card-shadow);
 }
 
 .darkMode .googleButton:hover {
-  background-color: #4d4d4d;
+  background-color: var(--dark-bg-color);
 }
 
 .registerLink {
   text-align: center;
   margin-top: 1.5rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .darkMode .registerLink {
-  color: #aaa;
+  color: var(--dark-text-secondary);
 }
 
 .linkButton {
   background: none;
   border: none;
-  color: #f77f00;
+  color: var(--primary-color);
   cursor: pointer;
   padding: 0;
   font: inherit;
@@ -207,29 +207,29 @@
 }
 
 .darkMode .linkButton {
-  color: #ff9f40;
+  color: var(--dark-primary-color);
 }
 
 .linkButton:hover {
-  color: #e76f00;
+  color: var(--primary-dark);
 }
 
 .darkMode .linkButton:hover {
-  color: #ff8f20;
+  color: var(--dark-primary-dark);
 }
 
 .errorMessage {
-  color: #dc3545;
+  color: var(--error-color);
   text-align: center;
   margin-bottom: 1rem;
   padding: 0.5rem;
-  background-color: #f8d7da;
+  background-color: var(--error-background);
   border-radius: 4px;
 }
 
 .darkMode .errorMessage {
-  background-color: #3d2a2a;
-  color: #ff6b6b;
+  background-color: var(--dark-error-background);
+  color: var(--dark-error-color);
 }
 
 @keyframes fadeIn {

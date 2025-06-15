@@ -10,22 +10,22 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: var(--color-primary);
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  box-shadow: 0 4px 12px var(--card-shadow);
+  transition: all 0.3s ease;
   z-index: 1000;
 }
 
 .chatButton:hover {
   transform: translateY(-2px);
-  background-color: var(--color-primary-dark);
-  box-shadow: var(--shadow-lg);
+  background-color: var(--primary-dark);
+  box-shadow: 0 6px 16px var(--card-shadow);
 }
 
 .chatButton:active {
@@ -41,9 +41,9 @@
   right: 20px;
   width: 350px;
   height: 500px;
-  background-color: #ffffff;
+  background-color: var(--card-background);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px var(--card-shadow);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -63,9 +63,9 @@
 
 .chatHeader {
   padding: 1rem;
-  background-color: #dca879;
-  color: #0c0c0c;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: var(--header-background);
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .chatHeader h3 {
@@ -92,31 +92,31 @@
 }
 
 .message.assistant {
-  background-color: #f0f0f0;
-  color: #0c0c0c;
+  background-color: var(--primary-light);
+  color: var(--text-color);
   align-self: flex-start;
   border-bottom-left-radius: 4px;
 }
 
 .message.user {
-  background-color: #dca879;
-  color: #ffffff;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   align-self: flex-end;
   border-bottom-right-radius: 4px;
 }
 
 .chatInput {
   padding: 1rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--border-color);
   display: flex;
   gap: 0.5rem;
-  background-color: #ffffff;
+  background-color: var(--card-background);
 }
 
 .chatInput input {
   flex: 1;
   padding: 0.8rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   font-size: 0.9rem;
   outline: none;
@@ -124,14 +124,14 @@
 }
 
 .chatInput input:focus {
-  border-color: #dca879;
-  box-shadow: 0 0 0 2px rgba(220, 168, 121, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(192, 146, 106, 0.2);
 }
 
 .sendButton {
   padding: 0.8rem 1.2rem;
-  background-color: #dca879;
-  color: #ffffff;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   border: none;
   border-radius: 20px;
   cursor: pointer;
@@ -140,7 +140,7 @@
 }
 
 .sendButton:hover {
-  background-color: #c0926a;
+  background-color: var(--primary-dark);
   transform: translateY(-1px);
 }
 
@@ -148,49 +148,53 @@
   transform: translateY(0);
 }
 
+.sendButton svg {
+  font-size: 1.5rem;
+}
+
 /* Dark mode styles */
 .darkMode.chatButton {
-  background-color: var(--color-primary-dark);
+  background-color: var(--dark-primary-color);
 }
 
 .darkMode.chatWindow {
-  background-color: #2d2d2d;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background-color: var(--dark-card-background);
+  box-shadow: 0 4px 20px var(--card-shadow);
 }
 
 .darkMode .chatHeader {
-  background-color: #363636;
-  color: #ffffff;
-  border-bottom-color: #404040;
+  background-color: var(--dark-header-background);
+  color: var(--dark-text-color);
+  border-bottom-color: var(--dark-border-color);
 }
 
 .darkMode .message.assistant {
-  background-color: #363636;
-  color: #ffffff;
+  background-color: var(--dark-primary-light);
+  color: var(--dark-text-color);
 }
 
 .darkMode .message.user {
-  background-color: #dca879;
-  color: #ffffff;
+  background-color: var(--dark-primary-color);
+  color: var(--dark-secondary-color);
 }
 
 .darkMode .chatInput {
-  background-color: #2d2d2d;
-  border-top-color: #404040;
+  background-color: var(--dark-card-background);
+  border-top-color: var(--dark-border-color);
 }
 
 .darkMode .chatInput input {
-  background-color: #363636;
-  border-color: #404040;
-  color: #ffffff;
+  background-color: var(--dark-input-background);
+  border-color: var(--dark-border-color);
+  color: var(--dark-text-color);
 }
 
 .darkMode .chatInput input::placeholder {
-  color: #a0a0a0;
+  color: var(--dark-text-secondary);
 }
 
 .darkMode .chatInput input:focus {
-  border-color: #dca879;
+  border-color: var(--dark-primary-color);
   box-shadow: 0 0 0 2px rgba(220, 168, 121, 0.2);
 }
 
