@@ -381,25 +381,17 @@ const Cadastro = () => {
       
       // Formatar os dados para o backend
       const userData = {
-        username: formData.name.toLowerCase().replace(/\s+/g, ''),
         email: formData.email,
         phone: formData.phone.replace(/\D/g, ''),
         identifier: formData.identifier.replace(/\D/g, ''),
         password: formData.password,
         type: type,
-        displayName: formData.name,
-        address: type === 'org' ? formData.address : undefined,
+        name: formData.name,
+        address: type === 'org' ? [formData.address] : undefined,
         owner_details: type === 'org' ? { description: formData.owner_details.description, additional_data: {} } : undefined,
-        // cpf e cnpj são gerenciados pelo identifier e tipo
+        surname: type === 'org' ? null : '',
+        picture: '', // Adiciona o campo picture com valor vazio, pois é obrigatório pelo backend
       };
-
-      if (type === 'tutor') {
-        userData.cpf = userData.identifier;
-        userData.cnpj = null; // Garante que CNPJ seja nulo para tutor
-      } else if (type === 'org') {
-        userData.cnpj = userData.identifier;
-        userData.cpf = null; // Garante que CPF seja nulo para org
-      }
 
       console.log('Enviando dados:', userData);
 
