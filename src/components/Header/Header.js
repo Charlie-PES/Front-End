@@ -11,7 +11,8 @@ import {
     FaPaw,
     FaInfoCircle,
     FaMapMarkedAlt,
-    FaNewspaper
+    FaNewspaper,
+    FaHandHoldingHeart
 } from 'react-icons/fa';
 import { logout } from '../../services/authService';
 
