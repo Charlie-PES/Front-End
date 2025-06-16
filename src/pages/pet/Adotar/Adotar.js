@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch, FaPaw, FaHeart, FaShare, FaMapMarkerAlt, FaDog, FaCat, FaTimes } from 'react-icons/fa';
 import styles from './Adotar.module.css';
 import { ThemeContext } from '../../../contexts/ThemeContext';
@@ -15,11 +15,11 @@ const Adotar = () => {
     tipo: 'todos'
   });
   const [busca, setBusca] = useState('');
-  const [selectedPet, setSelectedPet] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -78,13 +78,8 @@ const Adotar = () => {
     return sexoMatch && porteMatch && comportamentoMatch && especialMatch && tipoMatch && buscaMatch;
   });
 
-  const handlePetClick = (pet) => {
-    setSelectedPet(pet);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const closePetDetails = () => {
-    setSelectedPet(null);
+  const handlePetClick = (petId) => {
+    navigate(`/pet/${petId}`);
   };
 
   const toggleSidebar = () => {
@@ -124,7 +119,7 @@ const Adotar = () => {
       <div className={styles.mainContent}>
         <aside className={`${styles.sidebar} ${sidebarOpen ? styles.active : ''}`}>
           <div className={styles.sidebarHeader}>
-            <h2>Filtrar</h2>
+            <h2 className={styles.filterHeaderTitle}>Filtrar</h2>
             <button 
               className={styles.closeFiltersBtn}
               onClick={toggleSidebar}
@@ -138,7 +133,7 @@ const Adotar = () => {
             <label htmlFor="tipo">Tipo</label>
             <div className={styles.tipoButtons}>
               <button 
-                className={`${styles.tipoButton} ${filtros.tipo === 'todos' ? styles.active : ''}`}
+                className={`${styles.tipoButton} ${styles.todosButton} ${filtros.tipo === 'todos' ? styles.active : ''}`}
                 onClick={() => handleFiltroChange({ target: { name: 'tipo', value: 'todos' } })}
               >
                 Todos
@@ -213,7 +208,7 @@ const Adotar = () => {
             <div 
               key={pet._id} 
               className={styles.petCard}
-              onClick={() => handlePetClick(pet)}
+              onClick={() => handlePetClick(pet._id)}
             >
               <img src={pet.picture} alt={pet.name} />
               <div className={styles.petInfo}>
@@ -231,53 +226,6 @@ const Adotar = () => {
           ))}
         </main>
       </div>
-
-      {selectedPet && (
-        <div className={styles.petDetails}>
-          <button 
-            className={styles.closeButton}
-            onClick={closePetDetails}
-            aria-label="Fechar detalhes"
-          >
-            <FaTimes />
-          </button>
-          <div className={styles.petDetailsContent}>
-            <img src={selectedPet.picture} alt={selectedPet.name} />
-            <div className={styles.petDetailsInfo}>
-              <h2>{selectedPet.name}</h2>
-              <p className={styles.description}>{selectedPet.traits.description}</p>
-              <div className={styles.details}>
-                <div className={styles.detail}>
-                  <strong>Raça:</strong> {selectedPet.traits.breed || 'Não especificada'}
-                </div>
-                <div className={styles.detail}>
-                  <strong>Tamanho:</strong> {selectedPet.traits.size}
-                </div>
-                <div className={styles.detail}>
-                  <strong>Temperamento:</strong> {selectedPet.traits.temperament}
-                </div>
-                <div className={styles.detail}>
-                  <strong>Pelagem:</strong> {selectedPet.traits.fur_type}
-                </div>
-                <div className={styles.detail}>
-                  <strong>Treinado:</strong> {selectedPet.traits.trained ? 'Sim' : 'Não'}
-                </div>
-              </div>
-              <div className={styles.actions}>
-                <button className={styles.actionButton}>
-                  <FaHeart /> Favoritar
-                </button>
-                <button className={styles.actionButton}>
-                  <FaShare /> Compartilhar
-                </button>
-                <Link to={`/pet/${selectedPet._id}`} className={styles.actionButton}>
-                  Ver Mais Detalhes
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

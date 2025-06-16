@@ -1,0 +1,108 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modalContent {
+  background-color: var(--card-background, #ffffff);
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  transform: translateY(-20px);
+  animation: slideIn 0.3s forwards cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.darkMode .modalContent {
+  background-color: var(--dark-card-background, #2d2d2d);
+  color: var(--dark-text-color, #ffffff);
+}
+
+.modalContent p {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-color, #333333);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.darkMode .modalContent p {
+  color: var(--dark-text-color, #e0e0e0);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.confirmButton,
+.cancelButton {
+  padding: 0.9rem 1.8rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confirmButton {
+  background-color: var(--error-color, #f44336);
+  color: white;
+}
+
+.confirmButton:hover {
+  background-color: var(--error-hover, #d32f2f);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 15px rgba(244, 67, 54, 0.3);
+}
+
+.cancelButton {
+  background-color: var(--button-secondary-background, #f0f0f0);
+  color: var(--button-secondary-text, #555555);
+  border: 1px solid var(--border-color, #cccccc);
+}
+
+.cancelButton:hover {
+  background-color: var(--button-secondary-hover, #e0e0e0);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.darkMode .cancelButton {
+  background-color: var(--dark-button-secondary-background, #3a3a3a);
+  color: var(--dark-button-secondary-text, #dddddd);
+  border-color: var(--dark-border-color, #555555);
+}
+
+.darkMode .cancelButton:hover {
+  background-color: var(--dark-button-secondary-hover, #4a4a4a);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+} 

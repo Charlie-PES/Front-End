@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
 import styles from './PetsManager.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { deletePet } from '../../../../services/petService';
+import ConfirmationModal from '../../../../components/ConfirmationModal/ConfirmationModal';
 
 // Função utilitária para calcular idade (copiada de PetPage.js para consistência)
 function calcularIdade(dataNascimento) {
@@ -19,6 +21,10 @@ function calcularIdade(dataNascimento) {
 const PetsManager = ({ pets: initialPets = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [pets, setPets] = useState(initialPets);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [petToDelete, setPetToDelete] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPets(initialPets);
@@ -26,6 +32,39 @@ const PetsManager = ({ pets: initialPets = [] }) => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleCardClick = (petId) => {
+    navigate(`/pet/${petId}`);
+  };
+
+  const handleDeletePet = (petId, petName) => {
+    setPetToDelete({ id: petId, name: petName });
+    setModalMessage(`Tem certeza que deseja excluir o pet ${petName}? Esta ação é irreversível.`);
+    setShowConfirmModal(true);
+  };
+
+  const onConfirmDelete = async () => {
+    if (!petToDelete) return;
+
+    try {
+      await deletePet(petToDelete.id);
+      setPets(pets.filter(pet => pet._id !== petToDelete.id));
+      alert(`${petToDelete.name} foi excluído com sucesso!`);
+    } catch (error) {
+      console.error(`Erro ao excluir o pet ${petToDelete.name}:`, error);
+      alert(`Erro ao excluir ${petToDelete.name}. Por favor, tente novamente.`);
+    } finally {
+      setShowConfirmModal(false);
+      setPetToDelete(null);
+      setModalMessage('');
+    }
+  };
+
+  const onCancelDelete = () => {
+    setShowConfirmModal(false);
+    setPetToDelete(null);
+    setModalMessage('');
   };
 
   const filteredPets = pets.filter(pet =>
@@ -45,10 +84,6 @@ const PetsManager = ({ pets: initialPets = [] }) => {
             onChange={handleSearch}
           />
         </div>
-        <Link to="/pets/add" className={styles.addButton}>
-          <FaPlus />
-          <span>Adicionar Pet</span>
-        </Link>
       </div>
 
       <div className={styles.petsGrid}>
@@ -63,7 +98,11 @@ const PetsManager = ({ pets: initialPets = [] }) => {
             const statusColor = pet.is_available ? '#00796b' : '#e65100';
 
             return (
-              <div key={pet._id} className={styles.petCard}>
+              <div 
+                key={pet._id} 
+                className={styles.petCard}
+                onClick={() => handleCardClick(pet._id)}
+              >
                 <div className={styles.petImage}>
                   <img src={imagem} alt={nome} />
                   <div className={styles.statusBadge} style={{backgroundColor: statusColor}}>
@@ -77,10 +116,19 @@ const PetsManager = ({ pets: initialPets = [] }) => {
                   {idade && idade !== '0 anos' && <p className={styles.age}>{idade}</p>}
                 </div>
                 <div className={styles.actions}>
-                  <button className={styles.editButton}>
+                  <button 
+                    className={styles.editButton}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <FaEdit />
                   </button>
-                  <button className={styles.deleteButton}>
+                  <button 
+                    className={styles.deleteButton}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeletePet(pet._id, nome);
+                    }}
+                  >
                     <FaTrash />
                   </button>
                 </div>
@@ -91,6 +139,13 @@ const PetsManager = ({ pets: initialPets = [] }) => {
           <p className={styles.noPetsMessage}>Nenhum pet encontrado.</p>
         )}
       </div>
+      {showConfirmModal && (
+        <ConfirmationModal
+          message={modalMessage}
+          onConfirm={onConfirmDelete}
+          onCancel={onCancelDelete}
+        />
+      )}
     </div>
   );
 };

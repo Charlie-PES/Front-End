@@ -18,6 +18,7 @@ import {
 } from 'react-icons/fa';
 import api from '../../../services/api';
 import PetsManager from './components/PetsManager';
+import { getPetsByOwnerId } from '../../../services/matchService';
 
 // Função utilitária para gerar matriz do calendário
 function getCalendarMatrix(year, month) {
@@ -56,45 +57,39 @@ const OngProfile = () => {
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [ongData, setOngData] = useState(null);
   const [ongPets, setOngPets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchOng = async () => {
-      if (user && user._id) {
-        try {
-          const resp = await api.get(`/owners/owners/${user._id}`);
-          setOngData(resp.data);
-          setFormData({
-            razaoSocial: resp.data.razaoSocial || '',
-            cnpj: resp.data.cnpj || '',
-            endereco: resp.data.address?.[0]?.street || resp.data.endereco || '',
-            telefone: resp.data.phone || resp.data.telefone || '',
-            email: resp.data.email || '',
-            descricao: resp.data.description || resp.data.descricao || '',
-            createdAt: resp.data.createdAt || '',
-          });
-
-          // Buscar pets da ONG
-          if (resp.data.pets && resp.data.pets.length > 0) {
-            const fetchedPets = [];
-            for (const petId of resp.data.pets) {
-              try {
-                const petResp = await api.get(`/pets/${petId}`);
-                fetchedPets.push(petResp.data);
-              } catch (petErr) {
-                console.error(`Erro ao buscar pet ${petId}:`, petErr);
-              }
-            }
-            setOngPets(fetchedPets);
-          }
-
-        } catch (err) {
-          setOngData(null);
-          console.error('Erro ao buscar dados da ONG:', err);
+      setIsLoading(true);
+      setError(null);
+      try {
+        // Verifica se o usuário está logado e é uma ONG
+        if (!user || user.type !== 'org') {
+          navigate('/login');
+          return;
         }
+
+        const response = await api.get(`/owners/owners/${user._id}`);
+        setOngData(response.data);
+        
+        // Buscar pets da ONG
+        const petsData = await getPetsByOwnerId(user._id);
+        console.log('Pets da ONG carregados:', petsData);
+        setOngPets(petsData);
+
+      } catch (err) {
+        console.error('Erro ao buscar dados da ONG:', err);
+        setError('Erro ao carregar os dados da ONG. Por favor, tente novamente.');
+        logout(); // Desloga em caso de erro na busca da ONG
+      } finally {
+        setIsLoading(false);
       }
     };
+
     fetchOng();
-  }, [user]);
+  }, [user, navigate, logout]);
 
   const handleLogout = () => {
     logout();

@@ -69,7 +69,7 @@ function App() {
                         <Route path="/admin" element={<AdminPage />} />
                         <Route path="/ong/perfil" element={<OngProfile />} />
                         <Route path="/messages" element={<DirectMessages />} />
-                        <Route path="/pets/add" element={<AddPet />} />
+                        <Route path="/pets/add" element={<CadastroPet />} />
                         <Route path="/doacoes" element={<Doacoes />} />
                     </Routes>
                 </main>

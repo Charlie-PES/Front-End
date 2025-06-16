@@ -3,65 +3,136 @@ import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import { FaCamera, FaPlus, FaTrash, FaPaw, FaDog, FaCat, FaHeart, FaSyringe, FaStethoscope } from 'react-icons/fa';
 import styles from './CadastroPet.module.css';
+import { useAuth } from '../../../contexts/AuthContext';
+import { registerPet } from '../../../services/petService';
 
 // Componente para cadastro de pets
 const CadastroPet = () => {
   // Hooks para navegação e contexto de tema
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
+  const { user } = useAuth();
+
+  // Estados para carregamento e mensagens de feedback
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
   
   // Estado para armazenar os dados do formulário
   const [formData, setFormData] = useState({
-    nome: '',
-    tipo: '',
-    raca: '',
-    idade: '',
-    sexo: '',
-    tamanho: '',
-    cor: '',
-    descricao: '',
-    vacinas: [''],
-    necessidades: [''],
-    foto: null
+    name: '',
+    birthday_date: '',
+    traits: {
+      size: '',
+      breed: '',
+      color: '',
+      fur_type: '',
+      temperament: '',
+      trained: false,
+      description: ''
+    },
+    picture: '',
+    is_available: true,
+    owner_id: user ? user._id : '',
+    additional_data: {
+      vacinas: [''],
+      doencas: ['']
+    }
+  });
+
+  // Estado para armazenar erros de validação
+  const [errors, setErrors] = useState({
+    name: '',
+    birthday_date: '',
+    'traits.size': '',
+    'traits.breed': '',
+    'traits.color': '',
+    'traits.fur_type': '',
+    'traits.temperament': '',
+    'traits.trained': '',
+    'traits.description': '',
+    picture: '',
+    owner_id: '',
+    'additional_data.vacinas': '',
+    'additional_data.doencas': '',
   });
 
   // Estado para armazenar a prévia da imagem
   const [imagePreview, setImagePreview] = useState(null);
 
+  // Opções para os dropdowns (baseado no schema PetIn)
+  const sizes = ['small', 'medium', 'large'];
+  const furTypes = ['short', 'medium', 'long', 'hairless'];
+  const temperaments = ['calm', 'energetic', 'aggressive', 'friendly'];
+
   // Função para lidar com mudanças nos inputs
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+    const { name, value, type, checked } = e.target;
 
-  // Função para lidar com a seleção de imagem
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    // Lidar com checkboxes (trained)
+    if (type === 'checkbox') {
       setFormData(prev => ({
         ...prev,
-        foto: file
+        traits: {
+          ...prev.traits,
+          [name]: checked
+        }
       }));
-      
-      // Criar URL para prévia da imagem
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+    } else if (name.includes('.')) {
+      // Lidar com campos aninhados (ex: traits.size, additional_data.vacinas)
+      const [parent, child] = name.split('.');
+      if (parent === 'traits') {
+        setFormData(prev => ({
+          ...prev,
+          traits: {
+            ...prev.traits,
+            [child]: value
+          }
+        }));
+      } else if (parent === 'additional_data') {
+        setFormData(prev => ({
+          ...prev,
+          additional_data: {
+            ...prev.additional_data,
+            [child]: value
+          }
+        }));
+      }
+    } else {
+      // Lidar com campos de nível superior
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
     }
+
+    // Limpar erros se existirem
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  // Função para lidar com a seleção de imagem (agora aceita URL)
+  const handlePictureChange = (e) => {
+    const { value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      picture: value
+    }));
   };
 
   // Função para adicionar ou remover vacinas
   const handleVacinaChange = (index, value) => {
-    const newVacinas = [...formData.vacinas];
+    const newVacinas = [...formData.additional_data.vacinas];
     newVacinas[index] = value;
     setFormData(prev => ({
       ...prev,
-      vacinas: newVacinas
+      additional_data: {
+        ...prev.additional_data,
+        vacinas: newVacinas
+      }
     }));
   };
 
@@ -69,7 +140,10 @@ const CadastroPet = () => {
   const addVacina = () => {
     setFormData(prev => ({
       ...prev,
-      vacinas: [...prev.vacinas, '']
+      additional_data: {
+        ...prev.additional_data,
+        vacinas: [...prev.additional_data.vacinas, '']
+      }
     }));
   };
 
@@ -77,43 +151,142 @@ const CadastroPet = () => {
   const removeVacina = (index) => {
     setFormData(prev => ({
       ...prev,
-      vacinas: prev.vacinas.filter((_, i) => i !== index)
+      additional_data: {
+        ...prev.additional_data,
+        vacinas: prev.additional_data.vacinas.filter((_, i) => i !== index)
+      }
     }));
   };
 
-  // Função para adicionar ou remover necessidades
-  const handleNecessidadeChange = (index, value) => {
-    const newNecessidades = [...formData.necessidades];
-    newNecessidades[index] = value;
+  // Função para adicionar ou remover doenças
+  const handleDoencaChange = (index, value) => {
+    const newDoencas = [...formData.additional_data.doencas];
+    newDoencas[index] = value;
     setFormData(prev => ({
       ...prev,
-      necessidades: newNecessidades
+      additional_data: {
+        ...prev.additional_data,
+        doencas: newDoencas
+      }
     }));
   };
 
-  // Função para adicionar nova necessidade
-  const addNecessidade = () => {
+  // Função para adicionar nova doença
+  const addDoenca = () => {
     setFormData(prev => ({
       ...prev,
-      necessidades: [...prev.necessidades, '']
+      additional_data: {
+        ...prev.additional_data,
+        doencas: [...prev.additional_data.doencas, '']
+      }
     }));
   };
 
-  // Função para remover necessidade
-  const removeNecessidade = (index) => {
+  // Função para remover doença
+  const removeDoenca = (index) => {
     setFormData(prev => ({
       ...prev,
-      necessidades: prev.necessidades.filter((_, i) => i !== index)
+      additional_data: {
+        ...prev.additional_data,
+        doencas: prev.additional_data.doencas.filter((_, i) => i !== index)
+      }
     }));
+  };
+
+  // Função para validar o formulário
+  const validateForm = () => {
+    const newErrors = {};
+    let hasError = false;
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Nome do pet é obrigatório.';
+      hasError = true;
+    }
+    if (!formData.birthday_date) {
+      newErrors.birthday_date = 'Data de nascimento é obrigatória.';
+      hasError = true;
+    } else {
+      // Validação simples de formato de data (AAAA-MM-DD)
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(formData.birthday_date)) {
+        newErrors.birthday_date = 'Formato de data inválido. Use AAAA-MM-DD.';
+        hasError = true;
+      }
+    }
+
+    // Validações de traits
+    if (!formData.traits.size) {
+      newErrors['traits.size'] = 'Porte é obrigatório.';
+      hasError = true;
+    }
+    if (!formData.traits.breed.trim()) {
+      newErrors['traits.breed'] = 'Raça é obrigatória.';
+      hasError = true;
+    }
+    if (!formData.traits.color.trim()) {
+      newErrors['traits.color'] = 'Cor é obrigatória.';
+      hasError = true;
+    }
+    if (!formData.traits.fur_type) {
+      newErrors['traits.fur_type'] = 'Tipo de pelo é obrigatório.';
+      hasError = true;
+    }
+    if (!formData.traits.temperament) {
+      newErrors['traits.temperament'] = 'Temperamento é obrigatório.';
+      hasError = true;
+    }
+    if (!formData.traits.description.trim()) {
+      newErrors['traits.description'] = 'Descrição é obrigatória.';
+      hasError = true;
+    }
+    // Validação da URL da imagem
+    if (formData.picture && !/^(ftp|http|https):\/\/[^ "]+$/.test(formData.picture)) {
+      newErrors.picture = 'URL da imagem inválida.';
+      hasError = true;
+    }
+
+    setErrors(newErrors);
+    return !hasError;
   };
 
   // Função para enviar o formulário
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você implementaria a lógica para enviar os dados para o backend
-    console.log('Dados do formulário:', formData);
-    alert('Pet cadastrado com sucesso!');
-    navigate('/feed');
+
+    if (!validateForm()) {
+      setMessage({ type: 'error', text: 'Por favor, corrija os erros no formulário.' });
+      return;
+    }
+
+    setLoading(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      const petData = {
+        name: formData.name,
+        birthday_date: `${formData.birthday_date}T00:00:00Z`,
+        traits: formData.traits,
+        picture: formData.picture,
+        is_available: formData.is_available,
+        owner_id: formData.owner_id,
+        additional_data: {
+          vacinas: formData.additional_data.vacinas.filter(v => v.trim() !== ''),
+          doencas: formData.additional_data.doencas.filter(d => d.trim() !== ''),
+        },
+      };
+
+      console.log('Enviando dados do pet:', petData);
+      const response = await registerPet(petData);
+      console.log('Pet cadastrado com sucesso:', response);
+      setMessage({ type: 'success', text: 'Pet cadastrado com sucesso!' });
+      setTimeout(() => navigate('/feed'), 1500);
+
+    } catch (error) {
+      console.error('Erro no cadastro do pet:', error);
+      setMessage({ type: 'error', text: error.response?.data?.detail || 'Erro ao cadastrar pet. Tente novamente.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -121,25 +294,22 @@ const CadastroPet = () => {
       <div className={styles.top}>
         <div className={styles.imageBox}>
           <div className={styles.imagePlaceholder}>
-            {imagePreview ? (
-              <img src={imagePreview} alt="Preview" className={styles.previewImage} />
+            {formData.picture ? (
+              <img src={formData.picture} alt="Preview" className={styles.previewImage} />
             ) : (
               <FaCamera className={styles.cameraIcon} />
             )}
           </div>
-          <label className={styles.uploadButton}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className={styles.fileInput}
-            />
-            <FaCamera /> Adicionar Foto
-          </label>
+          {errors.picture && <span className={styles.error}>{errors.picture}</span>}
         </div>
         
         <div className={styles.summaryBox}>
           <h2><FaPaw /> Cadastro de Pet</h2>
+          {message.text && (
+            <div className={`${styles.message} ${styles[message.type]}`}>
+              {message.text}
+            </div>
+          )}
           <div className={styles.descriptionBox}>
             <p>Preencha os dados do pet para cadastrá-lo em nossa plataforma. 
                Quanto mais informações você fornecer, maiores serão as chances de encontrar um lar amoroso!</p>
@@ -152,179 +322,219 @@ const CadastroPet = () => {
         
         <div className={styles.formGrid}>
           <div className={styles.formGroup}>
-            <label>Nome do Pet</label>
+            <label>Nome</label>
             <input
               type="text"
-              name="nome"
-              value={formData.nome}
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
               required
+              disabled={loading}
             />
+            {errors.name && <span className={styles.error}>{errors.name}</span>}
           </div>
 
           <div className={styles.formGroup}>
-            <label>Tipo</label>
-            <select
-              name="tipo"
-              value={formData.tipo}
+            <label>Data de Nascimento</label>
+            <input
+              type="text"
+              name="birthday_date"
+              value={formData.birthday_date}
               onChange={handleInputChange}
+              placeholder="Ex: 2023-01-15"
               required
-            >
-              <option value="">Selecione</option>
-              <option value="cachorro">Cachorro</option>
-              <option value="gato">Gato</option>
-              <option value="outro">Outro</option>
-            </select>
+              disabled={loading}
+            />
+            {errors.birthday_date && <span className={styles.error}>{errors.birthday_date}</span>}
           </div>
 
           <div className={styles.formGroup}>
             <label>Raça</label>
             <input
               type="text"
-              name="raca"
-              value={formData.raca}
+              name="traits.breed"
+              value={formData.traits.breed}
               onChange={handleInputChange}
               required
+              disabled={loading}
             />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Idade</label>
-            <input
-              type="text"
-              name="idade"
-              value={formData.idade}
-              onChange={handleInputChange}
-              placeholder="Ex: 2 anos"
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Sexo</label>
-            <select
-              name="sexo"
-              value={formData.sexo}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Selecione</option>
-              <option value="macho">Macho</option>
-              <option value="femea">Fêmea</option>
-            </select>
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Tamanho</label>
-            <select
-              name="tamanho"
-              value={formData.tamanho}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Selecione</option>
-              <option value="pequeno">Pequeno</option>
-              <option value="medio">Médio</option>
-              <option value="grande">Grande</option>
-            </select>
+            {errors['traits.breed'] && <span className={styles.error}>{errors['traits.breed']}</span>}
           </div>
 
           <div className={styles.formGroup}>
             <label>Cor</label>
             <input
               type="text"
-              name="cor"
-              value={formData.cor}
+              name="traits.color"
+              value={formData.traits.color}
               onChange={handleInputChange}
               required
+              disabled={loading}
             />
+            {errors['traits.color'] && <span className={styles.error}>{errors['traits.color']}</span>}
           </div>
+
+          <div className={styles.formGroup}>
+            <label>Porte</label>
+            <select
+              name="traits.size"
+              value={formData.traits.size}
+              onChange={handleInputChange}
+              required
+              disabled={loading}
+            >
+              <option value="">Selecione</option>
+              {sizes.map(size => (
+                <option key={size} value={size}>{size.charAt(0).toUpperCase() + size.slice(1)}</option>
+              ))}
+            </select>
+            {errors['traits.size'] && <span className={styles.error}>{errors['traits.size']}</span>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>Tipo de Pelo</label>
+            <select
+              name="traits.fur_type"
+              value={formData.traits.fur_type}
+              onChange={handleInputChange}
+              required
+              disabled={loading}
+            >
+              <option value="">Selecione</option>
+              {furTypes.map(type => (
+                <option key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
+              ))}
+            </select>
+            {errors['traits.fur_type'] && <span className={styles.error}>{errors['traits.fur_type']}</span>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>Temperamento</label>
+            <select
+              name="traits.temperament"
+              value={formData.traits.temperament}
+              onChange={handleInputChange}
+              required
+              disabled={loading}
+            >
+              <option value="">Selecione</option>
+              {temperaments.map(temperament => (
+                <option key={temperament} value={temperament}>{temperament.charAt(0).toUpperCase() + temperament.slice(1)}</option>
+              ))}
+            </select>
+            {errors['traits.temperament'] && <span className={styles.error}>{errors['traits.temperament']}</span>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>URL da Imagem</label>
+            <input
+              type="text"
+              name="picture"
+              value={formData.picture}
+              onChange={handlePictureChange}
+              placeholder="Ex: https://exemplo.com/imagem.jpg"
+              disabled={loading}
+            />
+            {errors.picture && <span className={styles.error}>{errors.picture}</span>}
+          </div>
+
+          <div className={styles.formCheckboxGroup}>
+            <input
+              type="checkbox"
+              id="trained"
+              name="trained"
+              checked={formData.traits.trained}
+              onChange={handleInputChange}
+              disabled={loading}
+            />
+            <label htmlFor="trained">Treinado</label>
+            {errors['traits.trained'] && <p className={styles.error}>{errors['traits.trained']}</p>}
+          </div>
+
+          <div className={`${styles.inputGroup} ${styles.descriptionInputGroup}`}>
+            <label htmlFor="description">Descrição</label>
+            <textarea
+              id="description"
+              name="traits.description"
+              value={formData.traits.description}
+              onChange={handleInputChange}
+              placeholder="Descreva o pet"
+              className={styles.textarea}
+            ></textarea>
+            {errors['traits.description'] && <p className={styles.error}>{errors['traits.description']}</p>}
+          </div>
+
+          <div className={`${styles.sectionTitle} ${styles.fullWidthGridItem}`}>
+            <FaSyringe /> Vacinas
+          </div>
+          <div className={`${styles.inlineAdd} ${styles.fullWidthGridItem}`}>
+            {formData.additional_data.vacinas.map((vacina, index) => (
+              <div key={index} className={styles.inputWithButton}>
+                <input
+                  type="text"
+                  value={vacina}
+                  onChange={(e) => handleVacinaChange(index, e.target.value)}
+                  placeholder="Nome da vacina"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => removeVacina(index)}
+                  className={styles.removeButton}
+                  disabled={loading}
+                >
+                  <FaTrash />
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addVacina}
+              className={styles.addButton}
+              disabled={loading}
+            >
+              <FaPlus /> Adicionar Vacina
+            </button>
+          </div>
+
+          <div className={`${styles.sectionTitle} ${styles.fullWidthGridItem}`}>
+            <FaStethoscope /> Doenças
+          </div>
+          <div className={`${styles.inlineAdd} ${styles.fullWidthGridItem}`}>
+            {formData.additional_data.doencas.map((doenca, index) => (
+              <div key={index} className={styles.inputWithButton}>
+                <input
+                  type="text"
+                  value={doenca}
+                  onChange={(e) => handleDoencaChange(index, e.target.value)}
+                  placeholder="Nome da doença"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => removeDoenca(index)}
+                  className={styles.removeButton}
+                  disabled={loading}
+                >
+                  <FaTrash />
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addDoenca}
+              className={styles.addButton}
+              disabled={loading}
+            >
+              <FaPlus /> Adicionar Doença
+            </button>
+          </div>
+
         </div>
 
-        <div className={styles.formGroup}>
-          <label>Descrição</label>
-          <textarea
-            name="descricao"
-            value={formData.descricao}
-            onChange={handleInputChange}
-            rows="4"
-            required
-          />
-        </div>
-
-        <div className={styles.sectionTitle}>
-          <FaSyringe /> Vacinas
-        </div>
-        <div className={styles.inlineAdd}>
-          {formData.vacinas.map((vacina, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                value={vacina}
-                onChange={(e) => handleVacinaChange(index, e.target.value)}
-                placeholder="Nome da vacina"
-              />
-              <button
-                type="button"
-                onClick={() => removeVacina(index)}
-                className={styles.removeButton}
-              >
-                <FaTrash />
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addVacina}
-            className={styles.addButton}
-          >
-            <FaPlus /> Adicionar Vacina
-          </button>
-        </div>
-
-        <div className={styles.sectionTitle}>
-          <FaStethoscope /> Necessidades Especiais
-        </div>
-        <div className={styles.inlineAdd}>
-          {formData.necessidades.map((necessidade, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                value={necessidade}
-                onChange={(e) => handleNecessidadeChange(index, e.target.value)}
-                placeholder="Descreva a necessidade especial"
-              />
-              <button
-                type="button"
-                onClick={() => removeNecessidade(index)}
-                className={styles.removeButton}
-              >
-                <FaTrash />
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addNecessidade}
-            className={styles.addButton}
-          >
-            <FaPlus /> Adicionar Necessidade
-          </button>
-        </div>
-
-        <div className={styles.buttons}>
-          <button
-            type="button"
-            onClick={() => navigate('/feed')}
-            className={styles.cancelBtn}
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            className={styles.registerBtn}
-          >
-            Cadastrar Pet
+        <div className={styles.formActions}>
+          <button type="submit" className={styles.submitButton} disabled={loading}>
+            {loading ? 'Cadastrando...' : 'Cadastrar Pet'}
           </button>
         </div>
       </form>

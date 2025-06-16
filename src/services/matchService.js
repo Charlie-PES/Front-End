@@ -371,36 +371,15 @@ const getAvailablePets = async () => {
   }
 };
 
-// Obtém um pet específico
+// Adaptação da função getPet para o novo endpoint
 const getPet = async (petId) => {
-  try {
-    const response = await api.get(`/pets/${petId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Erro ao buscar pet:', error);
-    throw error;
-  }
-};
-
-// Cria um novo pet
-const createPet = async (petData) => {
-  try {
-    const response = await api.post('/pets', petData);
-    return response.data;
-  } catch (error) {
-    console.error('Erro ao criar pet:', error);
-    throw error;
-  }
-};
-
-// Remove um pet
-const deletePet = async (petId) => {
-  try {
-    await api.delete(`/pets/${petId}`);
-  } catch (error) {
-    console.error('Erro ao remover pet:', error);
-    throw error;
-  }
+    try {
+        const response = await api.get(`/pets/${petId}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao buscar pet ${petId}:`, error);
+        throw error;
+    }
 };
 
 // Cria uma solicitação de adoção
@@ -446,6 +425,37 @@ const deleteAdoption = async (petId, ownerId) => {
   }
 };
 
+const getPetsByOwnerId = async (ownerId) => {
+    try {
+        const allPets = await getAvailablePets(); // Obtém todos os pets
+        const filteredPets = allPets.filter(pet => pet.owner_id === ownerId); // Filtra por owner_id
+        return filteredPets;
+    } catch (error) {
+        console.error(`Erro ao buscar e filtrar pets para o proprietário ${ownerId}:`, error);
+        throw error;
+    }
+};
+
+const createPet = async (petData) => {
+  try {
+    const response = await api.post('/pets', petData);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao cadastrar pet:', error);
+    throw error;
+  }
+};
+
+const deletePet = async (petId) => {
+  try {
+    const response = await api.delete(`/pets/${petId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao remover pet:', error);
+    throw error;
+  }
+};
+
 export {
   getAvailablePets,
   getPet,
@@ -454,5 +464,6 @@ export {
   createAdoptionRequest,
   registerAdoption,
   getAdoptions,
-  deleteAdoption
+  deleteAdoption,
+  getPetsByOwnerId,
 }; 

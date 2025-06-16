@@ -10,6 +10,7 @@ import { login } from '../../../services/authService';
 import { useAuth } from '../../../contexts/AuthContext';
 import { getAvailablePets } from '../../../services/matchService';
 import chatStyles from '../../../components/ChatButton/ChatButton.module.css';
+import PetCard from '../../../components/PetCard/PetCard';
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('todos');
@@ -341,38 +342,9 @@ const Home = () => {
         ) : (
           <div className={styles.sliderContainer}>
             <Slider {...sliderSettings}>
-              {filteredPets.map((pet) => {
-                // Nome
-                const nome = pet.name && pet.name !== 'string' ? pet.name : 'Não informado';
-                // Descrição
-                const descricao = pet.traits?.description && pet.traits.description !== 'string' ? pet.traits.description : '';
-                // Tamanho
-                const tamanho = pet.traits?.size && pet.traits.size !== 'string' ? pet.traits.size : '';
-                // Idade
-                let idade = '';
-                if (pet.birthday_date && pet.birthday_date !== 'string') {
-                  idade = calcularIdade(pet.birthday_date);
-                }
-                // Imagem
-                let imagem = '/images/default-pet.png';
-                if (pet.picture && pet.picture !== 'string') imagem = pet.picture;
-                // Link para detalhes
-                const petId = pet._id || pet.id || '';
-                return (
-                  <div key={petId || nome + Math.random()} className={styles.petCard}>
-                    <img src={imagem} alt={nome} />
-                    <div className={styles.petInfo}>
-                      <h3>{nome}</h3>
-                      {descricao && <p className={styles.petDesc}>{descricao}</p>}
-                      <div className={styles.petDetails}>
-                        {idade && <span>{idade}</span>}
-                        {tamanho && <span>{tamanho}</span>}
-                      </div>
-                      <Link to={petId ? `/pet/${petId}` : '#'} className={styles.adotarBtn}>ME ADOTE</Link>
-                    </div>
-                  </div>
-                );
-              })}
+              {filteredPets.map((pet) => (
+                <PetCard key={pet._id} pet={pet} />
+              ))}
             </Slider>
           </div>
         )}

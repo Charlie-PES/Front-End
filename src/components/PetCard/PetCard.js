@@ -18,6 +18,13 @@ const PetCard = ({ pet, onFavoriteClick, isFavorite }) => {
     return age;
   };
 
+  // Função para truncar a descrição
+  const truncateDescription = (text, maxLength) => {
+    if (!text) return 'Descrição não disponível';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
+
   // Determina o tipo de proprietário
   const getOwnerType = (type) => {
     return type === 'org' ? 'ONG' : 'Tutor Temporário';
@@ -61,6 +68,9 @@ const PetCard = ({ pet, onFavoriteClick, isFavorite }) => {
           <span>{pet.traits.size}</span>
           <span>{pet.traits.fur_type}</span>
         </div>
+        <p className={styles.description}>
+          {truncateDescription(pet.description, 100)}
+        </p>
         <p className={styles.location}>
           {pet.owner_id?.address?.[0]?.city || 'Localização não disponível'}
         </p>

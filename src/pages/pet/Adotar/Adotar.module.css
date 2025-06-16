@@ -125,10 +125,11 @@
 
 .sidebar {
   width: 280px;
-  background-color: var(--card-background); /* Usar variável global */
+  background-color: var(--card-background);
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
-  box-shadow: var(--card-shadow); /* Usar variável global */
+  padding-bottom: 2.5rem;
+  box-shadow: var(--card-shadow);
   height: fit-content;
   position: sticky;
   top: 100px;
@@ -143,9 +144,24 @@
 }
 
 .sidebarHeader h2 {
-  margin: 0;
-  font-size: var(--font-size-h4);
-  color: var(--text-color); /* Usar variável global */
+  color: var(--text-color);
+}
+
+.filterHeaderTitle {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.filterHeaderTitle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 5px;
 }
 
 .closeFiltersBtn {
@@ -153,64 +169,77 @@
 }
 
 .filterGroup {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 2.5rem;
 }
 
 .filterGroup label {
   display: block;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 0.8rem;
   font-weight: var(--font-weight-medium);
-  color: var(--text-color); /* Usar variável global */
+  color: var(--text-color);
 }
 
 .tipoButtons {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
   margin-bottom: var(--spacing-md);
 }
 
-.tipoBtn {
-  width: 100%;
+.todosButton {
+  grid-column: span 2;
+}
+
+.tipoButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  background-color: var(--bg-color); /* Usar variável global */
-  color: var(--text-color); /* Usar variável global */
-  border: none;
+  gap: 0.3rem;
+  padding: 0.5rem;
+  background-color: var(--color-background-secondary);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   cursor: pointer;
   transition: all var(--transition-normal);
-  font-size: var(--font-size-body);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  width: 100%;
 }
 
-.tipoBtn:hover {
-  background-color: var(--primary-light); /* Usar variável global para hover mais claro */
+.tipoButton:hover {
+  background-color: var(--color-border-dark);
   transform: translateY(-2px);
 }
 
-.tipoBtn.active {
-  background-color: var(--primary-color); /* Usar variável global */
-  color: var(--secondary-color); /* Usar variável global (branco) */
+.tipoButton.active {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-color: var(--primary-color);
 }
 
 .filterGroup select {
   width: 100%;
   padding: var(--spacing-md);
-  background-color: var(--input-background); /* Usar variável global */
-  color: var(--text-color); /* Usar variável global */
-  border: 1px solid var(--border-color); /* Usar variável global */
+  background-color: var(--color-card);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   outline: none;
   transition: all var(--transition-normal);
   font-size: var(--font-size-body);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-5.4H18.6c-5%200-9.3%201.8-13.2%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013.2l128%20127.9c3.9%203.9%208.7%205.8%2013.2%205.8s9.3-1.9%2013.2-5.8l128-127.9c3.6-3.9%205.4-8.7%205.4-13.2%200-5-1.8-9.3-5.4-13.2z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 0.8rem;
 }
 
 .filterGroup select:focus {
-  border-color: var(--primary-color); /* Usar variável global */
-  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2); /* Usar variável RGB global */
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
 }
 
 .checkboxGroupTitle {
@@ -284,32 +313,36 @@
 }
 
 .petsGrid {
-  flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
-  padding: var(--spacing-md);
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .petCard {
-  background-color: var(--card-background); /* Usar variável global */
+  background-color: var(--color-card);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  box-shadow: var(--card-shadow); /* Usar variável global */
+  box-shadow: var(--shadow-md);
   transition: all var(--transition-normal);
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .petCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg); /* Usar variável global */
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .petImageContainer {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .petImageContainer img {
@@ -325,101 +358,102 @@
 
 .petTypeBadge {
   position: absolute;
-  top: var(--spacing-sm);
-  left: var(--spacing-sm);
-  background-color: var(--primary-color); /* Usar variável global */
-  color: var(--secondary-color); /* Usar variável global (branco) */
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--border-radius-md);
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--border-radius-xl);
   font-size: 0.8rem;
   font-weight: 600;
+  box-shadow: var(--shadow-sm);
 }
 
 .petInfo {
-  padding: var(--spacing-md);
+  padding: 1.2rem 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .petInfo h3 {
-  margin: 0 0 var(--spacing-sm) 0;
-  font-size: 1.3rem;
-  color: var(--text-color); /* Usar variável global */
+  margin: 0 0 0.6rem;
+  font-size: 1.35rem;
+  color: var(--text-color);
 }
 
 .petDetails {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
 }
 
 .petDetails span {
-  background-color: var(--bg-color); /* Usar variável global */
-  color: var(--text-secondary); /* Usar variável global */
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--border-radius-md);
+  background-color: var(--color-background-secondary);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--border-radius-lg);
   font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
 .petLocation {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  color: var(--text-secondary); /* Usar variável global */
+  gap: 0.4rem;
+  color: var(--text-secondary);
   font-size: 0.9rem;
-  margin-bottom: var(--spacing-md);
+  margin-top: auto;
+}
+
+.petLocation svg {
+  color: var(--primary-color);
 }
 
 .petActions {
   display: flex;
-  gap: var(--spacing-sm);
-  padding: 0 var(--spacing-md) var(--spacing-md);
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
 }
 
 .favoriteBtn, .shareBtn {
-  flex: 1;
-  padding: 0.75rem;
-  border-radius: var(--border-radius-md);
-  font-size: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.3rem;
   cursor: pointer;
-  transition: all var(--transition-normal);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  transition: color var(--transition-normal);
 }
 
 .favoriteBtn {
-  background-color: var(--primary-color); /* Usar variável global */
-  color: var(--secondary-color); /* Usar variável global (branco) */
-  border: none;
+  color: var(--color-error);
 }
 
 .shareBtn {
-  background-color: var(--bg-color); /* Usar variável global */
-  color: var(--text-color); /* Usar variável global */
-  border: 1px solid var(--border-color); /* Usar variável global */
+  color: var(--color-info);
 }
 
 .favoriteBtn:hover, .shareBtn:hover {
-  background-color: var(--primary-dark); /* Usar variável global */
-  color: var(--secondary-color); /* Usar variável global (branco) */
+  color: var(--primary-color);
 }
 
 .noResults {
   text-align: center;
-  padding: var(--spacing-xxl);
-  color: var(--text-secondary); /* Usar variável global */
+  margin-top: 3rem;
+  color: var(--text-secondary);
 }
 
 .noResultsIcon {
   font-size: 3rem;
-  margin-bottom: var(--spacing-md);
-  color: var(--primary-color); /* Usar variável global */
+  color: var(--primary-color);
+  margin-bottom: 1rem;
 }
 
 .noResults p {
   font-size: 1.1rem;
-  color: var(--text-secondary); /* Usar variável global */
 }
 
 .petModal {
@@ -428,7 +462,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Manter rgba para overlay */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -436,14 +470,14 @@
 }
 
 .petModalContent {
-  background-color: var(--card-background); /* Usar variável global */
+  background-color: var(--card-background);
   border-radius: var(--border-radius-lg);
   width: 90%;
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: var(--shadow-lg); /* Usar variável global */
+  box-shadow: var(--shadow-lg);
   animation: slideIn var(--transition-normal) ease-out;
 }
 
@@ -454,14 +488,14 @@
   background: none;
   border: none;
   font-size: 1.8rem;
-  color: var(--text-color); /* Usar variável global */
+  color: var(--text-color);
   cursor: pointer;
   z-index: 2010;
   transition: all var(--transition-normal);
 }
 
 .closeModalBtn:hover {
-  color: var(--primary-color); /* Usar variável global */
+  color: var(--primary-color);
   transform: rotate(90deg);
 }
 
@@ -484,7 +518,7 @@
 
 .petModalInfo h2 {
   font-size: 2rem;
-  color: var(--text-color); /* Usar variável global */
+  color: var(--text-color);
   margin-bottom: var(--spacing-md);
 }
 
@@ -496,23 +530,23 @@
 }
 
 .petModalDetail {
-  background-color: var(--bg-color); /* Usar variável global */
+  background-color: var(--bg-color);
   padding: var(--spacing-md);
   border-radius: var(--border-radius-md);
   text-align: center;
-  box-shadow: var(--shadow-sm); /* Usar variável global */
+  box-shadow: var(--shadow-sm);
 }
 
 .detailLabel {
   font-size: 0.9rem;
-  color: var(--text-secondary); /* Usar variável global */
+  color: var(--text-secondary);
   margin-bottom: 0.25rem;
 }
 
 .detailValue {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--primary-color); /* Usar variável global */
+  color: var(--primary-color);
 }
 
 .petModalDescription {
@@ -521,29 +555,29 @@
 
 .petModalDescription h3 {
   font-size: 1.3rem;
-  color: var(--text-color); /* Usar variável global */
+  color: var(--text-color);
   margin-bottom: var(--spacing-sm);
 }
 
 .petModalDescription p {
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--text-color); /* Usar variável global */
+  color: var(--text-color);
 }
 
 .petModalActions {
   padding: var(--spacing-lg);
   display: flex;
   gap: var(--spacing-md);
-  border-top: 1px solid var(--border-color); /* Usar variável global */
+  border-top: 1px solid var(--border-color);
   margin-top: var(--spacing-lg);
 }
 
 .adotarBtn {
   flex: 1;
   padding: 1rem 2rem;
-  background-color: var(--primary-color); /* Usar variável global */
-  color: var(--secondary-color); /* Usar variável global (branco) */
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   border: none;
   border-radius: var(--border-radius-md);
   font-size: 1.1rem;
@@ -553,9 +587,9 @@
 }
 
 .adotarBtn:hover {
-  background-color: var(--primary-dark); /* Usar variável global */
+  background-color: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md); /* Usar variável global */
+  box-shadow: var(--shadow-md);
 }
 
 @keyframes fadeIn {
@@ -625,6 +659,64 @@
 
   .petsGrid {
     grid-template-columns: 1fr;
+    padding: 0.5rem;
+    gap: 1.5rem;
+  }
+
+  .petCard {
+    flex-direction: row;
+    height: auto;
+  }
+
+  .petImageContainer {
+    width: 150px;
+    height: 150px;
+    border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+    border-bottom: none;
+    flex-shrink: 0;
+  }
+
+  .petImageContainer img {
+    object-fit: contain;
+    padding: 0.5rem;
+  }
+
+  .petTypeBadge {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+
+  .petInfo {
+    padding: 1rem;
+  }
+
+  .petInfo h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .petDetails {
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .petDetails span {
+    font-size: 0.8rem;
+  }
+
+  .petLocation {
+    font-size: 0.85rem;
+  }
+
+  .petActions {
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+  }
+
+  .favoriteBtn, .shareBtn {
+    font-size: 1.2rem;
   }
 
   .petModalContent {
@@ -634,6 +726,18 @@
 
   .petModalImage {
     height: 200px;
+  }
+
+  .tipoButtons {
+    grid-template-columns: 1fr;
+  }
+
+  .tipoButton {
+    width: 100%;
+  }
+
+  .todosButton {
+    grid-column: span 1;
   }
 }
 
@@ -656,6 +760,22 @@
 
   .adotarBtn {
     width: 100%;
+  }
+
+  .petCard {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .petImageContainer {
+    width: 100%;
+    height: 200px;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .petInfo {
+    padding: 1rem;
   }
 }
 
@@ -700,29 +820,27 @@
   color: var(--dark-text-color);
 }
 
-.darkMode .tipoBtn {
-  background-color: var(--dark-bg-color);
+.darkMode .tipoButton {
+  background-color: var(--dark-background-secondary);
+  border-color: var(--dark-border-color);
   color: var(--dark-text-color);
 }
 
-.darkMode .tipoBtn:hover {
-  background-color: var(--dark-primary-light);
+.darkMode .tipoButton:hover {
+  background-color: var(--dark-border-dark);
 }
 
-.darkMode .tipoBtn.active {
+.darkMode .tipoButton.active {
   background-color: var(--dark-primary-color);
+  border-color: var(--dark-primary-color);
   color: var(--dark-secondary-color);
 }
 
 .darkMode .filterGroup select {
-  background-color: var(--dark-input-background);
-  color: var(--dark-text-color);
+  background-color: var(--dark-card-background);
   border-color: var(--dark-border-color);
-}
-
-.darkMode .filterGroup select:focus {
-  border-color: var(--dark-primary-color);
-  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2); /* Usar variável RGB para o dark mode */
+  color: var(--dark-text-color);
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23bbb%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-5.4H18.6c-5%200-9.3%201.8-13.2%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013.2l128%20127.9c3.9%203.9%208.7%205.8%2013.2%205.8s9.3-1.9%2013.2-5.8l128-127.9c3.6-3.9%205.4-8.7%205.4-13.2%200-5-1.8-9.3-5.4-13.2z%22%2F%3E%3C%2Fsvg%3E');
 }
 
 .darkMode .checkboxGroupTitle {
@@ -747,7 +865,7 @@
 }
 
 .darkMode .resetBtn {
-  background-color: var(--error-dark); /* Usar uma variável para erro no dark mode */
+  background-color: var(--error-dark);
   color: var(--dark-secondary-color);
   box-shadow: var(--card-shadow);
 }
@@ -758,11 +876,11 @@
 
 .darkMode .petCard {
   background-color: var(--dark-card-background);
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .darkMode .petCard:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .darkMode .petTypeBadge {
@@ -775,7 +893,7 @@
 }
 
 .darkMode .petDetails span {
-  background-color: var(--dark-bg-color);
+  background-color: var(--dark-background-secondary);
   color: var(--dark-text-secondary);
 }
 
@@ -783,20 +901,20 @@
   color: var(--dark-text-secondary);
 }
 
-.darkMode .favoriteBtn {
-  background-color: var(--dark-primary-color);
-  color: var(--dark-secondary-color);
+.darkMode .petLocation svg {
+  color: var(--dark-primary-color);
 }
 
-.darkMode .shareBtn {
-  background-color: var(--dark-bg-color);
-  color: var(--dark-text-color);
-  border-color: var(--dark-border-color);
+.darkMode .petActions {
+  border-top-color: var(--dark-border-color);
+}
+
+.darkMode .favoriteBtn, .darkMode .shareBtn {
+  color: var(--dark-text-secondary);
 }
 
 .darkMode .favoriteBtn:hover, .darkMode .shareBtn:hover {
-  background-color: var(--dark-primary-dark);
-  color: var(--dark-secondary-color);
+  color: var(--dark-primary-color);
 }
 
 .darkMode .noResults {
@@ -861,5 +979,9 @@
 .darkMode .adotarBtn:hover {
   background-color: var(--dark-primary-dark);
   box-shadow: var(--shadow-md);
+}
+
+.darkMode .filterHeaderTitle::after {
+  background-color: var(--dark-primary-color);
 }
 

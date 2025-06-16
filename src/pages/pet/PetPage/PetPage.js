@@ -39,6 +39,13 @@ const PetPage = () => {
   const [adocaoSucesso, setAdocaoSucesso] = useState(false);
   const [responsavel, setResponsavel] = useState(null);
 
+  // Função para truncar a descrição
+  const truncateDescription = (text, maxLength) => {
+    if (!text) return 'Descrição não disponível';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -209,7 +216,7 @@ const PetPage = () => {
           </ul>
           {descricao && (
             <div className={styles.description}>
-              <p>{descricao}</p>
+              <p>{truncateDescription(descricao, 250)}</p>
             </div>
           )}
           {responsavel && (
