@@ -11,7 +11,6 @@ const Adotar = () => {
     comportamento: '',
     tamanho: '',
     sexo: [],
-    especial: '',
     tipo: 'todos'
   });
   const [busca, setBusca] = useState('');
@@ -59,7 +58,6 @@ const Adotar = () => {
       comportamento: '',
       tamanho: '',
       sexo: [],
-      especial: '',
       tipo: 'todos'
     });
     setBusca('');
@@ -69,13 +67,12 @@ const Adotar = () => {
     const sexoMatch = filtros.sexo.length === 0 || filtros.sexo.includes(pet.traits.gender);
     const porteMatch = !filtros.tamanho || pet.traits.size === filtros.tamanho;
     const comportamentoMatch = !filtros.comportamento || pet.traits.temperament === filtros.comportamento;
-    const especialMatch = !filtros.especial || (pet.traits.special_needs === (filtros.especial === 'Sim'));
     const tipoMatch = filtros.tipo === 'todos' || pet.traits.species === filtros.tipo;
     const buscaMatch = !busca || 
       pet.name.toLowerCase().includes(busca.toLowerCase()) || 
       pet.traits.description?.toLowerCase().includes(busca.toLowerCase());
     
-    return sexoMatch && porteMatch && comportamentoMatch && especialMatch && tipoMatch && buscaMatch;
+    return sexoMatch && porteMatch && comportamentoMatch && tipoMatch && buscaMatch;
   });
 
   const handlePetClick = (petId) => {
@@ -179,19 +176,6 @@ const Adotar = () => {
               <option value="energetic">Energético</option>
               <option value="aggressive">Agressivo</option>
               <option value="friendly">Amigável</option>
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>Necessidades Especiais</label>
-            <select 
-              name="especial" 
-              value={filtros.especial}
-              onChange={handleFiltroChange}
-            >
-              <option value="">Todos</option>
-              <option value="Sim">Sim</option>
-              <option value="Não">Não</option>
             </select>
           </div>
 
