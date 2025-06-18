@@ -1,13 +1,12 @@
 ## 🐾 Pets Adoção - Front-End
-Projeto front-end de um sistema de adoção de pets. Desenvolvido em React, com funcionalidades de visualização de pets, filtros, match de compatibilidade, mapa de ONGs, cadastro e login com Google (via Firebase).
+Projeto front-end de um sistema de adoção de pets. Desenvolvido em React.
 
 ## 💻 Requisitos
 Node.js v18 ou superior (recomendada v20+)
-
-npm v9 ou superior
+Python 3.7+
+npm v9+
 
 ## Dependências do projeto:
-
 npm install
 
 ## 🚀 Rodando o projeto
