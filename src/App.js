@@ -25,7 +25,6 @@ import Feed from './pages/info/Feed/Feed';
 import Depoimentos from './pages/ExFooter/Depoimentos/Depoimentos';
 import Apoiadores from './pages/ExFooter/Apoiadores/Apoiadores';
 import MatchPage from './pages/user/MatchPage/MatchPage';
-import AdminPage from './pages/admin/AdminPage';
 import { AuthProvider } from './contexts/AuthContext';
 import OngProfile from './pages/ong/OngProfile/OngProfile';
 import DirectMessages from './components/DirectMessages/DirectMessages';
@@ -65,7 +64,6 @@ function App() {
                         <Route path="/depoimentos" element={<Depoimentos />} />
                         <Route path="/apoiadores" element={<Apoiadores />} />
                         <Route path="/matchpage" element={<MatchPage />} />
-                        <Route path="/admin" element={<AdminPage />} />
                         <Route path="/ong/perfil" element={<OngProfile />} />
                         <Route path="/messages" element={<DirectMessages />} />
                         <Route path="/pets/add" element={<CadastroPet />} />

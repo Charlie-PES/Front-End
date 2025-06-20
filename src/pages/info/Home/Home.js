@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { FaHeart, FaSearch, FaChevronLeft, FaChevronRight, FaBone, FaCat, FaUserFriends, FaCut, FaUser, FaBuilding, FaPaw, FaMapMarkerAlt, FaHandHoldingHeart, FaHeartbeat, FaHome } from 'react-icons/fa';
 import { ThemeContext } from '../../../contexts/ThemeContext';
-import { login } from '../../../services/authService';
+
 import { useAuth } from '../../../contexts/AuthContext';
 import { getAvailablePets } from '../../../services/matchService';
 import PetCard from '../../../components/PetCard/PetCard';
