@@ -289,6 +289,19 @@ const Home = () => {
       </section>
 
       <WhyAdopt />
+
+      {/* Parceiros */}
+      <section className={styles.partnersSection}>
+        <h2>Apoiadores</h2>
+        <div className={styles.partnerGrid}>
+          {parceiros.map((logo, i) => (
+            <div key={i} className={styles.partnerLogo}>
+              <img src={logo} alt={`parceiro ${i + 1}`} />
+            </div>
+          ))}
+        </div>
+      </section>
+
           
       {/* Blog/Feed como última seção */}
       <section className={styles.blogSection}>
@@ -326,18 +339,6 @@ const Home = () => {
           ) : (
             <p>Nenhuma notícia encontrada.</p>
           )}
-        </div>
-      </section>
-
-      {/* Parceiros */}
-      <section className={styles.partnersSection}>
-        <h2>Apoiadores</h2>
-        <div className={styles.partnerGrid}>
-          {parceiros.map((logo, i) => (
-            <div key={i} className={styles.partnerLogo}>
-              <img src={logo} alt={`parceiro ${i + 1}`} />
-            </div>
-          ))}
         </div>
       </section>
 
