@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import ChatButton from './components/ChatButton/ChatButton';
 import BackButton from './components/BackButton/BackButton';
 import Home from './pages/info/Home/Home';
 import Adotar from './pages/pet/Adotar/Adotar';
@@ -73,7 +72,6 @@ function App() {
                         <Route path="/doacoes" element={<Doacoes />} />
                     </Routes>
                 </main>
-                <ChatButton />
                 <BackButton />
                 <Footer />
             </div>

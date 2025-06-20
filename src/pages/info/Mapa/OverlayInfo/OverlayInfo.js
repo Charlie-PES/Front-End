@@ -22,6 +22,10 @@ const OverlayInfo = ({ ong, onClose }) => {
           <h2>{ong.nome}</h2>
           <p>{ong.descricao}</p>
 
+          {ong.telefone && (
+            <p><strong>Telefone:</strong> {ong.telefone}</p>
+          )}
+
           <div className={styles.visitInfo}>
             <div>
               <FaClock /> Horário de visitas<br />Das 18h até 8h

@@ -9,7 +9,6 @@ import { ThemeContext } from '../../../contexts/ThemeContext';
 import { login } from '../../../services/authService';
 import { useAuth } from '../../../contexts/AuthContext';
 import { getAvailablePets } from '../../../services/matchService';
-import chatStyles from '../../../components/ChatButton/ChatButton.module.css';
 import PetCard from '../../../components/PetCard/PetCard';
 import { getPetNews } from '../../../services/newsService';
 
@@ -146,30 +145,7 @@ const Home = () => {
     ? pets 
     : pets.filter(pet => pet.traits.species === activeCategory);
 
-  // Função para login rápido mockado
-  const handleQuickLogin = async (type) => {
-    let email = '';
-    let password = '';
-    if (type === 'user') {
-      email = 'usuario@teste.com';
-      password = 'Teste@123';
-    } else if (type === 'ong') {
-      email = 'ong@teste.com';
-      password = 'Teste@123';
-    }
-    try {
-      const user = await login(email, password);
-      setUser(user);
-      if (type === 'user') {
-        navigate('/perfil');
-      } else {
-        navigate('/ong/perfil');
-      }
-    } catch (e) {
-      alert('Erro ao logar mock: ' + (e.message || e));
-    }
-  };
-
+  
   // Função utilitária para calcular idade
   function calcularIdade(dataNascimento) {
     if (!dataNascimento) return 'Não informado';
@@ -245,7 +221,7 @@ const Home = () => {
         ) : (
           <div className={styles.sliderContainer}>
             <Slider {...sliderSettings}>
-              {filteredPets.map((pet) => (
+              {filteredPets.slice(0, 5).map((pet) => (
                 <PetCard key={pet._id} pet={pet} />
               ))}
             </Slider>
@@ -267,7 +243,6 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <Link to="/adotar" className={styles.adoptNowBtn}>Ver pets disponíveis</Link>
       </section>
 
       {/* Contador de Sucesso */}

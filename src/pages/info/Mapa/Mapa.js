@@ -7,11 +7,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import OverlayInfo from './OverlayInfo/OverlayInfo';
 import NovoLocalOverlay from './NovoLocalOverlay/NovoLocalOverlay';
+import { getOngs, geocodeAddress } from '../../../services/ongService';
 
-/**
- * Configuração dos ícones padrão do Leaflet
- * Necessário para evitar problemas com os marcadores padrão
- */
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -19,96 +16,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-/**
- * Componente Mapa
- * 
- * Este componente exibe um mapa interativo com locais de adoção de pets.
- * Permite visualizar ONGs, abrigos e outros locais relacionados à adoção.
- * Inclui funcionalidades de filtro, busca e adição de novos locais.
- * 
- * Funcionalidades:
- * - Visualização de locais no mapa
- * - Filtros por cidade, estado, bairro e nome
- * - Adição de novos locais
- * - Visualização detalhada de cada local
- * - Suporte a modo escuro
- * - Design responsivo para dispositivos móveis
- */
 
-/**
- * Dados iniciais para simulação de locais no mapa
- * Em produção, estes dados viriam de uma API
- */
-const locaisIniciais = [
-  {
-    id: 1,
-    nome: 'ONG Amor Animal',
-    posicao: [-30.0331, -51.23],
-    descricao: 'Ajuda animais em situação de rua e promove adoções!',
-    cidade: 'Porto Alegre',
-    estado: 'RS',
-    bairro: 'Centro',
-    telefone: '(51) 9999-9999',
-    email: 'contato@amoranimal.org',
-    horario: 'Seg-Sex: 9h-18h',
-    fotos: ['/images/ong1.jpg', '/images/ong2.jpg'],
-    animais: ['Cães', 'Gatos', 'Pássaros'],
-    redesSociais: {
-      facebook: 'https://facebook.com/amoranimal',
-      instagram: 'https://instagram.com/amoranimal'
-    },
-    tipo: 'ong' // Tipo de local para personalização do marcador
-  },
-  {
-    id: 2,
-    nome: 'Abrigo Patinhas',
-    posicao: [-30.0400, -51.20],
-    descricao: 'Adote com responsabilidade. 🐾',
-    cidade: 'Porto Alegre',
-    estado: 'RS',
-    bairro: 'Vila Nova',
-    telefone: '(51) 8888-8888',
-    email: 'contato@abrigopatinhas.org',
-    horario: 'Ter-Dom: 10h-17h',
-    fotos: ['/images/abrigo1.jpg', '/images/abrigo2.jpg'],
-    animais: ['Cães', 'Gatos'],
-    redesSociais: {
-      facebook: 'https://facebook.com/abrigopatinhas',
-      instagram: 'https://instagram.com/abrigopatinhas'
-    },
-    tipo: 'abrigo'
-  },
-  {
-    id: 3,
-    nome: 'Clínica Veterinária PetCare',
-    posicao: [-30.0271, -51.22],
-    descricao: 'Cuidados veterinários de qualidade para seu pet.',
-    cidade: 'Porto Alegre',
-    estado: 'RS',
-    bairro: 'Moinhos de Vento',
-    telefone: '(51) 7777-7777',
-    email: 'contato@petcare.com',
-    horario: 'Seg-Sab: 8h-20h',
-    fotos: ['/images/clinica1.jpg', '/images/clinica2.jpg'],
-    animais: ['Cães', 'Gatos', 'Exóticos'],
-    redesSociais: {
-      facebook: 'https://facebook.com/petcare',
-      instagram: 'https://instagram.com/petcare'
-    },
-    tipo: 'clinica'
-  }
-];
-
-/**
- * Componente principal do mapa
- * @returns {JSX.Element} Componente de mapa renderizado
- */
 const Mapa = () => {
-  // Contexto de tema para suporte a modo escuro
   const { darkMode } = useContext(ThemeContext);
   
-  // Estados para gerenciar os locais e interações
-  const [locais, setLocais] = useState(locaisIniciais);
+  const [locais, setLocais] = useState([]);
   const [novoLocal, setNovoLocal] = useState({ 
     nome: '', 
     descricao: '', 
@@ -143,21 +55,38 @@ const Mapa = () => {
   const [error, setError] = useState(null);
   const [modoAdicionar, setModoAdicionar] = useState(false); // Novo estado para controlar o modo de adição
   
-  /**
-   * Efeito para carregar os locais ao montar o componente
-   * Simula uma chamada à API
-   */
   useEffect(() => {
     const fetchLocais = async () => {
       setIsLoading(true);
       setError(null);
-      
       try {
-        // Simula um delay de rede
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Em produção, aqui seria uma chamada à API
-        setLocais(locaisIniciais);
+        // Busca ONGs reais do backend
+        const ongs = await getOngs();
+        // Filtra apenas ONGs (type === 'org')
+        const onlyOngs = ongs.filter(ong => ong.type === 'org');
+        // Geocodifica endereços
+        const geocodedOngs = await Promise.all(
+          onlyOngs.map(async (ong) => {
+            const address = ong.address && ong.address[0];
+            if (!address) return null;
+            const coords = await geocodeAddress(address);
+            if (!coords) return null;
+            return {
+              id: ong._id,
+              nome: ong.name || ong.surname || 'ONG',
+              descricao: ong.owner_details?.description || '',
+              posicao: [coords.lat, coords.lon],
+              cidade: address.city || '',
+              estado: address.state || '',
+              bairro: address.neighborhood || '',
+              telefone: ong.phone || '',
+              email: ong.email || '',
+              tipo: 'ong',
+            };
+          })
+        );
+        // Remove nulos e usa apenas as ONGs reais
+        setLocais(geocodedOngs.filter(Boolean));
       } catch (err) {
         setError('Erro ao carregar os locais. Tente novamente mais tarde.');
         console.error('Erro ao carregar locais:', err);
@@ -165,7 +94,6 @@ const Mapa = () => {
         setIsLoading(false);
       }
     };
-    
     fetchLocais();
   }, []);
   
@@ -279,11 +207,10 @@ const Mapa = () => {
    * @returns {L.Icon} Ícone personalizado do Leaflet
    */
   const createCustomIcon = (tipo, isNew = false) => {
+   
     // Cores para os marcadores
     const colors = {
       ong: '#d35400', // Laranja escuro
-      abrigo: '#3498db', // Azul
-      clinica: '#2ecc71', // Verde
       default: '#9b59b6' // Roxo
     };
     
@@ -349,23 +276,17 @@ const Mapa = () => {
 
       {/* Layout principal do mapa */}
       <div className={styles.mapaLayout}>
+        
         {/* Sidebar de filtros */}
         <div className={`${styles.sidebarContainer} ${showFilters ? styles.showFilters : ''}`}>
           <div className={styles.sidebar}>
+            
             <div className={styles.sidebarHeader}>
               <h3>Filtros</h3>
-              <button 
-                className={styles.closeFiltersBtn}
-                onClick={() => setShowFilters(false)}
-                aria-label="Fechar filtros"
-              >
-                <FaTimes />
-              </button>
             </div>
             
             {/* Campo de busca */}
             <div className={styles.searchContainer}>
-              <FaSearch className={styles.searchIcon} />
               <input
                 type="text"
                 placeholder="Buscar por nome"
@@ -374,22 +295,7 @@ const Mapa = () => {
                 className={styles.searchInput}
               />
             </div>
-            
-            {/* Filtro por tipo de local */}
-            <div className={styles.filterGroup}>
-              <label>Tipo de Local</label>
-              <select 
-                value={filtros.tipo}
-                onChange={(e) => setFiltros({ ...filtros, tipo: e.target.value })}
-                className={styles.filterSelect}
-              >
-                <option value="todos">Todos</option>
-                <option value="ong">ONGs</option>
-                <option value="abrigo">Abrigos</option>
-                <option value="clinica">Clínicas</option>
-              </select>
-            </div>
-            
+              
             {/* Filtro por cidade */}
             <div className={styles.filterGroup}>
               <label>Cidade</label>
@@ -455,20 +361,7 @@ const Mapa = () => {
               <span>Filtros</span>
             </button>
           </div>
-          
-          {/* Botão de adicionar local (agora no canto inferior direito) */}
-          <div className={styles.addLocationButton}>
-            <button
-              className={`${styles.addButton} ${modoAdicionar ? styles.active : ''}`}
-              onClick={ativarModoAdicionar}
-              title="Adicionar nova ONG ou Abrigo"
-              aria-label="Adicionar novo local"
-            >
-              <FaPlus />
-              <span className={styles.addButtonText}>Adicionar Local</span>
-            </button>
-          </div>
-          
+                  
           {/* Área do mapa */}
           <div className={styles.mapArea}>
             {isLoading ? (
@@ -510,21 +403,20 @@ const Mapa = () => {
                       key={local.id}
                       position={local.posicao}
                       icon={customIcon}
-                      eventHandlers={{
-                        click: () => setOngSelecionada(local),
-                      }}
                     >
                       <Popup>
                         <div className={styles.popupContent}>
                           <h3>{local.nome}</h3>
                           <p>{local.descricao}</p>
                           <p><strong>Endereço:</strong> {local.bairro}, {local.cidade} - {local.estado}</p>
+                          
                           <button 
                             className={styles.viewDetailsBtn}
                             onClick={() => setOngSelecionada(local)}
                           >
                             Ver Detalhes
                           </button>
+                        
                         </div>
                       </Popup>
                     </Marker>
@@ -541,26 +433,7 @@ const Mapa = () => {
         <OverlayInfo ong={ongSelecionada} onClose={() => setOngSelecionada(null)} />
       )}
 
-      {/* Overlay para adicionar novo local */}
-      {overlayNovoLocal && (
-        <NovoLocalOverlay
-          local={novoLocal}
-          onChange={handleInputChange}
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleAddNovoLocal();
-          }}
-          onClose={() => setOverlayNovoLocal(false)}
-        />
-      )}
       
-      {/* Indicador de modo de adição */}
-      {modoAdicionar && (
-        <div className={styles.addModeIndicator}>
-          <FaPaw className={styles.addModeIcon} />
-          <p>Clique no mapa para adicionar um novo local</p>
-        </div>
-      )}
     </div>
   );
 };
