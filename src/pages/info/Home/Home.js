@@ -72,12 +72,6 @@ const Home = () => {
     '/images/parceiro3.png'
   ];
 
-  const depoimentos = [
-    { nome: 'Carlos', texto: 'Adotar mudou minha vida! O Thor é incrível.', foto: '/images/avatar1.jpg' },
-    { nome: 'Juliana', texto: 'Muito obrigada por essa plataforma maravilhosa!', foto: '/images/avatar2.jpg' },
-    { nome: 'Fernanda', texto: 'Encontrei a Luna e agora somos inseparáveis.', foto: '/images/avatar3.jpg' },
-  ];
-
   const successStats = [
     {
       number: "480",
@@ -98,51 +92,6 @@ const Home = () => {
       number: "4355",
       text: "Pets Cuidados",
       icon: <FaCut />
-    }
-  ];
-
-  const testimonials = [
-    {
-      text: "A experiência com o site foi incrível! Encontrei minha Luna e hoje somos inseparáveis. O processo de adoção foi simples e transparente.",
-      author: "Maria Silva",
-      location: "São Paulo",
-      image: "/images/avatar1.jpg"
-    },
-    {
-      text: "Graças a esta plataforma, consegui dar um lar para dois gatinhos maravilhosos. A equipe foi super atenciosa durante todo o processo.",
-      author: "João Santos",
-      location: "Rio de Janeiro",
-      image: "/images/avatar2.jpg"
-    },
-    {
-      text: "Adotar mudou minha vida! O processo foi muito profissional e hoje tenho dois companheiros incríveis que trouxeram mais alegria para minha casa.",
-      author: "Ana Oliveira",
-      location: "Belo Horizonte",
-      image: "/images/avatar3.jpg"
-    }
-  ];
-
-  const blogPosts = [
-    {
-      date: "13 Mar",
-      category: "PET GROOMING, PET SITTING",
-      title: "Some toughly useful much walking before",
-      image: "/images/blog1.jpg",
-      comments: "0 COMMENT"
-    },
-    {
-      date: "14 Mar",
-      category: "PET CARE, PET SITTING",
-      title: "Acute yellow re-laid less or affirmatively cats",
-      image: "/images/blog2.jpg",
-      comments: "5 COMMENTS"
-    },
-    {
-      date: "14 Mar",
-      category: "PET CARE",
-      title: "Some toughly useful much walking before",
-      image: "/images/blog3.jpg",
-      comments: "0 COMMENT"
     }
   ];
 
@@ -321,18 +270,6 @@ const Home = () => {
         <Link to="/adotar" className={styles.adoptNowBtn}>Ver pets disponíveis</Link>
       </section>
 
-      {/* Parceiros */}
-      <section className={styles.partnersSection}>
-        <h2>Apoiadores</h2>
-        <div className={styles.partnerGrid}>
-          {parceiros.map((logo, i) => (
-            <div key={i} className={styles.partnerLogo}>
-              <img src={logo} alt={`parceiro ${i + 1}`} />
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Contador de Sucesso */}
       <section className={styles.successCounter}>
         <div className={styles.testimonialHeader}>
@@ -351,28 +288,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Depoimentos */}
-      <section className={styles.testimonialSection}>
-        <div className={styles.testimonialHeader}>
-          <span className={styles.sectionTag}>DEPOIMENTOS</span>
-          <h2>Histórias de Sucesso</h2>
-          <p>Descubra como a adoção responsável tem transformado vidas e criado laços eternos entre pets e suas novas famílias.</p>
-        </div>
-        <div className={styles.testimonialGrid}>
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className={styles.testimonialCard}>
-              <div className={styles.testimonialContent}>
-                <p>{testimonial.text}</p>
-                <div className={styles.testimonialAuthor}>
-                  <span>{testimonial.author}</span>
-                  <span className={styles.location}>{testimonial.location}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
+      <WhyAdopt />
+          
       {/* Blog/Feed como última seção */}
       <section className={styles.blogSection}>
         <div className={styles.testimonialHeader}>
@@ -412,60 +329,18 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Botões escondidos para login mockado */}
-      {process.env.REACT_APP_USE_MOCKS === 'true' && (
-        <div style={{ position: 'fixed', top: 20, left: 20, zIndex: 1000, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <button
-            className={chatStyles.chatButton}
-            style={{ width: 60, height: 60 }}
-            title="Login rápido usuário"
-            onClick={() => handleQuickLogin('user')}
-          >
-            <FaUser size={28} />
-          </button>
-          <button
-            className={chatStyles.chatButton}
-            style={{ width: 60, height: 60 }}
-            title="Login rápido ONG"
-            onClick={() => handleQuickLogin('ong')}
-          >
-            <FaBuilding size={28} />
-          </button>
-        </div>
-      )}
-
-      <section className={styles.actions}>
-        <h2>O que você gostaria de fazer?</h2>
-        <div className={styles.actionButtons}>
-          <Link to="/adotar" className={styles.actionButton}>
-            <FaPaw className={styles.actionIcon} />
-            <span>Ver Pets Disponíveis</span>
-          </Link>
-          <Link to="/mapa" className={styles.actionButton}>
-            <FaMapMarkerAlt className={styles.actionIcon} />
-            <span>Encontrar Pets Próximos</span>
-          </Link>
-          <Link to="/matchpage" className={styles.actionButton}>
-            <FaHeart className={styles.actionIcon} />
-            <span>Fazer Match com Pets</span>
-          </Link>
-          <Link to="/doacoes" className={styles.actionButton}>
-            <FaHandHoldingHeart className={styles.actionIcon} />
-            <span>Ajudar com Doações</span>
-          </Link>
+      {/* Parceiros */}
+      <section className={styles.partnersSection}>
+        <h2>Apoiadores</h2>
+        <div className={styles.partnerGrid}>
+          {parceiros.map((logo, i) => (
+            <div key={i} className={styles.partnerLogo}>
+              <img src={logo} alt={`parceiro ${i + 1}`} />
+            </div>
+          ))}
         </div>
       </section>
 
-      <WhyAdopt />
-      <WhyDonate />
-
-      <section className={styles.cta}>
-        <h2>Pronto para começar sua jornada?</h2>
-        <p>Encontre o pet perfeito para você e sua família</p>
-        <Link to="/adotar" className={styles.ctaButton}>
-          Começar Agora
-        </Link>
-      </section>
     </div>
   );
 };
@@ -504,60 +379,6 @@ const WhyAdopt = () => {
         </div>
       </div>
 
-      <div className={styles.ctaContainer}>
-        <h3>Pronto para começar sua jornada?</h3>
-        <p>Encontre o pet perfeito para você e sua família</p>
-        <Link to="/adotar" className={styles.ctaButton}>
-          Começar Agora
-        </Link>
-      </div>
-    </section>
-  );
-};
-
-const WhyDonate = () => {
-  return (
-    <section className={styles.whyDonateSection}>
-      <div className={styles.sectionHeader}>
-        <h2>A Importância de Doar</h2>
-        <p className={styles.sectionSubtitle}>Sua contribuição faz a diferença na vida de muitos animais</p>
-      </div>
-
-      <div className={styles.donationContent}>
-        <div className={styles.donationText}>
-          <div className={styles.donationPoint}>
-            <FaHandHoldingHeart className={styles.donationIcon} />
-            <div>
-              <h3>Suporte Vital</h3>
-              <p>Sua doação ajuda a fornecer alimentos, medicamentos e cuidados veterinários essenciais para animais em situação de vulnerabilidade.</p>
-            </div>
-          </div>
-
-          <div className={styles.donationPoint}>
-            <FaHome className={styles.donationIcon} />
-            <div>
-              <h3>Lares Temporários</h3>
-              <p>Contribui para a manutenção de abrigos e lares temporários, oferecendo um ambiente seguro e acolhedor enquanto os pets aguardam adoção.</p>
-            </div>
-          </div>
-
-          <div className={styles.donationPoint}>
-            <FaHeart className={styles.donationIcon} />
-            <div>
-              <h3>Segunda Chance</h3>
-              <p>Ajuda a dar uma nova oportunidade para animais abandonados, permitindo que eles encontrem famílias amorosas e permanentes.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.donationCTA}>
-          <h3>Faça Parte Desta História</h3>
-          <p>Cada doação, por menor que seja, tem um grande impacto na vida desses animais.</p>
-          <Link to="/doacoes" className={styles.donateButton}>
-            Quero Doar
-          </Link>
-        </div>
-      </div>
     </section>
   );
 };
