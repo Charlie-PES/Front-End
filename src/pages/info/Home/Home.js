@@ -11,6 +11,7 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { getAvailablePets } from '../../../services/matchService';
 import chatStyles from '../../../components/ChatButton/ChatButton.module.css';
 import PetCard from '../../../components/PetCard/PetCard';
+import { getPetNews } from '../../../services/newsService';
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('todos');
@@ -20,6 +21,8 @@ const Home = () => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [noticias, setNoticias] = useState([]);
+  const [loadingNoticias, setLoadingNoticias] = useState(true);
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -34,7 +37,15 @@ const Home = () => {
       }
     };
 
+    const fetchNoticias = async () => {
+      setLoadingNoticias(true);
+      const news = await getPetNews();
+      setNoticias(news);
+      setLoadingNoticias(false);
+    };
+
     fetchPets();
+    fetchNoticias();
   }, []);
 
   const steps = [
@@ -59,63 +70,6 @@ const Home = () => {
     '/images/parceiro1.png',
     '/images/parceiro2.png',
     '/images/parceiro3.png'
-  ];
-
-  const noticias = [
-    { 
-      id: 1,
-      titulo: 'Campanha de vacinação gratuita começa em maio', 
-      imagem: '/images/feed1.jpg',
-      data: '15 Mai',
-      categoria: 'SAÚDE PET',
-      comentarios: '3 COMENTÁRIOS',
-      resumo: 'Diversas clínicas veterinárias participarão da campanha oferecendo vacinação gratuita para cães e gatos.'
-    },
-    { 
-      id: 2,
-      titulo: 'Mega feira de adoção acontece neste fim de semana', 
-      imagem: '/images/feed2.jpg',
-      data: '18 Mai',
-      categoria: 'EVENTOS',
-      comentarios: '5 COMENTÁRIOS',
-      resumo: 'Mais de 200 pets estarão disponíveis para adoção no evento que acontece no Parque Ibirapuera.'
-    },
-    { 
-      id: 3,
-      titulo: 'Novo abrigo com capacidade para 500 pets é inaugurado', 
-      imagem: '/images/feed3.jpg',
-      data: '20 Mai',
-      categoria: 'NOVIDADES',
-      comentarios: '2 COMENTÁRIOS',
-      resumo: 'O espaço conta com área médica, hotel e creche para pets.'
-    },
-    {
-      id: 4,
-      titulo: 'Projeto de castração móvel atenderá comunidades carentes',
-      imagem: '/images/feed4.jpg',
-      data: '22 Mai',
-      categoria: 'PROJETOS',
-      comentarios: '8 COMENTÁRIOS',
-      resumo: 'Unidade móvel percorrerá diferentes bairros oferecendo castração gratuita.'
-    },
-    {
-      id: 5,
-      titulo: 'Pesquisa revela: pets ajudam na recuperação de pacientes',
-      imagem: '/images/feed5.jpg',
-      data: '25 Mai',
-      categoria: 'PESQUISA',
-      comentarios: '12 COMENTÁRIOS',
-      resumo: 'Estudo comprova benefícios da interação com animais durante tratamentos médicos.'
-    },
-    {
-      id: 6,
-      titulo: 'Nova lei aumenta punição para maus-tratos a animais',
-      imagem: '/images/feed6.jpg',
-      data: '27 Mai',
-      categoria: 'LEGISLAÇÃO',
-      comentarios: '15 COMENTÁRIOS',
-      resumo: 'Penas mais severas para casos de abandono e maus-tratos entram em vigor.'
-    }
   ];
 
   const depoimentos = [
@@ -427,28 +381,34 @@ const Home = () => {
           <p>Acompanhe as últimas notícias sobre pets, eventos de adoção e dicas para cuidar do seu melhor amigo.</p>
         </div>
         <div className={styles.blogGrid}>
-          {noticias.map((noticia, index) => (
-            <div key={index} className={styles.blogCard}>
-              <div className={styles.blogImage}>
-                <img src={noticia.imagem} alt={noticia.titulo} />
-                <div className={styles.dateTag}>
-                  <span>{noticia.data}</span>
+          {loadingNoticias ? (
+            <p>Carregando notícias...</p>
+          ) : noticias && noticias.length > 0 ? (
+            noticias.map((noticia, index) => (
+              <div key={index} className={styles.blogCard}>
+                <div className={styles.blogImage}>
+                  <img src={noticia.urlToImage || '/images/logo.png'} alt={noticia.title} />
+                  <div className={styles.dateTag}>
+                    <span>{new Date(noticia.publishedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}</span>
+                  </div>
+                </div>
+                <div className={styles.blogContent}>
+                  <div className={styles.blogMeta}>
+                    <span className={styles.category}>{noticia.source && noticia.source.name}</span>
+                    <span className={styles.comments}>Notícia real</span>
+                  </div>
+                  <h3>{noticia.title}</h3>
+                  <p className={styles.blogExcerpt}>{noticia.description}</p>
+                  <a href={noticia.url} target="_blank" rel="noopener noreferrer" className={styles.readMore}>
+                    Ler mais
+                    <span className={styles.readMoreArrow}>→</span>
+                  </a>
                 </div>
               </div>
-              <div className={styles.blogContent}>
-                <div className={styles.blogMeta}>
-                  <span className={styles.category}>{noticia.categoria}</span>
-                  <span className={styles.comments}>{noticia.comentarios}</span>
-                </div>
-                <h3>{noticia.titulo}</h3>
-                <p className={styles.blogExcerpt}>{noticia.resumo}</p>
-                <Link to={`/feed/${noticia.id}`} className={styles.readMore}>
-                  Ler mais
-                  <span className={styles.readMoreArrow}>→</span>
-                </Link>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>Nenhuma notícia encontrada.</p>
+          )}
         </div>
       </section>
 

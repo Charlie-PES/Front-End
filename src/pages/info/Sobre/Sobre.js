@@ -9,6 +9,7 @@ const Sobre = () => {
 
   return (
     <div className={`${styles.sobreContainer} ${darkMode ? styles.darkMode : ''}`}>
+      
       <section className={styles.heroSection}>
         <h1>Sobre Nós</h1>
         <p>
@@ -18,6 +19,7 @@ const Sobre = () => {
       </section>
 
       <section className={styles.missionSection}>
+        
         <div className={styles.missionCard}>
           <FaHeart className={styles.missionIcon} />
           <h2>Nossa Missão</h2>
@@ -87,59 +89,6 @@ const Sobre = () => {
         </div>
       </section>
 
-      <section className={styles.teamSection}>
-        <h2>Nossa Equipe</h2>
-        <div className={styles.teamGrid}>
-          <div className={styles.teamCard}>
-            <img 
-              src="/images/team/member1.jpg" 
-              alt="Maria Silva" 
-              className={styles.teamImage}
-            />
-            <div className={styles.teamInfo}>
-              <h3>Maria Silva</h3>
-              <p className={styles.teamRole}>Diretora Executiva</p>
-              <p>
-                Veterinária com mais de 15 anos de experiência em bem-estar animal
-                e gestão de organizações não-governamentais.
-              </p>
-            </div>
-          </div>
-
-          <div className={styles.teamCard}>
-            <img 
-              src="/images/team/member2.jpg" 
-              alt="João Santos" 
-              className={styles.teamImage}
-            />
-            <div className={styles.teamInfo}>
-              <h3>João Santos</h3>
-              <p className={styles.teamRole}>Coordenador de Adoções</p>
-              <p>
-                Especialista em comportamento animal e responsável por garantir
-                o melhor match entre pets e famílias.
-              </p>
-            </div>
-          </div>
-
-          <div className={styles.teamCard}>
-            <img 
-              src="/images/team/member3.jpg" 
-              alt="Ana Costa" 
-              className={styles.teamImage}
-            />
-            <div className={styles.teamInfo}>
-              <h3>Ana Costa</h3>
-              <p className={styles.teamRole}>Veterinária</p>
-              <p>
-                Responsável pelos cuidados médicos e avaliação de saúde dos
-                animais disponíveis para adoção.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className={styles.ctaSection}>
         <h2>Faça Parte da Nossa História</h2>
         <p>
@@ -150,6 +99,7 @@ const Sobre = () => {
           <FaPaw /> Adotar um Pet
         </Link>
       </section>
+    
     </div>
   );
 };

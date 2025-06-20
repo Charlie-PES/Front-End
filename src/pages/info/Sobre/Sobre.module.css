@@ -55,347 +55,212 @@
 }
 
 .sobreContainer {
-  max-width: var(--container-max-width, 1200px);
+  max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-lg);
+  padding: 40px 20px;
   min-height: 100vh;
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: Arial, sans-serif;
-  animation: fadeIn var(--transition-slower) var(--ease-smooth);
-  opacity: 0;
-  animation-fill-mode: forwards;
 }
 
 .heroSection {
   background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
-  padding: var(--spacing-xxl) var(--spacing-lg);
+  padding: 48px 24px;
   text-align: center;
   color: var(--color-text-light);
-  border-radius: var(--border-radius-lg);
-  margin-bottom: var(--spacing-xxl);
-  animation: fadeInUp var(--transition-slower) var(--ease-smooth) 0.2s both;
+  border-radius: 18px;
+  margin-bottom: 48px;
 }
 
 .heroSection h1 {
-  font-size: var(--font-size-h1);
-  margin-bottom: var(--spacing-md);
-  font-weight: var(--font-weight-bold);
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 0.4s both;
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  font-weight: bold;
 }
 
 .heroSection p {
-  font-size: var(--font-size-h4);
+  font-size: 1.2rem;
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 0.6s both;
 }
 
 .missionSection {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-xxl);
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 0.8s both;
+  gap: 32px;
+  margin-bottom: 48px;
 }
 
 .missionCard {
   background-color: var(--color-card);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-xl);
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal) var(--ease-smooth);
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 2px 12px 0 #0001;
   text-align: center;
-  opacity: 0;
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 1s both;
-}
-
-.missionCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-  background-color: var(--color-primary-light);
 }
 
 .missionIcon {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
-  transition: transform var(--transition-normal) var(--ease-in-out);
-}
-
-.missionCard:hover .missionIcon {
-  transform: scale(1.1);
+  margin-bottom: 12px;
 }
 
 .missionCard h2 {
-  font-size: var(--font-size-h3);
+  font-size: 1.3rem;
   color: var(--color-text);
-  margin-bottom: var(--spacing-md);
-  transition: color var(--transition-normal) var(--ease-in-out);
+  margin-bottom: 10px;
 }
 
 .missionCard p {
   color: var(--color-text-secondary);
   line-height: 1.6;
-  transition: color var(--transition-normal) var(--ease-in-out);
 }
 
 .valuesSection {
   background-color: var(--color-background-secondary);
-  padding: var(--spacing-xxl) var(--spacing-lg);
-  margin-bottom: var(--spacing-xxl);
-  border-radius: var(--border-radius-lg);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 1.2s both;
+  padding: 40px 20px;
+  margin-bottom: 48px;
+  border-radius: 16px;
 }
 
 .valuesSection h2 {
   text-align: center;
-  font-size: var(--font-size-h2);
+  font-size: 1.7rem;
   color: var(--color-text);
-  margin-bottom: var(--spacing-xl);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 1.4s both;
+  margin-bottom: 32px;
 }
 
 .valuesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-lg);
-  max-width: 1200px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .valueCard {
   background-color: var(--color-card);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-lg);
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal) var(--ease-smooth);
+  border-radius: 14px;
+  padding: 24px 16px;
+  box-shadow: 0 2px 8px 0 #0001;
   text-align: center;
-  opacity: 0;
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 1.6s both;
-}
-
-.valueCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-  background-color: var(--color-primary-light);
 }
 
 .valueIcon {
-  font-size: 2rem;
+  font-size: 1.7rem;
   color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
-  transition: transform var(--transition-normal) var(--ease-in-out);
-}
-
-.valueCard:hover .valueIcon {
-  transform: scale(1.1) rotate(5deg);
+  margin-bottom: 8px;
 }
 
 .valueCard h3 {
-  font-size: var(--font-size-h4);
+  font-size: 1.1rem;
   color: var(--color-text);
-  margin-bottom: var(--spacing-sm);
-  transition: color var(--transition-normal) var(--ease-in-out);
+  margin-bottom: 8px;
 }
 
 .valueCard p {
   color: var(--color-text-secondary);
-  line-height: 1.6;
-  transition: color var(--transition-normal) var(--ease-in-out);
+  font-size: 0.97rem;
 }
 
 .teamSection {
-  margin-bottom: var(--spacing-xxl);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 1.8s both;
+  margin-bottom: 48px;
 }
 
 .teamSection h2 {
   text-align: center;
-  font-size: var(--font-size-h2);
+  font-size: 1.7rem;
+  margin-bottom: 32px;
   color: var(--color-text);
-  margin-bottom: var(--spacing-xl);
-  animation: fadeIn var(--transition-normal) var(--ease-out) 2s both;
 }
 
 .teamGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .teamCard {
-  background-color: var(--color-card);
-  border-radius: var(--border-radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal) var(--ease-smooth);
-  opacity: 0;
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.2s both;
-}
-
-.teamCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 #0001;
+  padding: 32px 24px 24px 24px;
+  min-width: 220px;
+  max-width: 260px;
+  flex: 1 1 220px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .teamImage {
-  width: 100%;
-  height: 300px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
   object-fit: cover;
-  transition: transform var(--transition-normal) var(--ease-in-out);
-}
-
-.teamCard:hover .teamImage {
-  transform: scale(1.05);
-}
-
-.teamInfo {
-  padding: var(--spacing-lg);
-  text-align: center;
+  margin-bottom: 16px;
+  border: 3px solid #f0d5bb;
 }
 
 .teamInfo h3 {
-  font-size: var(--font-size-h4);
-  color: var(--color-text);
-  margin-bottom: var(--spacing-xs);
-  transition: color var(--transition-normal) var(--ease-in-out);
-}
-
-.teamInfo p {
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-sm);
-  transition: color var(--transition-normal) var(--ease-in-out);
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  color: var(--color-primary-dark);
 }
 
 .teamRole {
+  font-weight: 600;
   color: var(--color-primary);
-  font-weight: var(--font-weight-medium);
-  margin-bottom: var(--spacing-md);
-  transition: color var(--transition-normal) var(--ease-in-out);
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.teamInfo p {
+  color: #6d5c4d;
+  font-size: 0.97rem;
 }
 
 .ctaSection {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  padding: var(--spacing-xxl) var(--spacing-lg);
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+  border-radius: 16px;
+  padding: 40px 20px 32px 20px;
   text-align: center;
-  color: var(--color-text-light);
-  border-radius: var(--border-radius-lg);
-  margin-bottom: var(--spacing-xxl);
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.4s both;
+  margin-bottom: 32px;
 }
 
 .ctaSection h2 {
-  font-size: var(--font-size-h2);
-  margin-bottom: var(--spacing-md);
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.6s both;
+  font-size: 1.7rem;
+  margin-bottom: 18px;
+  color: var(--color-text-light);
 }
 
 .ctaSection p {
-  font-size: var(--font-size-h4);
-  max-width: 800px;
-  margin: 0 auto var(--spacing-xl);
-  line-height: 1.6;
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 2.8s both;
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  margin-bottom: 24px;
 }
 
 .ctaButton {
-  background-color: var(--color-text-light);
-  color: var(--color-primary);
-  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 32px;
   border: none;
-  border-radius: var(--border-radius-xl);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer;
-  transition: all var(--transition-normal) var(--ease-smooth);
+  box-shadow: 0 2px 8px 0 #0001;
+  transition: background 0.2s, box-shadow 0.2s;
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  animation: fadeIn var(--transition-slower) var(--ease-smooth) 3s both;
+  gap: 10px;
+  text-decoration: none;
 }
 
 .ctaButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.ctaButton:active {
-  transform: translateY(0);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 1024px) {
-  .sobreContainer {
-    padding: var(--spacing-md);
-  }
-
-  .heroSection h1 {
-    font-size: var(--font-size-h2);
-  }
-
-  .heroSection p {
-    font-size: var(--font-size-h5);
-  }
-}
-
-@media (max-width: 768px) {
-  .missionSection,
-  .valuesGrid,
-  .teamGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .heroSection,
-  .valuesSection,
-  .ctaSection {
-    padding: var(--spacing-xl) var(--spacing-md);
-  }
-
-  .missionCard,
-  .valueCard,
-  .teamCard {
-    padding: var(--spacing-lg);
-  }
-}
-
-@media (max-width: 480px) {
-  .sobreContainer {
-    padding: var(--spacing-sm);
-  }
-
-  .heroSection h1 {
-    font-size: var(--font-size-h3);
-  }
-
-  .heroSection p {
-    font-size: var(--font-size-body);
-  }
-
-  .ctaButton {
-    width: 100%;
-    justify-content: center;
-  }
+  background: var(--color-primary-dark);
+  box-shadow: 0 6px 16px 0 #0002;
 }
